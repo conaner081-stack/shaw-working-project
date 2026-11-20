@@ -1,0 +1,68 @@
+# ===== 依赖与构建产物 =====
+node_modules/
+bower_components/
+vendor/
+dist/
+build/
+out/
+target/
+bin/
+obj/
+.venv/
+venv/
+env/
+__pycache__/
+*.pyc
+*.pyo
+*.egg-info/
+.pytest_cache/
+.mypy_cache/
+.ruff_cache/
+coverage/
+.coverage
+
+# ===== 密钥与环境变量 =====
+.env
+.env.*
+!.env.example
+*.key
+*.pem
+*.p12
+credentials.json
+secrets.json
+
+# ===== 编辑器 / 系统文件 =====
+.vscode/
+.idea/
+*.swp
+*.swo
+.DS_Store
+Thumbs.db
+desktop.ini
+*.lnk
+
+# ===== 日志与临时文件 =====
+*.log
+npm-debug.log*
+yarn-error.log*
+pnpm-debug.log*
+*.tmp
+*.temp
+~$*
+
+# ===== 大体积二进制（按需自行增删） =====
+*.zip
+*.tar.gz
+*.rar
+*.7z
+*.mp4
+*.mov
+*.avi
+*.psd
+*.ai
+*.iso
+
+# ===== WorkBuddy：排除会话缓存，保留项目记忆 =====
+.workbuddy/**
+!.workbuddy/memory/
+!.workbuddy/memory/**
