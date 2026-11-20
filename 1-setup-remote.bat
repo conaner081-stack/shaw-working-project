@@ -2,6 +2,14 @@
 setlocal
 cd /d "%~dp0"
 
+call "%~dp0_git-path.bat"
+if errorlevel 1 (
+  echo [ERROR] Git not found. Install Git for Windows, or start WorkBuddy once
+  echo         so its portable Git is available, then run this again.
+  pause
+  exit /b 1
+)
+
 echo ============================================
 echo  1 - Setup remote repository
 echo ============================================
