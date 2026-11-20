@@ -1,0 +1,28 @@
+{
+  "targetWindow": "Auto Bond",
+  "windows": {
+    "main": "Auto Bond",
+    "mainClass": "",
+    "stage": "Right Bond Stage",
+    "stageClass": ""
+  },
+  "source": "演示文稿1.pptx 第 1~4 页（按页序整理）",
+  "requireConfirm": false,
+  "expectPopup": false,
+  "waitScale": 1.0,
+  "calibrated": false,
+  "calibratedAt": "",
+  "preRunChecklist": [
+    "设备无未清除报警",
+    "载板 / 当前批次无产品（空片或维护模式）",
+    "本次操作已获设备工程师批准",
+    "已确认当前 Heater 状态下允许执行本流程"
+  ],
+  "note": "现场答复（2026-11-11）：4 步均不弹确认框，脚本不再处理任何设备弹窗；等待时间做成可调项，wait 为每步点完后等待的毫秒数，waitScale 为全局倍率；标题栏截图缺失无关紧要，取点向导会自动记录窗口真实标题与类名（win / winClass）。4 个 x/y 仍是拍屏照片的占位值，必须先做一次现场取点；calibrated=false 时脚本禁止真实执行，只允许空跑。",
+  "steps": [
+    { "name": "打开 Setup 页面", "view": "main", "preset": "setupIcon", "win": "Auto Bond", "winClass": "", "x": 515, "y": 222, "wait": 800, "check": "", "note": "PPT 第 1 页：右侧工具栏第 3 个图标（扳手锤子）SETUP" },
+    { "name": "进入 Right Bond Stage", "view": "setup", "preset": "treeRightBondStage", "win": "Auto Bond", "winClass": "", "x": 105, "y": 215, "wait": 900, "check": "", "note": "PPT 第 2 页：树形列表 Right 展开项下的 Right Bond Stage" },
+    { "name": "Standby 回待机位", "view": "stage", "preset": "standby", "win": "Right Bond Stage", "winClass": "", "x": 410, "y": 440, "wait": 1500, "check": "", "note": "PPT 第 3 页：Operations 区右下部 Standby（第 3 行第 3 列）" },
+    { "name": "Vacuum Toggle 释放真空", "view": "stage", "preset": "vacuumToggle", "win": "Right Bond Stage", "winClass": "", "x": 285, "y": 155, "wait": 1000, "check": "", "note": "PPT 第 4 页：Status 区最顶端（Vacuum 行）的 Toggle" }
+  ]
+}

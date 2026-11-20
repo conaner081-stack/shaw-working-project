@@ -1,0 +1,1359 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>一键退出基板 · 辅助工具设计原型 v3</title>
+<style>
+*{box-sizing:border-box}
+body{margin:0;background:#F4F6F9;color:#1F2933;font:14px/1.6 "Microsoft YaHei UI","Microsoft YaHei","Segoe UI",sans-serif}
+header{background:#fff;border-bottom:1px solid #DFE5EC;padding:18px 28px}
+.wrap{max-width:1300px;margin:0 auto;padding:0 28px 48px}
+h1{margin:0;font-size:20px;font-weight:600;color:#123A5E}
+.sub{margin:6px 0 0;color:#6B7A8A;font-size:13px}
+.badge{display:inline-block;margin-left:10px;padding:2px 9px;border-radius:20px;background:#EAF6EF;color:#1D6B3C;font-size:12px;vertical-align:middle}
+.tabs{display:flex;gap:6px;margin:20px 0 16px;flex-wrap:wrap}
+.tab{padding:9px 18px;border:1px solid #DFE5EC;background:#fff;border-radius:8px;cursor:pointer;color:#52616F;font-size:13px}
+.tab:hover{border-color:#185FA5;color:#185FA5}
+.tab.on{background:#185FA5;border-color:#185FA5;color:#fff}
+.panel{display:none}.panel.on{display:block}
+.card{background:#fff;border:1px solid #DFE5EC;border-radius:12px;padding:20px;margin-bottom:16px}
+.card h2{margin:0 0 12px;font-size:16px;font-weight:600;color:#123A5E}
+.card h3{margin:18px 0 8px;font-size:14px;font-weight:600;color:#123A5E}
+p{margin:8px 0}.muted{color:#6B7A8A;font-size:13px}
+.warn{background:#FFF6E6;border:1px solid #F0D7A0;color:#7A5410;border-radius:10px;padding:12px 14px;font-size:13px;margin:12px 0}
+.danger{background:#FDEEEE;border:1px solid #F0C4C4;color:#8A2B2B;border-radius:10px;padding:12px 14px;font-size:13px;margin:12px 0}
+.ok{background:#EAF6EF;border:1px solid #BFE3CC;color:#1D6B3C;border-radius:10px;padding:12px 14px;font-size:13px;margin:12px 0}
+table{border-collapse:collapse;width:100%;font-size:13px}
+th,td{border:1px solid #E3E9EF;padding:9px 11px;text-align:left;vertical-align:top}
+th{background:#F7F9FC;color:#40505F;font-weight:600;white-space:nowrap}
+.grid2{display:grid;grid-template-columns:1fr 1fr;gap:16px}
+.grid3{display:grid;grid-template-columns:repeat(3,1fr);gap:14px}
+.mini{border:1px solid #E3E9EF;border-radius:10px;padding:14px;background:#FCFDFE}
+.mini b{display:block;color:#123A5E;margin-bottom:6px;font-size:14px}
+code{background:#F1F4F8;padding:2px 6px;border-radius:4px;font-family:Consolas,Monaco,monospace;font-size:12px;color:#1F4E79}
+pre{background:#1E2A36;color:#DCE6F0;border-radius:10px;padding:14px;overflow:auto;font:12px/1.7 Consolas,Monaco,monospace;white-space:pre-wrap}
+.btn{border:1px solid #C9D6E3;background:#fff;color:#185FA5;border-radius:8px;padding:8px 14px;cursor:pointer;font-size:13px;font-family:inherit}
+.btn:hover{background:#EFF6FD;border-color:#185FA5}
+.btn.primary{background:#185FA5;border-color:#185FA5;color:#fff}
+.btn.primary:hover{background:#0C447C}
+.btn.ghost{color:#52616F}.btn:disabled{opacity:.45;cursor:not-allowed}
+.row{display:flex;gap:10px;flex-wrap:wrap;align-items:center;margin:10px 0}
+.demo{display:grid;grid-template-columns:minmax(0,1.55fr) minmax(300px,1fr);gap:16px;align-items:start}
+.view{display:none}.view.on{display:block}
+.hmi{border:2px solid #7C8B9A;border-radius:8px;overflow:hidden;background:#DDE3EA;font-size:12px}
+.hmi-title{background:#3C5468;color:#fff;padding:7px 12px;font-weight:600;display:flex;justify-content:space-between}
+.hmi-title span{font-weight:400;opacity:.8}
+.hmi-tabs{background:#C9D4DE;padding:6px 10px;display:flex;gap:4px;flex-wrap:wrap}
+.hmi-tabs i{font-style:normal;background:#E8EEF3;border:1px solid #A9B7C3;border-radius:4px 4px 0 0;padding:3px 9px;color:#41566A}
+.hmi-tabs i:first-child{background:#FFF3D9;border-color:#D9A83C;color:#7A5410}
+.hmi-body{padding:12px}
+.sec{background:linear-gradient(90deg,#4E7CA8,#B9CCDC);color:#fff;padding:3px 9px;font-size:11px;margin:10px 0 8px;border-radius:2px}
+.sec:first-child{margin-top:0}
+.hmi-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:5px}
+.hmi-grid.two{grid-template-columns:repeat(2,1fr)}
+.hmi-btn{background:#F4F6F8;border:1px solid #9AA9B6;border-radius:4px;padding:5px 4px;font:11px "Microsoft YaHei UI",sans-serif;color:#1F2D3A;cursor:default;text-align:center;transition:.15s}
+.hmi-btn.done{background:#E7F4EC;border-color:#7FBF98;color:#1D6B3C}
+.hot{background:#FFF0DA !important;border-color:#E8734A !important;box-shadow:0 0 0 2px #E8734A;color:#8A3A10 !important;font-weight:600}
+.status-row{display:grid;grid-template-columns:1.2fr 70px 1fr 1fr;gap:5px;align-items:center;margin-bottom:5px;color:#263746}
+.status-row .hmi-btn{padding:3px}
+.dot{width:10px;height:10px;border-radius:50%;display:inline-block;vertical-align:middle;margin-right:5px}
+.hmi-foot{margin-top:10px;background:#5E8DBE;color:#fff;padding:3px 9px;font-size:11px;display:flex;justify-content:space-between;align-items:center}
+.hmi-foot span{background:#F4F6F8;color:#1F2D3A;border:1px solid #9AA9B6;border-radius:3px;padding:2px 9px;margin-left:4px}
+.toolbar{width:78px;background:#16455C;border-radius:6px;padding:8px 4px;flex-shrink:0}
+.tool{text-align:center;color:#D4E3EC;font-size:10px;padding:7px 2px;border:1px solid transparent;border-radius:6px;margin-bottom:4px;cursor:default}
+.tool i{display:block;width:24px;height:24px;margin:0 auto 4px;border-radius:5px;background:#6E8FA3;border:1px solid #9FB6C4}
+.tool.sel{border-color:#D9A83C;background:#215C77;color:#FFD98A}
+.tree{background:#EDF1F5;border:1px solid #B7C3CE;border-radius:6px;padding:9px;min-height:330px}
+.tree-i{padding:4px 8px;border-radius:4px;color:#33465A;font-size:12px;cursor:default}
+.tree-i.sub{padding-left:30px;color:#1F4E79}
+.tree-i.sel{background:#DCE9F5;border:1px solid #9FB9CF}
+.console{background:#fff;border:1px solid #DFE5EC;border-radius:12px;padding:18px}
+.big{width:100%;height:74px;border:0;border-radius:12px;background:#185FA5;color:#fff;font-size:20px;font-weight:600;cursor:pointer;font-family:inherit;letter-spacing:1px}
+.big:hover{background:#0C447C}.big:disabled{background:#9FB4C7;cursor:not-allowed}
+.bigsmall{display:block;font-size:11px;font-weight:400;letter-spacing:0;opacity:.85;margin-top:3px}
+.pill{display:inline-block;padding:3px 10px;border-radius:20px;font-size:12px;background:#EEF2F6;color:#52616F}
+.pill.run{background:#E6F1FB;color:#185FA5}.pill.ok{background:#EAF6EF;color:#1D6B3C}.pill.err{background:#FDEEEE;color:#A32D2D}
+.bar{height:12px;background:#ECF1F6;border-radius:8px;overflow:hidden;margin:10px 0}
+.bar i{display:block;height:100%;width:0;background:#185FA5;transition:width .25s}
+.log{height:230px;overflow:auto;background:#1E2A36;color:#CFDCE8;border-radius:8px;padding:10px;font:12px/1.65 Consolas,Monaco,monospace;white-space:pre-wrap}
+.log .e{color:#FF9E9E}.log .s{color:#8FE0A8}.log .t{color:#8FB8DE}
+label.chk{display:inline-flex;align-items:center;gap:6px;font-size:13px;color:#40505F;cursor:pointer}
+.tbl-wrap{overflow-x:auto}
+.inp{width:100%;min-width:70px;border:1px solid #D6DFE8;border-radius:6px;padding:6px 8px;font:12px "Microsoft YaHei UI",sans-serif;color:#1F2933;background:#fff}
+.inp:focus{outline:2px solid #B5D4F4;border-color:#185FA5}
+td.num{width:34px;text-align:center;color:#6B7A8A}
+.act{white-space:nowrap}
+.act button{border:1px solid #D6DFE8;background:#fff;border-radius:5px;cursor:pointer;padding:3px 7px;margin-right:3px;color:#52616F;font-size:12px}
+.act button:hover{border-color:#185FA5;color:#185FA5}
+ul{margin:8px 0;padding-left:22px}li{margin:5px 0}
+.filelist{display:flex;flex-direction:column;gap:8px}
+.fileitem{border:1px solid #E3E9EF;border-radius:8px;padding:10px 12px;background:#FCFDFE;font-size:13px}
+.fileitem b{color:#123A5E}
+.waitrow{display:grid;grid-template-columns:190px 1fr 96px;gap:14px;align-items:center;padding:11px 0;border-bottom:1px dashed #E3E9EF}
+.waitrow label{font-size:13px;color:#40505F}
+.waitrow input[type=range]{width:100%;accent-color:#185FA5}
+.waitrow .numbox{width:88px;text-align:center;border:1px solid #D6DFE8;border-radius:6px;padding:6px;font:13px Consolas,monospace;color:#123A5E}
+.kpi{display:flex;gap:18px;flex-wrap:wrap;align-items:baseline;background:#F7FAFD;border:1px solid #DFE9F3;border-radius:10px;padding:14px 18px;margin:14px 0}
+.kpi b{font-size:26px;color:#185FA5;font-family:Consolas,monospace}
+.kpi span{font-size:13px;color:#6B7A8A}
+.stepcard{border-left:4px solid #185FA5;background:#F7FAFD;border-radius:0 8px 8px 0;padding:10px 14px;margin:10px 0;font-size:13px}
+.stepcard b{color:#123A5E}
+.stepcard kbd{background:#123A5E;color:#fff;border-radius:4px;padding:1px 7px;font:12px Consolas,monospace;margin:0 3px}
+.faq td:first-child{width:32%;color:#123A5E;font-weight:600}
+@media(max-width:980px){.demo,.grid2,.grid3{grid-template-columns:1fr}.waitrow{grid-template-columns:1fr 80px}.waitrow input[type=range]{grid-column:1 / -1;grid-row:2}}
+</style>
+</head>
+<body>
+<header>
+  <div class="wrap" style="padding:0 28px">
+    <h1>一键退出基板 · 辅助工具设计原型 <span class="badge">v3 · 等待可调 / 取点向导 / 已获许可</span></h1>
+    <p class="sub">真实流程：跨 2 个窗口、共 4 步 · 现场答复已并入 · 本页不连接真实设备</p>
+  </div>
+</header>
+
+<div class="wrap">
+  <div class="tabs">
+    <button class="tab on" data-tab="overview">1 流程与方案</button>
+    <button class="tab" data-tab="demo">2 交互演示</button>
+    <button class="tab" data-tab="wait">3 等待时间（可调）</button>
+    <button class="tab" data-tab="config">4 步骤配置与导出</button>
+    <button class="tab" data-tab="calib">5 现场取点怎么做</button>
+    <button class="tab" data-tab="guide">6 落地说明与状态</button>
+  </div>
+
+  <section class="panel on" id="tab-overview">
+    <div class="ok"><b>v3 已按你 5 条答复改完：</b>① 等待时间做成现场随时可调、自动存盘；② 标题栏没拍到不用管，取点向导自动读取鼠标下窗口的真实标题与类名；③ 不再等待／点击任何设备确认弹窗；④ 取点改成 <code>F12</code> 四步引导向导（鼠标悬停 + F12），并写了独立操作卡；⑤ 许可状态改为「已获批准」，禁止执行条件做成启动前可编辑清单。还有一条安全锁：<b>没取过点，F9 锁住，只能空跑</b>。</div>
+
+    <div class="card">
+      <h2>按 PPT 页序读到的流程</h2>
+      <table>
+        <tr><th style="width:52px">PPT 页</th><th>文字说明</th><th>截图里对应的界面与控件</th><th>目标窗口</th></tr>
+        <tr><td>第 1 页</td><td>起始页，找到右侧的扳手锤子图像，名字叫 SETUP，点击它</td><td>Auto Bond 主界面，右侧竖排工具栏第 3 个 <b>Setup（扳手锤子）</b></td><td>Auto Bond</td></tr>
+        <tr><td>第 2 页</td><td>返回主界面，找到白页面里的下级标题 Right Bond Stage，点击</td><td>Setup 树形列表，Right 展开项下第 1 个子项 <b>Right Bond Stage</b></td><td>Auto Bond</td></tr>
+        <tr><td>第 3 页</td><td>进入新页面，点击右下部的 Standby</td><td>弹出 <b>Right Bond Stage</b> 子窗口 / General 页，Operations 区第 3 行第 3 列 <b>Standby</b></td><td>Right Bond Stage</td></tr>
+        <tr><td>第 4 页</td><td>继续点击中上部的最顶端的 Toggle，至此完成</td><td>Status 区三个 Toggle 自上而下 Vacuum / Anvil Block Vacuum / Blow；光标落在<b>第一行 Vacuum 的 Toggle</b></td><td>Right Bond Stage</td></tr>
+      </table>
+      <div class="warn">前两步在<b>主窗口</b>、后两步在<b>弹出子窗口</b>，所以每一步各自指定目标窗口。第 4 页「最顶端的 Toggle」我按截图判断为 Vacuum 行；现场取点时顺便再确认一眼。</div>
+    </div>
+
+    <div class="grid2">
+      <div class="card">
+        <h2>截图里另外读到的现场信息</h2>
+        <table>
+          <tr><th>项目</th><th>内容</th></tr>
+          <tr><td>软件版本</td><td>V 4.08.05</td></tr>
+          <tr><td>顶部状态</td><td>Inert Air Supply: Compress · Env. Safe / Inert: Safe · <b>Heater ON</b></td></tr>
+          <tr><td>第 3 / 4 页 Status</td><td>Vacuum = On、Anvil Block Vacuum = On、Blow = Off</td></tr>
+          <tr><td>Settings 延时参数</td><td>Vacuum Delay 50 ms、Load Board Delay 500 ms、AB Off Before Motor 2000 ms、AB On Before Motor 5000 ms 等</td></tr>
+          <tr><td>Operations 区按钮</td><td>Current Pad / Current Target / Bond Index；Index To... / Pedestal Center / Load/Unload；Load Board / Unload Board / <b>Standby</b>；Place Board / Remove Board / Manual 等</td></tr>
+          <tr><td>Setup 树其他项</td><td>Bondhead、Optics Table、Left、Die Transfer Arm、Heater、Sub SECS/GEM Configuration 等</td></tr>
+          <tr><td>时间戳</td><td>第 3 页 00:00:11、第 4 页 00:00:18（相隔约 7 秒，PPT 未说是等待要求）</td></tr>
+        </table>
+        <p class="muted">树里出现 <code>Sub SECS/GEM Configuration</code>，说明设备可能留有标准通讯接口——对应「方案 B：原厂接口」，以后正式立项时可问厂商，眼下不改它。</p>
+      </div>
+
+      <div class="card">
+        <h2>跟 IT / 厂商沟通时可以用这些词</h2>
+        <table>
+          <tr><th>你的说法</th><th>正式叫法</th><th>说给谁听</th></tr>
+          <tr><td>一键退出的小软件</td><td>桌面辅助面板 / HMI Overlay</td><td>班组长、IT</td></tr>
+          <tr><td>替我点按钮</td><td>UI 自动化、模拟点击（轻量 RPA）</td><td>IT</td></tr>
+          <tr><td>那几个固定步骤</td><td>SOP 脚本化 / 宏（Macro）</td><td>工艺</td></tr>
+          <tr><td>告诉它按钮在哪</td><td>坐标校准 / 取点（相对窗口坐标）</td><td>IT</td></tr>
+          <tr><td>点错了马上停</td><td>中止 / 急停（Abort）</td><td>设备、安全</td></tr>
+          <tr><td>每次都记下来</td><td>操作日志、可追溯性</td><td>质量</td></tr>
+        </table>
+        <h3>工具自带的保险</h3>
+        <ul>
+          <li>未取点前锁住真实执行，只能空跑。</li>
+          <li>按 F9 直接执行（2026-11-16 按现场要求已取消二次确认弹窗）；执行中按 Esc 仍可随时中止。</li>
+          <li>每步按窗口标题/类名定位；找不到就停，绝不盲点。</li>
+          <li>Esc / 中止按钮随时停，剩余步骤一律不执行。</li>
+          <li>全程写日志；只发鼠标点击，不改参数、不写配方、不碰 PLC。</li>
+        </ul>
+      </div>
+    </div>
+  </section>
+
+  <section class="panel" id="tab-demo">
+    <div class="warn">这是<b>纯演示</b>：右边按一次大按钮，左边会按 PPT 页序<b>依次切换 3 个界面视图</b>并高亮对应控件，逐条打印它会做的事。它不会向任何真实设备发送指令。等待时间可在第 3 页调整，勾「按设置的时间演示」即可看到效果。</div>
+    <div class="demo">
+      <div class="views">
+        <div class="view on" id="view-main">
+          <div class="hmi">
+            <div class="hmi-title">Auto Bond <span>Main Bonder · 起始页（PPT 第 1 页）</span></div>
+            <div class="hmi-tabs"><i>Main Bonder</i><i>Status</i><i>Nozzle</i><i>Operations</i><i>Debug</i></div>
+            <div class="hmi-body" style="display:flex;gap:10px">
+              <div style="flex:1;min-width:0">
+                <div class="sec">Main Bonder</div>
+                <div class="mini" style="margin-bottom:8px;font-size:11px">Bond Stage：BSModuleRight　Operation：R<br>Run Mode：Idle　Index State：NEW　Current Index：2</div>
+                <div class="hmi-grid two">
+                  <button class="hmi-btn">Stop</button><button class="hmi-btn">Burn In</button>
+                  <button class="hmi-btn">One Die</button><button class="hmi-btn">One Pedestal</button>
+                  <button class="hmi-btn">Standby</button><button class="hmi-btn">Auto Bond</button>
+                  <button class="hmi-btn">Start HW</button><button class="hmi-btn">Finish Cur BS</button>
+                </div>
+                <div class="muted" style="margin-top:10px;font-size:11px">Heater ON · V 4.08.05 · Idle Mode</div>
+              </div>
+              <div class="toolbar">
+                <div class="tool" data-preset="axisIcon"><i></i>Axis</div>
+                <div class="tool" data-preset="recipeIcon"><i></i>Recipe</div>
+                <div class="tool sel" data-preset="setupIcon"><i></i>Setup</div>
+                <div class="tool" data-preset="servicesIcon"><i></i>Services</div>
+                <div class="tool" data-preset="calibIcon"><i></i>Calibration</div>
+                <div class="tool" data-preset="systemIcon"><i></i>System</div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="view" id="view-setup">
+          <div class="hmi">
+            <div class="hmi-title">Auto Bond <span>Setup 树形页面（PPT 第 2 页）</span></div>
+            <div class="hmi-body" style="display:flex;gap:10px">
+              <div class="tree" style="flex:1">
+                <div class="tree-i">Bondhead</div>
+                <div class="tree-i">Optics Table</div>
+                <div class="tree-i">Left</div>
+                <div class="tree-i sub">Left Bond Stage</div>
+                <div class="tree-i">Right</div>
+                <div class="tree-i sub sel" data-preset="treeRightBondStage">Right Bond Stage</div>
+                <div class="tree-i sub">Right Large Panel Modules</div>
+                <div class="tree-i sub">Right Panel Loader Modules</div>
+                <div class="tree-i">Die Transfer Arm</div>
+                <div class="tree-i">Die Feed Handler</div>
+                <div class="tree-i">Buffer Handler</div>
+                <div class="tree-i">Heater</div>
+                <div class="tree-i">Sub SECS/GEM Configuration</div>
+                <div class="tree-i">Equipment State</div>
+                <div class="tree-i">Simulation · Mode · RMC Connection</div>
+              </div>
+              <div class="toolbar">
+                <div class="tool"><i></i>Axis</div><div class="tool"><i></i>Recipe</div>
+                <div class="tool sel"><i></i>Setup</div><div class="tool"><i></i>Services</div>
+                <div class="tool"><i></i>Calibration</div><div class="tool"><i></i>System</div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="view" id="view-stage">
+          <div class="hmi">
+            <div class="hmi-title">Right Bond Stage <span>V 4.08.05 · General（PPT 第 3~4 页）</span></div>
+            <div class="hmi-tabs"><i>General</i><i>Advance</i><i>Advance 2</i><i>BondList</i><i>BS Optic</i><i>Water Map</i><i>Debug</i><i>Clean</i></div>
+            <div class="hmi-body">
+              <div class="sec">Status</div>
+              <div class="status-row"><span>Vacuum</span><span class="hmi-btn">On</span><span><span class="dot" style="background:#D64545"></span></span><button class="hmi-btn" data-preset="vacuumToggle">Toggle</button></div>
+              <div class="status-row"><span>Anvil Block Vacuum</span><span class="hmi-btn">On</span><span><span class="dot" style="background:#2E9E5B"></span></span><button class="hmi-btn" data-preset="anvilToggle">Toggle</button></div>
+              <div class="status-row"><span>Blow</span><span class="hmi-btn">Off</span><span></span><button class="hmi-btn" data-preset="blowToggle">Toggle</button></div>
+              <div class="sec">Operations</div>
+              <div class="hmi-grid">
+                <button class="hmi-btn" data-preset="currentPad">Current Pad</button>
+                <button class="hmi-btn" data-preset="currentTarget">Current Target</button>
+                <button class="hmi-btn" data-preset="bondIndex">Bond Index</button>
+                <button class="hmi-btn" data-preset="indexTo">Index To...</button>
+                <button class="hmi-btn" data-preset="pedestalCenter">Pedestal Center</button>
+                <button class="hmi-btn" data-preset="loadUnload">Load/Unload</button>
+                <button class="hmi-btn" data-preset="loadBoard">Load Board</button>
+                <button class="hmi-btn" data-preset="unloadBoard">Unload Board</button>
+                <button class="hmi-btn" data-preset="standby">Standby</button>
+                <button class="hmi-btn" data-preset="placeBoard">Place Board</button>
+                <button class="hmi-btn" data-preset="removeBoard">Remove Board</button>
+                <button class="hmi-btn" data-preset="manual">Manual</button>
+                <button class="hmi-btn" data-preset="singleBond">Single Bond</button>
+                <button class="hmi-btn" data-preset="unloadLoadBoard">UnloadLoad Board</button>
+              </div>
+              <div class="sec">Clean Water</div>
+              <div class="hmi-grid two">
+                <button class="hmi-btn" data-preset="loadCleanWater">Load Clean Water</button>
+                <button class="hmi-btn" data-preset="unloadCleanWater">Unload Clean Water</button>
+                <button class="hmi-btn" data-preset="placeCleanWater">Place Clean Water</button>
+                <button class="hmi-btn" data-preset="removeCleanWater">Remove Clean Water</button>
+              </div>
+              <div class="hmi-foot">Water Loader: Close <span><button class="hmi-btn" data-preset="onBtn" style="border:0;background:transparent;padding:0 5px">ON</button> <button class="hmi-btn" data-preset="offBtn" style="border:0;background:transparent;padding:0 5px">OFF</button> <button class="hmi-btn" data-preset="homeBtn" style="border:0;background:transparent;padding:0 5px">HOME</button></span></div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="console">
+        <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:12px">
+          <b style="color:#123A5E">一键退出基板 · 悬浮面板</b>
+          <span class="pill" id="statePill">待机</span>
+        </div>
+        <button class="big" id="runBtn">一键退出基板<span class="bigsmall">共 4 步 · 跨 2 个窗口</span></button>
+        <div class="row" style="margin-top:12px">
+          <label class="chk"><input type="checkbox" id="confirmChk"> 演示二次确认（实际工具已取消）</label>
+          <label class="chk"><input type="checkbox" id="failChk"> 模拟第 3 步校验失败</label>
+        </div>
+        <div class="row">
+          <label class="chk"><input type="checkbox" id="realChk"> 按设置的时间演示（最长 4 秒）</label>
+          <button class="btn" id="stopBtn" disabled>中止</button>
+          <button class="btn ghost" id="resetBtn">清空日志</button>
+        </div>
+        <div class="bar"><i id="bar"></i></div>
+        <div class="muted" id="stepText" style="min-height:22px">准备就绪，等待启动</div>
+        <div class="log" id="logBox"></div>
+      </div>
+    </div>
+  </section>
+
+  <section class="panel" id="tab-wait">
+    <div class="ok"><b>按你的要求，等待时间不再写死。</b>这里改完立刻同步到第 4 页步骤表和导出的脚本；真机上工具面板下半部同样有 4 个输入框，改完点「保存等待设置」会存进 <code>OneKeyUnload_calib.ini</code>，下次开机自动沿用，<b>不用改代码、不用重新导出</b>。</div>
+    <div class="card">
+      <h2>每步等几秒 · 现场拖动即可</h2>
+      <p class="muted">含义是「点完这一步之后，等多久再点下一步」。第 ④ 步的等待只影响工具报告完成的时机，设备动作在点下 Toggle 时已经发生。</p>
+      <div id="waitRows"></div>
+      <div class="row" style="margin-top:16px">
+        <span class="muted">一键预设</span>
+        <button class="btn" data-wpreset="fast">快速（0.4/0.5/1.0/0.5 秒）</button>
+        <button class="btn primary" data-wpreset="std">标准（0.8/0.9/1.5/1.0 秒）</button>
+        <button class="btn" data-wpreset="safe">保守（2/2/4/2 秒）</button>
+      </div>
+      <h3>全局倍率 · 调试时先把整套流程放慢</h3>
+      <div class="row">
+        <select class="inp" id="scaleSel" style="max-width:150px">
+          <option value="0.5">0.5 ×（更快，慎用）</option>
+          <option value="1" selected>1.0 ×（正常）</option>
+          <option value="1.5">1.5 ×</option>
+          <option value="2">2.0 ×（调试起步，推荐）</option>
+          <option value="3">3.0 ×（最保守）</option>
+        </select>
+        <span class="muted">或自定义</span>
+        <input class="inp" id="scaleNum" type="number" min="0.1" max="10" step="0.1" value="1.0" style="max-width:90px">
+        <span class="muted">实际等待 = 每步秒数 × 倍率</span>
+      </div>
+      <div class="kpi">
+        <div><b id="waitTotal">4.2</b> <span>秒 · 整套流程预计耗时</span></div>
+        <div><b id="waitScaleShow">1.0</b> <span>× 全局倍率</span></div>
+        <div><b id="waitLongest">③</b> <span>最长的一步</span></div>
+      </div>
+      <div class="row">
+        <button class="btn primary" id="waitExportAhk">下载更新后的 AutoHotkey 脚本</button>
+        <button class="btn" id="waitExportJson">下载更新后的 config.json</button>
+        <button class="btn ghost" id="waitCopy">复制 4 个等待值（秒）</button>
+      </div>
+    </div>
+
+    <div class="grid2">
+      <div class="card">
+        <h2>现场怎么试出合适的值</h2>
+        <div class="stepcard"><b>第 1 轮</b>：选「保守」预设 + 倍率 2.0，先勾空跑看一遍日志，确认 4 步顺序和窗口名都对。</div>
+        <div class="stepcard"><b>第 2 轮</b>：维护模式 / 空片 / 无产品，连跑 10 次，看有没有漏步、设备动作是否跟得上。</div>
+        <div class="stepcard"><b>第 3 轮</b>：把每步逐步缩短，直到找到「刚好不漏步」的值，再往上留 20~30% 余量当正式值。</div>
+        <div class="stepcard"><b>特别留意 ③ Standby 之后</b>：平台回位、真空释放可能需要几秒，这段别压得太狠。PPT 第 3→4 页计时相差约 7 秒，可作为保守上限参考，但 PPT 没写明这是等待要求。</div>
+        <div class="warn">等待时间只影响「下一步什么时候点」，<b>不会让设备动作变快</b>。调太短的风险是上一步还没完成就点了下一步。宁可先慢，稳了再快。</div>
+      </div>
+      <div class="card">
+        <h2>三种改法，任选其一</h2>
+        <table>
+          <tr><th>场合</th><th>怎么改</th><th>要不要重新导出</th></tr>
+          <tr><td>真机现场，边试边调</td><td>工具面板下半部 4 个框 + 倍率框 → 点「保存等待设置」</td><td><b>不用</b>，立即生效并存盘</td></tr>
+          <tr><td>办公室，先排好一版</td><td>本页滑块 → 下载 <code>config.json</code> / <code>.ahk</code></td><td>要，把下载的文件拷过去</td></tr>
+          <tr><td>只想临时放慢一次</td><td>PowerShell 版加 <code>-WaitScale 2</code> 参数</td><td>不用</td></tr>
+        </table>
+        <h3>脚本里对应的位置</h3>
+        <p class="muted">AHK：面板里的 <code>WaitSec1~4</code> 与 <code>WaitScaleEdit</code>；保存后写入 <code>calib.ini</code> 的 <code>[Wait]</code> 段。PS1：读 <code>config.json</code> 的 <code>steps[].wait</code> 与 <code>waitScale</code>，命令行 <code>-WaitScale</code> 可临时覆盖。</p>
+      </div>
+    </div>
+  </section>
+
+  <section class="panel" id="tab-config">
+    <div class="warn"><b>流程已按 PPT 改对，但 4 个坐标仍是拍屏照片估的占位值。</b>请用第 5 页的 <code>F12</code> 取点向导现场取一次；取点结果会自动覆盖这里的 X/Y 和窗口标题。没取点之前脚本会锁住真实执行。</div>
+    <div class="card">
+      <div class="row">
+        <span class="muted">主窗口标题关键字</span>
+        <input class="inp" id="targetWin" value="Auto Bond" style="max-width:200px">
+        <span class="muted">子窗口标题关键字</span>
+        <input class="inp" id="stageWin" value="Right Bond Stage" style="max-width:200px">
+      </div>
+      <p class="muted">这两个值只是导出脚本里的默认值。截图没拍到标题栏完全不影响：取点向导会自动记录鼠标下窗口的真实标题和窗口类名，优先用它们定位；万一以后标题变了，还能按类名兜底。现场想核对，把鼠标停在软件上按 <code>F8</code>。</p>
+      <div class="tbl-wrap">
+        <table id="stepTable">
+          <thead><tr>
+            <th>#</th><th>操作名称</th><th>界面按钮</th><th>目标窗口 win</th><th>X</th><th>Y</th><th>等待 ms</th><th>备注</th><th>操作</th>
+          </tr></thead>
+          <tbody id="stepBody"></tbody>
+        </table>
+      </div>
+      <div class="row">
+        <button class="btn" id="addBtn">+ 添加步骤</button>
+        <button class="btn" id="resetCfgBtn">恢复到 PPT 流程</button>
+        <button class="btn primary" id="exportAhkBtn">下载完整 AutoHotkey 脚本</button>
+        <button class="btn" id="exportJsonBtn">下载 config.json</button>
+        <button class="btn" id="exportBlockBtn">只复制步骤配置块</button>
+        <button class="btn ghost" id="importBtn">导入 config.json</button>
+        <input type="file" id="importFile" accept=".json" style="display:none">
+      </div>
+      <div class="muted"><b>win</b> = 本步目标窗口标题；<b>X / Y</b> = 相对该窗口左上角的坐标（取点后自动覆盖）；<b>等待 ms</b> = 点完等多久，可在第 3 页用滑块改。现场已确认 4 步均不弹确认框，所以本版不再有弹窗相关配置。</div>
+      <pre id="blockOut" style="display:none"></pre>
+    </div>
+  </section>
+
+  <section class="panel" id="tab-calib">
+    <div class="ok"><b>一句话：</b>取点 = 告诉工具按钮在窗口里的位置。做法是<b>鼠标停在按钮正中间 → 按一下键盘</b>，全程不点击设备按钮，不会给设备发任何动作。</div>
+    <div class="card">
+      <h2>推荐做法 · F12 四步引导向导（EXE 版 / AutoHotkey 版通用）</h2>
+      <p class="muted">先把设备软件打开、窗口放到平时作业的位置，然后双击 <code>OneKeyUnload.exe</code>（老 32 位电脑用 <code>OneKeyUnload_x86.exe</code>），面板出现在屏幕左上角。exe 不用装 AutoHotkey。</p>
+      <div class="stepcard"><b>准备</b>　按 <kbd>F12</kbd> 启动向导，屏幕左下角会出现一句提示，告诉你这一步该把鼠标停在哪。之后每停稳一个点，<b>再按一次 <kbd>F12</kbd></b> 记录，4 个点共按 5 次。</div>
+      <div class="stepcard"><b>第 1 点</b>　鼠标停在起始页右侧工具栏第 3 个 <b>SETUP（扳手锤子）</b>图标正中间 → 按 <kbd>F12</kbd>。听到「嘀」一声、提示跳到 2/4，就记好了。</div>
+      <div class="stepcard"><b>第 2 点</b>　自己用鼠标<b>点一下 SETUP 图标</b>切到 Setup 树页（只换页面，不动设备）→ 鼠标停在 <b>Right Bond Stage</b> 那行文字中间 → 按 <kbd>F12</kbd>。</div>
+      <div class="stepcard"><b>第 3 点</b>　自己点一下 <b>Right Bond Stage</b> 打开子窗口 → 鼠标停在右下部 <b>Standby</b> 按钮中间 → 按 <kbd>F12</kbd>。</div>
+      <div class="stepcard"><b>第 4 点</b>　同一个子窗口，Status 区第 1 行 <b>Vacuum 的 Toggle</b> 按钮中间 → 按 <kbd>F12</kbd>。弹出「取点完成」，结束。</div>
+      <div class="warn"><b>按键安全：</b>记录点只用 <code>F12</code>，不用空格 / 回车——那两个键会激活界面上当前有焦点的按钮，可能真的点动设备。取点过程工具不发送任何鼠标点击，但你手动翻页面的那两下例外。若设备软件把 F12 绑定了别的功能，告诉我改成 F7 之类的空闲键即可。<br><br><b>为什么要手动点两下？</b>因为第 2 点的树项在 Setup 页里、第 3 点的按钮在子窗口里，不先把界面切过去就找不到它们。这两下只是翻页面，不触发设备动作；如果贵厂 SOP 认为连翻页面也不该自动做，那就手动翻，不影响取点。</div>
+      <h3>取完会得到什么</h3>
+      <table>
+        <tr><th>文件</th><th>内容 / 用途</th></tr>
+        <tr><td><code>OneKeyUnload_calib.ini</code></td><td>4 个点的相对坐标 + 真实窗口标题 + 窗口类名 + 等待时间。工具每次启动自动读取，<b>别删</b>。</td></tr>
+        <tr><td><code>取点结果.txt</code></td><td>给人看的记录：每个点对应哪步、窗口标题、相对坐标、当时窗口位置。可贴进验收单。</td></tr>
+        <tr><td><code>OneKeyUnload_log_年月.txt</code></td><td>每次取点、每次执行的完整日志。</td></tr>
+      </table>
+      <div class="danger"><b>安全锁：</b>没取过点，脚本里的坐标只是照片估的，所以 <code>F9</code> 真实执行被锁住，只能勾「空跑」看流程。取点完成后自动解锁。这是防止误点真设备的设计，别想办法绕过去。</div>
+    </div>
+
+    <div class="grid2">
+      <div class="card">
+        <h2>其他几种按键</h2>
+        <table>
+          <tr><th>按键</th><th>作用</th></tr>
+          <tr><td><code>F12</code></td><td>第 1 次按＝启动 4 步向导；向导中每按一次＝记录当前鼠标所在的点（4 个点共按 5 次）</td></tr>
+          <tr><td><code>Esc</code></td><td>退出向导（不改动原坐标）；执行中则是中止</td></tr>
+          <tr><td><code>F8</code></td><td>窗口自检：显示鼠标下窗口的真实标题、类名、位置和相对坐标。标题栏没拍到就看这个</td></tr>
+          <tr><td><code>F10 / F11</code></td><td>单点补取：鼠标停稳后按一下，弹出相对坐标并复制一行配置到剪贴板。只错一个点时用，否则直接重跑 F12</td></tr>
+          <tr><td><code>F9</code></td><td>正式执行（取点后才解锁）</td></tr>
+        </table>
+        <h3>零依赖备选（PowerShell 版）</h3>
+        <pre>powershell -ExecutionPolicy Bypass -File .\OneKeyUnload.ps1 -ListWindows
+powershell -ExecutionPolicy Bypass -File .\OneKeyUnload.ps1 -Calibrate
+powershell -ExecutionPolicy Bypass -File .\OneKeyUnload.ps1 -DryRun
+powershell -ExecutionPolicy Bypass -File .\OneKeyUnload.ps1 -WaitScale 2</pre>
+        <p class="muted"><code>-Calibrate</code> 是同样的 4 步引导：鼠标停稳后<b>直接按 <code>F12</code></b> 记录，不用切回控制台，结果写回 <code>config.json</code>；<code>-ListWindows</code> 列出所有窗口的真实标题与类名；<code>-DryRun</code> 空跑不点击。</p>
+      </div>
+
+      <div class="card">
+        <h2>常见问题</h2>
+        <table class="faq">
+          <tr><td>窗口被拖动过了，要重取吗？</td><td><b>不用</b>。记的是相对窗口左上角的坐标，窗口整体移动照样准。子窗口每次弹出位置不同，正是用相对坐标解决的。</td></tr>
+          <tr><td>什么时候必须重取？</td><td>换分辨率、改 Windows 显示缩放（125%/150%）、换显示器、软件升级后界面布局变了、按钮位置挪了。重按一次 <code>F12</code> 即可。</td></tr>
+          <tr><td>为什么用 F12，不用空格 / 回车？</td><td>空格和回车会激活界面上<b>当前获得焦点</b>的按钮，可能真的点动设备；F12 不会。工具只读取鼠标位置和窗口信息，不发送鼠标点击。</td></tr>
+          <tr><td>鼠标停在工具自己窗口上怎么办？</td><td>工具会识别出「鼠标停错地方了」并拒绝记录，不会写进错坐标。把鼠标移回设备软件即可。</td></tr>
+          <tr><td>取错了一个点？</td><td>不用修，重新按 <code>F12</code> 从头走一遍，4 个点整体覆盖。</td></tr>
+          <tr><td>窗口标题是空的 / 没拍到？</td><td>没关系。向导同时记录窗口类名，标题定位失败时自动用类名兜底；<code>F8</code> 可随时查看。</td></tr>
+          <tr><td>会不会弹确认框？</td><td>你已确认这 4 步不弹框，所以工具不等也不点任何设备弹窗。工具自己执行前的那一次确认是我们加的安全确认，不是设备弹窗。</td></tr>
+        </table>
+        <div class="warn">同目录还有一份 <b>现场取点操作卡.txt</b>，可直接打印或存手机带到设备旁，照着做即可。</div>
+      </div>
+    </div>
+  </section>
+
+  <section class="panel" id="tab-guide">
+    <div class="grid2">
+      <div class="card">
+        <h2>现场只剩三件事</h2>
+        <h3>① 取点（约 2 分钟）</h3>
+        <p>按 <code>F12</code> 走 4 步向导，鼠标悬停 + 按 F12 记录，别点设备。详见第 5 页 / 操作卡。</p>
+        <h3>② 调等待时间（边试边调）</h3>
+        <p>从「保守」预设 + 倍率 2.0 起步，空跑 → 空片实跑 10 次 → 逐步缩短。面板上改完点保存，不用改代码。</p>
+        <h3>③ 空跑验证后再谈日常使用</h3>
+        <p>先勾「空跑」按 <code>F9</code> 核对日志里的 4 步窗口与坐标；再到维护模式 / 空片下连跑 10 次，核对设备状态与日志，经负责人确认后使用。</p>
+        <div class="danger"><b>红线：</b>不改原程序、不绕过联锁、不在有产品的批次上首试。PPT 第 3、4 页都显示 <b>Heater ON</b>，加热状态下执行须先经设备工程师确认。设备一旦报警或动作异常，立刻按 <code>Esc</code> 并回到人工操作。</div>
+      </div>
+      <div class="card">
+        <h2>交付的文件</h2>
+        <div class="warn"><b>Win7 机台注意：</b>2026-11-12 现场反馈，双击旧版 exe 后弹出的是空白控制台窗口、不是工具面板。已另外编好 <code>OneKeyUnload_Win7.exe</code>（旧运行库 32 位）和 <code>SelfTest_Win7.exe</code>（只弹框自检）。到 Win7 机台请先按 <code>Win7现场排查卡.txt</code> 走一遍，别直接双击 64 位版。</div>
+        <div class="filelist">
+          <div class="fileitem"><b>OneKeyUnload.exe</b>　<b>现场就用这个</b>（64 位）。由 <code>.ahk</code> 用官方 Ahk2Exe 编译，双击即用，<b>不用装 AutoHotkey</b>，也不用带 <code>.ahk</code> / <code>config.json</code>。F9 执行 / F12 取点向导 / F8 窗口自检 / F10·F11 补取 / Esc 中止；面板可调等待并存盘；未取点锁执行；空跑模式。</div>
+          <div class="fileitem"><b>OneKeyUnload_x86.exe</b>　32 位兼容版，只在现场是老 32 位系统时用它，功能完全相同。</div>
+          <div class="fileitem"><b>OneKeyUnload_Win7.exe</b>　<b>Win7 机台主用</b>。改用 AutoHotkey 1.1.30.03 的 Unicode 32 位运行库编译，32 / 64 位 Win7 都能跑。</div>
+          <div class="fileitem"><b>OneKeyUnload_Win7_alt.exe</b>　Win7 备用版，改用 1.1.33.10 运行库编译；主用版打不开时试它。</div>
+          <div class="fileitem"><b>SelfTest_Win7.exe</b>　只弹一个「EXE 自检成功」框、写一个 <code>SelfTest_result.txt</code>，不碰设备。用来一眼判断 exe 能不能在机台上运行。</div>
+          <div class="fileitem"><b>Win7现场排查卡.txt</b>　Win7 机台带下去照做：核对文件大小 → 自检 → 打开工具 → 拍回结果。</div>
+          <div class="fileitem"><b>OneKeyUnload.ahk</b>　源码，平时不用带。只有改按钮顺序 / 步骤名称时才动它，改完双击 <code>rebuild.bat</code> 重新生成两个 exe（<code>ahk_compiler</code> 文件夹要一起保留）。<b>调等待时间、重新取点都不用重编</b>。</div>
+          <div class="fileitem"><b>一键退出基板_设计原型.html</b>　本页，6 个页签；第 3 页调等待、第 4 页导出脚本。</div>
+          <div class="fileitem"><b>OneKeyUnload.ps1 + config.json</b>　零依赖备选，连 exe 也不让跑时才用。<code>-Calibrate</code> 取点、<code>-ListWindows</code> 看标题、<code>-DryRun</code> 空跑、<code>-WaitScale</code> 放慢。</div>
+          <div class="fileitem"><b>现场取点操作卡.txt</b>　可打印的一页纸操作卡，带到设备旁照做。</div>
+          <div class="fileitem"><b>OneKeyUnload_calib.ini / 取点结果.txt / OneKeyUnload_log_年月.txt</b>　现场运行后自动生成，都在 exe 同目录。换电脑时把 <code>calib.ini</code> 一起拷走，就不用重新取点。</div>
+        </div>
+        <div class="ok"><b>EXE 版注意：</b>把 exe 放在<b>可写</b>的文件夹（例如桌面新建文件夹），不要放 <code>C:\Program Files</code>，否则取点结果和日志存不下来。首次运行若被杀毒软件拦截，是 AutoHotkey 编译程序的常见误报，请让 IT 加白名单，不要从网上另下同名文件。</div>
+        <h3>一句话需求（可复制给 IT / 厂商）</h3>
+        <pre>我们需要在不改动设备原厂软件、不接入 PLC 的前提下，
+做一个 Windows 桌面辅助面板：点击一个大按钮后，
+按 SOP 在 Auto Bond 主窗口与 Right Bond Stage 子窗口
+依次点击 4 个控件（Setup 图标、树项、Standby、Vacuum Toggle），
+支持按窗口定位、现场坐标校准、逐步等待可调、
+随时中止和操作日志。厂内 IT / 设备许可已获批准，
+请协助安排维护模式下的空片验证。</pre>
+      </div>
+    </div>
+
+    <div class="card">
+      <h2>确认状态</h2>
+      <div class="grid2">
+        <div>
+          <h3 style="color:#1D6B3C">已确认（PPT + 你的现场答复）</h3>
+          <ul>
+            <li>完整 4 步顺序、每步要点什么、涉及 2 个窗口。</li>
+            <li>界面布局、按钮文字、Status 区 Toggle 上下顺序。</li>
+            <li><b>等待时间不写死</b>，做成可调项，具体值现场调试再定。</li>
+            <li><b>标题栏截图缺失无关紧要</b>；取点向导自动读真实标题 / 类名。</li>
+            <li><b>4 步均不弹确认框</b>；脚本已移除全部弹窗处理。</li>
+            <li><b>厂内 IT / 设备许可已获批准</b>。</li>
+          </ul>
+        </div>
+        <div>
+          <h3 style="color:#7A5410">现场做完这几项即可</h3>
+          <ul>
+            <li><b>4 个精确坐标</b>：按 <code>F12</code> 取点（约 2 分钟）。</li>
+            <li><b>等待时间定值</b>：从保守值起步，空片连跑 10 次后确定。</li>
+            <li><b>确认第 4 步</b>「最顶端的 Toggle」确实是 Vacuum 行那一个。</li>
+            <li><b>禁止执行的具体状态清单</b>：许可已拿到；若厂里有书面规定（如报警未清、Heater 状态、有产品批次），把条目补进 <code>config.json</code> 的 <code>preRunChecklist</code>，启动前会逐条列出。当前已预置 4 条保守条件。</li>
+          </ul>
+        </div>
+      </div>
+      <div class="warn"><b>验证边界：</b>两个 exe 已用官方 Ahk2Exe 1.1.37.02 编译完成，并在本机实际启动验证：面板能打开、中文界面与中文日志均正常、PE 架构分别为 x64 / x86。但本机<b>没有设备</b>，从未发送过任何真实点击；原型页 JS、PS1 语法、config 解析也都已校验。请让 IT 在测试电脑上先勾「空跑」走一遍，再在维护模式 / 空片上验证。<b>Win7 机台尚未实机验证</b>，请按《Win7现场排查卡.txt》做一次自检并带回结果。</div>
+    </div>
+  </section>
+</div>
+
+<script type="text/plain" id="ahkTpl">
+; ================================================================
+;  一键退出基板 · 辅助工具   v3
+;  流程来源：演示文稿1.pptx 第 1~4 页（按页序整理）
+;  AutoHotkey v1.1  |  不改原软件，只按既定顺序代点界面按钮
+;
+;  2026-11-11 现场答复已并入本版：
+;    ① 4 步之间的等待时间做成可调整项，面板上直接改、自动存盘，现场调试再定值
+;    ② 截图没拍到标题栏无关紧要：取点向导自动记录「鼠标下面那个窗口」的真实标题与类名
+;    ③ 4 步均不弹确认框：本脚本不再等待、不再点击任何设备弹窗
+;    ④ 上机前必须先按 F12 做一次取点；未取点时 F9 被锁住，只能空跑
+;       取点用 F12 而不是空格/回车：后两者会激活当前有焦点的按钮，可能点动设备
+;    ⑤ 厂内 IT / 设备许可已获批准（仍建议首试在维护模式 / 空片下做）
+;
+;  2026-11-16 现场反馈：已跑通；按 F9 直接执行，取消执行前二次确认弹窗。
+;    默认 RequireConfirm=0；如需恢复确认框，在 calib.ini 的 [Options] 下写 Confirm=1，
+;    无需重新编译。执行中仍可按 Esc 随时中止。
+;
+;  中文乱码时：用记事本另存为「UTF-8 带 BOM」，或安装 AutoHotkey Unicode 版
+; ================================================================
+
+#SingleInstance Force
+#NoEnv
+SetBatchLines -1
+SetTitleMatchMode 2
+CoordMode, Mouse, Screen
+FileEncoding, UTF-8
+
+; ---------------------------------------------- ① 现场可调配置
+DefaultWin     := "__TARGET__"          ; 主窗口标题关键字（取点后以向导记录为准）
+CalibMainWin   := "__TARGET__"          ; 兼容旧说明：主窗口
+CalibStageWin  := "__STAGEWIN__"       ; 兼容旧说明：子窗口
+RequireConfirm := 0                    ; 0 = 按 F9 直接执行（现场要求，已取消二次确认）；1 = 恢复确认框
+WaitScale      := __WAITSCALE__              ; 全局等待倍率（来自原型页第 3 页）
+CalibFile      := A_ScriptDir "\OneKeyUnload_calib.ini"
+ResultFile     := A_ScriptDir "\取点结果.txt"
+LogFile        := A_ScriptDir "\OneKeyUnload_log_" A_YYYY A_MM ".txt"
+
+; 启动前二次确认里会逐条列出，请按厂里规定增删
+Checklist := []
+Checklist.Push("设备无未清除报警")
+Checklist.Push("载板 / 当前批次无产品（空片或维护模式）")
+Checklist.Push("本次操作已获设备工程师批准")
+Checklist.Push("已确认当前 Heater 状态下允许执行本流程")
+
+; 取点向导的 4 句提示（只悬停，不点击设备）
+WizardPrompts := []
+WizardPrompts.Push("第 1 个点：起始页右侧竖排工具栏第 3 个「SETUP」扳手锤子图标`n把鼠标停在图标正中间。")
+WizardPrompts.Push("第 2 个点：先手动点一下 SETUP 进入 Setup 树页（只切页面，不动设备）`n再把鼠标停在「Right Bond Stage」这一行文字中间。")
+WizardPrompts.Push("第 3 个点：手动点 Right Bond Stage 打开子窗口`n把鼠标停在 Operations 区右下部「Standby」按钮正中间。")
+WizardPrompts.Push("第 4 个点：同一个子窗口里，Status 区第 1 行 Vacuum 的「Toggle」按钮`n把鼠标停在它正中间。")
+
+; win = 本步目标窗口标题；x y = 相对该窗口左上角的坐标；wait = 点完等多少毫秒
+; 下面 4 行的坐标是按 PPT 拍屏照片估的占位值，F12 取点后会被 calib.ini 自动覆盖。
+; <<<STEPS_START>>>
+__STEPS__
+; <<<STEPS_END>>>
+
+; ---------------------------------------------- ② 以下一般不用改
+Running      := 0
+Abort        := 0
+Calibrated   := 0
+DryRun       := 0
+WizardActive := 0
+WizardIdx    := 0
+WizardData   := []
+CurHwnd      := 0
+Total        := Steps.MaxIndex()
+
+LoadCalibration()
+
+FileAppend, , %LogFile%
+if (ErrorLevel)
+    LogFile := A_Temp "\OneKeyUnload_log.txt"
+
+Gui, +AlwaysOnTop
+Gui, Font, s9, Microsoft YaHei
+Gui, Add, Text, x14 y10 w300, 流程：PPT 第 1~4 页 · 共 %Total% 步 · 跨 2 个窗口
+Gui, Add, Text, x14 y30 w300 cGray vCalibState, 正在读取取点结果…
+Gui, Add, Button, x14 y52 w300 h48 gStartRun vRunBtn, 一键退出基板 (F9)
+Gui, Add, Button, x14 y106 w145 h26 gStopRun, 中止 (Esc)
+Gui, Add, Button, x167 y106 w147 h26 gStartWizard, 取点向导 (F12)
+Gui, Add, CheckBox, x14 y140 w300 h20 vDryRunChk, 空跑（只打印，不点设备，可不取点）
+Gui, Add, Progress, x14 y166 w300 h12 cBlue vBar, 0
+Gui, Add, Text, x14 y184 w300 h42 vStatus, 待机
+
+Gui, Add, GroupBox, x14 y232 w300 h190, 等待时间（点完本步后等几秒 · 现场可调）
+Gui, Add, Text, x26 y256 w140, ① Setup 之后
+Gui, Add, Edit, x176 y253 w60 vWaitSec1, 0.8
+Gui, Add, Text, x242 y256 w60, 秒
+Gui, Add, Text, x26 y282 w140, ② 树项之后
+Gui, Add, Edit, x176 y279 w60 vWaitSec2, 0.9
+Gui, Add, Text, x242 y282 w60, 秒
+Gui, Add, Text, x26 y308 w140, ③ Standby 之后
+Gui, Add, Edit, x176 y305 w60 vWaitSec3, 1.5
+Gui, Add, Text, x242 y308 w60, 秒
+Gui, Add, Text, x26 y334 w140, ④ Toggle 之后
+Gui, Add, Edit, x176 y331 w60 vWaitSec4, 1.0
+Gui, Add, Text, x242 y334 w60, 秒
+Gui, Add, Text, x26 y362 w140, 全局倍率（放慢用）
+Gui, Add, Edit, x176 y359 w60 vWaitScaleEdit, 1.0
+Gui, Add, Button, x26 y390 w130 h26 gSaveWait, 保存等待设置
+Gui, Add, Button, x164 y390 w136 h26 gPresetWait, 全部设为 2.0 秒
+
+Gui, Add, Text, x14 y430 w300 h36 cGray, F9 执行 · F12 取点向导 · F10/F11 补取 · F8 窗口自检 · Esc 中止
+Gui, Show, x30 y30 w328 h478, 一键退出基板 · 辅助工具 v3
+SyncWaitControls()
+UpdateCalibState()
+Log("工具已启动，共 " Total " 步；取点状态：" (Calibrated ? "已取点" : "未取点") "；等待倍率：" WaitScale)
+return
+
+; ---------------- 热键 ----------------
+F9::  Gosub, StartRun
+F12::
+    if (WizardActive)
+        RecordWizardPoint()
+    else
+        StartWizard()
+return
+F10:: Gosub, CalibrateMain
+F11:: Gosub, CalibrateStage
+F8::  Gosub, ShowWindowInfo
+
+Esc::
+    if (WizardActive) {
+        CancelWizard()
+        return
+    }
+    if (Running) {
+        Abort := 1
+        Log("用户请求中止 (Esc)")
+        SetStatus("收到中止请求，当前步骤结束后停止")
+    }
+return
+
+; ---------------- 执行 ----------------
+StartRun:
+    if (Running) {
+        ; 外接实体按钮时连按很常见：绝不弹窗打断正在跑的步骤，静默忽略 + 短提示音
+        SoundBeep, 400, 60
+        Log("忽略一次重复触发（当前正在执行中，未打断）")
+        return
+    }
+    GuiControlGet, dr, , DryRunChk
+    DryRun := dr
+    if (!Calibrated && !DryRun) {
+        MsgBox, 16, 尚未取点, 还没做过现场取点，坐标仍是照片估算值，已禁止真实执行。`n`n请先按 F12 走一遍 4 步取点向导（只悬停、不点设备），完成后本按钮自动解锁。`n`n只想看看流程：勾选「空跑」再按 F9。
+        return
+    }
+    if (RequireConfirm && !DryRun) {
+        txt := "即将按顺序执行 " Total " 步「退出基板」：`n"
+        for i, s in Steps
+            txt .= "`n  " i ". " s.name "   [" s.win "]"
+        txt .= "`n`n等待时间(秒)："
+        for i, s in Steps
+            txt .= Round(s.wait/1000,1) " / "
+        txt .= "   倍率 x" WaitScale
+        txt .= "`n`n请逐条确认："
+        for i, c in Checklist
+            txt .= "`n  □ " c
+        txt .= "`n`n执行中请勿移动鼠标；按 Esc 可随时中止。"
+        MsgBox, 292, 确认执行, %txt%
+        IfMsgBox, No
+            return
+    }
+    Running := 1
+    Abort := 0
+    GuiControl,, Bar, 0
+    Log("===== 开始执行 =====" (DryRun ? "（空跑，不发送点击）" : "") " 倍率 x" WaitScale)
+    for i, s in Steps {
+        if (Abort) {
+            Log("已中止，剩余步骤未执行")
+            break
+        }
+        if (!PrepareWindow(s.win, s.wclass))
+            break
+        SetStatus("第 " i " / " Total " 步：" s.name)
+        GuiControl,, Bar, % Round((i-1) * 100 / Total)
+        if (!ClickAt(s.x, s.y, s.name))
+            break
+        if (s.check != "") {
+            WinGetText, wtxt, ahk_id %CurHwnd%
+            if !InStr(wtxt, s.check) {
+                Log("状态校验失败：未找到「" s.check "」→ 中止")
+                SetStatus("状态校验失败，已中止")
+                Abort := 1
+                break
+            }
+            Log("状态校验通过：" s.check)
+        }
+        if (!SafeSleep(s.wait))
+            break
+        GuiControl,, Bar, % Round(i * 100 / Total)
+    }
+    if (!Abort)
+        Log("===== 执行结束，请人工核对设备状态 =====")
+    Running := 0
+    if (Abort)
+        SetStatus("已中止（部分步骤未执行）")
+    else
+        SetStatus("执行结束，请核对设备状态")
+    SoundBeep, 750, 120
+return
+
+StopRun:
+    if (Running) {
+        Abort := 1
+        Log("点击了「中止」按钮")
+        SetStatus("收到中止请求")
+    }
+return
+
+; ---------------- 等待时间：面板可调 + 存盘 ----------------
+SaveWait:
+    vals := []
+    Loop, %Total% {
+        GuiControlGet, v, , % "WaitSec" . A_Index
+        if v is not number
+            v := 1.0
+        if (v < 0)
+            v := 0
+        vals.Push(v)
+        Steps[A_Index].wait := Round(v * 1000)
+        IniWrite, % Steps[A_Index].wait, %CalibFile%, Wait, W%A_Index%
+    }
+    GuiControlGet, sc, , WaitScaleEdit
+    if sc is not number
+        sc := 1.0
+    if (sc <= 0)
+        sc := 1.0
+    WaitScale := sc
+    IniWrite, %WaitScale%, %CalibFile%, Wait, Scale
+    SyncWaitControls()
+    SetStatus("等待时间已保存到 calib.ini，下次启动自动沿用")
+    Log("等待设置已保存：4 步 = " Round(vals[1],1) "/" Round(vals[2],1) "/" Round(vals[3],1) "/" Round(vals[4],1) " 秒，倍率 x" WaitScale)
+return
+
+PresetWait:
+    Loop, %Total%
+        GuiControl, , % "WaitSec" . A_Index, 2.0
+    GuiControl, , WaitScaleEdit, 1.0
+    SetStatus("已全部填 2.0 秒（保守起步），点「保存等待设置」生效")
+return
+
+SyncWaitControls() {
+    global Steps, WaitScale, Total
+    Loop, %Total%
+        GuiControl, , % "WaitSec" . A_Index, % Round(Steps[A_Index].wait/1000, 1)
+    GuiControl, , WaitScaleEdit, %WaitScale%
+}
+
+; ---------------- 取点向导（核心：怎么取点） ----------------
+StartWizard:
+    StartWizard()
+return
+
+StartWizard() {
+    global WizardActive, WizardIdx, WizardData, Running, Total
+    if (Running) {
+        MsgBox, 48, 提示, 正在执行中，请先中止再取点。
+        return
+    }
+    WizardActive := 1
+    WizardIdx := 1
+    WizardData := []
+    Log("===== 开始 F12 取点向导 =====")
+    ShowWizardTip()
+}
+
+ShowWizardTip() {
+    global WizardIdx, WizardPrompts, Total, WizardActive
+    if (!WizardActive)
+        return
+    p := WizardPrompts[WizardIdx]
+    y := A_ScreenHeight - 190
+    ToolTip, % "【取点向导 " WizardIdx " / " Total "】`n" p "`n`n鼠标停稳后按【F12】记录 · 按 Esc 退出`n注意：只悬停，不要点击设备按钮", 20, %y%
+    SetStatus("取点 " WizardIdx " / " Total "：" p)
+}
+
+RecordWizardPoint() {
+    global WizardActive, WizardIdx, WizardData, WizardPrompts, Total, CalibFile, ResultFile, Calibrated, Steps
+    if (!WizardActive)
+        return
+    MouseGetPos, mx, my, hUnder
+    if (!hUnder) {
+        MsgBox, 48, 没读到窗口, 鼠标下面没找到窗口，请把鼠标移到设备软件上再按 F12。
+        return
+    }
+    root := RootHwnd(hUnder)
+    WinGetTitle, wt, ahk_id %root%
+    WinGetClass, wc, ahk_id %root%
+    WinGetPos, wx, wy, ww, wh, ahk_id %root%
+    if (InStr(wt, "一键退出基板") || InStr(wt, "ToolTip")) {
+        MsgBox, 48, 鼠标停错地方了, 鼠标正停在本工具自己的窗口上。`n请移到设备软件的按钮上，再按 F12。
+        return
+    }
+    rx := mx - wx
+    ry := my - wy
+    if (rx < 0 || ry < 0 || rx > ww || ry > wh) {
+        MsgBox, 48, 坐标异常, 算出来的相对坐标超出窗口范围，请重新悬停后按 F12。
+        return
+    }
+    pt := {win:wt, wclass:wc, x:rx, y:ry, sx:mx, sy:my, wx:wx, wy:wy, ww:ww, wh:wh}
+    WizardData.Push(pt)
+    Log("取点 " WizardIdx "/" Total "：窗口标题[" wt "] 类名[" wc "] 相对(" rx ", " ry ") 屏幕(" mx ", " my ")")
+    SoundBeep, 880, 90
+    WizardIdx += 1
+    if (WizardIdx > Total)
+        FinishWizard()
+    else
+        ShowWizardTip()
+}
+
+FinishWizard() {
+    global WizardActive, WizardData, Total, CalibFile, ResultFile, Calibrated, Steps
+    IniWrite, 1, %CalibFile%, Calibration, Done
+    IniWrite, %A_Now%, %CalibFile%, Calibration, Date
+    IniWrite, %Total%, %CalibFile%, Calibration, Count
+    txt := "一键退出基板 · 现场取点结果`n取点时间：" A_Now "`n"
+    txt .= "说明：X / Y 是相对该窗口左上角的像素；窗口移动不用重取，分辨率或界面布局变了才要重取。`n`n"
+    Loop, %Total% {
+        d := WizardData[A_Index]
+        IniWrite, % d.win, %CalibFile%, Step%A_Index%, Win
+        IniWrite, % d.wclass, %CalibFile%, Step%A_Index%, Class
+        IniWrite, % d.x, %CalibFile%, Step%A_Index%, X
+        IniWrite, % d.y, %CalibFile%, Step%A_Index%, Y
+        Steps[A_Index].win := d.win
+        Steps[A_Index].wclass := d.wclass
+        Steps[A_Index].x := d.x
+        Steps[A_Index].y := d.y
+        txt .= "第 " A_Index " 步  " Steps[A_Index].name "`n"
+        txt .= "    窗口标题：" d.win "`n    窗口类名：" d.wclass "`n"
+        txt .= "    相对坐标：X=" d.x "  Y=" d.y "`n"
+        txt .= "    当时窗口：(" d.wx ", " d.wy ") 大小 " d.ww "x" d.wh " · 鼠标屏幕坐标 (" d.sx ", " d.sy ")`n`n"
+    }
+    txt .= "配置文件：" CalibFile "`n未取点时脚本锁住真实执行；此文件存在即表示已取点。`n"
+    FileDelete, %ResultFile%
+    FileAppend, %txt%, %ResultFile%
+    Calibrated := 1
+    WizardActive := 0
+    ToolTip
+    UpdateCalibState()
+    SetStatus("取点完成，4 个点已保存；F9 已解锁，建议先勾选空跑验证")
+    Log("===== 取点完成，结果已写入 " CalibFile " 与 " ResultFile " =====")
+    MsgBox, 64, 取点完成, 4 个点已记录并保存。`n`n已自动写入：`n  OneKeyUnload_calib.ini（脚本启动时自动读取）`n  取点结果.txt（给人看的）`n`n接下来：勾选「空跑」按 F9 看一遍，再去维护模式 / 空片上试。
+}
+
+CancelWizard() {
+    global WizardActive
+    WizardActive := 0
+    ToolTip
+    SetStatus("取点向导已取消，原有坐标未改动")
+    Log("取点向导已取消")
+}
+
+ShowWindowInfo:
+    MouseGetPos, mx, my, hUnder
+    if (!hUnder) {
+        MsgBox, 48, 窗口自检, 鼠标下面没找到窗口。
+        return
+    }
+    root := RootHwnd(hUnder)
+    WinGetTitle, wt, ahk_id %root%
+    WinGetClass, wc, ahk_id %root%
+    WinGetPos, wx, wy, ww, wh, ahk_id %root%
+    rx := mx - wx
+    ry := my - wy
+    MsgBox, 64, 窗口自检 (F8), 鼠标下窗口标题：%wt%`n窗口类名：%wc%`n窗口左上角：%wx%, %wy%`n窗口大小：%ww% x %wh%`n`n鼠标屏幕坐标：%mx%, %my%`n相对左上角：X=%rx%  Y=%ry%`n`n标题栏没拍到也没关系：取点向导会自动用这里读到的真实标题 / 类名定位。
+return
+
+CalibrateMain:
+    DoCalibrate("主窗口")
+return
+
+CalibrateStage:
+    DoCalibrate("子窗口")
+return
+
+DoCalibrate(hint) {
+    MouseGetPos, mx, my, hUnder
+    if (!hUnder) {
+        MsgBox, 48, 补取失败, 鼠标下面没找到窗口。
+        return
+    }
+    root := RootHwnd(hUnder)
+    WinGetTitle, wt, ahk_id %root%
+    WinGetClass, wc, ahk_id %root%
+    WinGetPos, wx, wy, ww, wh, ahk_id %root%
+    rx := mx - wx
+    ry := my - wy
+    q := Chr(34)
+    clip := "Steps.Push({name:" . q . "按钮名称" . q . ", win:" . q . wt . q . ", x:" . rx . ", y:" . ry . ", wait:1000, check:" . q . q . "})"
+    Clipboard := clip
+    MsgBox, 64, 单点补取（%hint%）, 窗口标题：%wt%`n窗口类名：%wc%`n相对左上角：X=%rx%  Y=%ry%`n`n这一行配置已复制到剪贴板。`n只改某一步更推荐直接重跑 F12 向导。
+}
+
+; ---------------- 基础函数 ----------------
+LoadCalibration() {
+    global CalibFile, Calibrated, Steps, Total, WaitScale, RequireConfirm
+    IniRead, done, %CalibFile%, Calibration, Done, 0
+    if (done = 1) {
+        Loop, %Total% {
+            IniRead, w, %CalibFile%, Step%A_Index%, Win, % Steps[A_Index].win
+            IniRead, c, %CalibFile%, Step%A_Index%, Class,
+            IniRead, x, %CalibFile%, Step%A_Index%, X, % Steps[A_Index].x
+            IniRead, y, %CalibFile%, Step%A_Index%, Y, % Steps[A_Index].y
+            Steps[A_Index].win := w
+            Steps[A_Index].wclass := c
+            Steps[A_Index].x := x
+            Steps[A_Index].y := y
+        }
+        Calibrated := 1
+    }
+    ; 二次确认开关：默认取脚本里的 RequireConfirm；现场可在 calib.ini 覆盖（见文件头说明）
+    IniRead, cf, %CalibFile%, Options, Confirm, %RequireConfirm%
+    if cf is number
+        RequireConfirm := cf
+    IniRead, sc, %CalibFile%, Wait, Scale, %WaitScale%
+    if sc is number
+        if (sc > 0)
+            WaitScale := sc
+    Loop, %Total% {
+        IniRead, wms, %CalibFile%, Wait, W%A_Index%, % Steps[A_Index].wait
+        if wms is number
+            Steps[A_Index].wait := wms
+    }
+}
+
+UpdateCalibState() {
+    global Calibrated
+    if (Calibrated)
+        GuiControl,, CalibState, ● 已取点：坐标来自 calib.ini，可正常执行
+    else
+        GuiControl,, CalibState, ● 未取点：坐标是照片估算值，F9 已锁住（仅可空跑）
+}
+
+RootHwnd(h) {
+    return DllCall("GetAncestor", "Ptr", h, "UInt", 2, "Ptr")
+}
+
+ResolveHwnd(win, wclass) {
+    h := 0
+    if (win != "")
+        h := WinExist(win)
+    if (!h && wclass != "")
+        h := WinExist("ahk_class " . wclass)
+    return h
+}
+
+PrepareWindow(win, wclass) {
+    global Abort, CurHwnd
+    h := ResolveHwnd(win, wclass)
+    if (!h) {
+        Log("错误：找不到窗口「" win "」/ 类名「" wclass "」→ 中止")
+        SetStatus("找不到窗口，已中止")
+        Abort := 1
+        return 0
+    }
+    CurHwnd := h
+    WinActivate, ahk_id %h%
+    WinWaitActive, ahk_id %h%, , 2
+    if (ErrorLevel) {
+        Log("错误：窗口无法激活 → 中止")
+        Abort := 1
+        return 0
+    }
+    WinGetPos, wx, wy, ww, wh, ahk_id %h%
+    Log("定位窗口「" win "」 左上角(" wx ", " wy ") 大小(" ww "x" wh ")")
+    return 1
+}
+
+ClickAt(rx, ry, label) {
+    global CurHwnd, DryRun
+    WinGetPos, wx, wy, ww, wh, ahk_id %CurHwnd%
+    tx := wx + rx
+    ty := wy + ry
+    if (DryRun) {
+        Log("[空跑] 本应点击「" label "」 屏幕(" tx ", " ty ") 相对(" rx ", " ry ")")
+        Sleep, 100
+        return 1
+    }
+    MouseClick, Left, %tx%, %ty%, 1, 0
+    Log("点击「" label "」 屏幕(" tx ", " ty ") 相对(" rx ", " ry ")")
+    Sleep, 120
+    return 1
+}
+
+SafeSleep(ms) {
+    global Abort, WaitScale
+    ms := Round(ms * WaitScale)
+    left := ms
+    while (left > 0) {
+        if (Abort)
+            return 0
+        Sleep, 100
+        left -= 100
+    }
+    Log("等待 " ms " ms 完成（倍率 x" WaitScale "）")
+    return 1
+}
+
+Log(msg) {
+    global LogFile
+    FormatTime, ts, , yyyy-MM-dd HH:mm:ss
+    line := "[" . ts . "] " . msg . Chr(10)
+    FileAppend, %line%, %LogFile%
+}
+
+SetStatus(msg) {
+    GuiControl,, Status, %msg%
+}
+
+GuiClose:
+    if (Running) {
+        MsgBox, 48, 提示, 正在执行中，请先中止再关闭。
+        return
+    }
+    ExitApp
+return
+</script>
+
+<script>
+var PRESETS = [
+  {id:'setupIcon',label:'SETUP 图标（扳手锤子 / 起始页）',x:515,y:222,view:'main',win:'Auto Bond'},
+  {id:'treeRightBondStage',label:'树项 Right Bond Stage（Setup 页）',x:105,y:215,view:'setup',win:'Auto Bond'},
+  {id:'vacuumToggle',label:'Vacuum / Toggle（Status 第 1 行）',x:285,y:155,view:'stage',win:'Right Bond Stage'},
+  {id:'standby',label:'Standby（Operations 第 3 行第 3 列）',x:410,y:440,view:'stage',win:'Right Bond Stage'},
+  {id:'anvilToggle',label:'Anvil Block Vacuum / Toggle',x:285,y:180,view:'stage',win:'Right Bond Stage'},
+  {id:'blowToggle',label:'Blow / Toggle',x:245,y:205,view:'stage',win:'Right Bond Stage'},
+  {id:'currentPad',label:'Current Pad',x:98,y:387,view:'stage',win:'Right Bond Stage'},
+  {id:'currentTarget',label:'Current Target',x:253,y:387,view:'stage',win:'Right Bond Stage'},
+  {id:'bondIndex',label:'Bond Index',x:407,y:387,view:'stage',win:'Right Bond Stage'},
+  {id:'indexTo',label:'Index To...',x:98,y:412,view:'stage',win:'Right Bond Stage'},
+  {id:'pedestalCenter',label:'Pedestal Center',x:253,y:412,view:'stage',win:'Right Bond Stage'},
+  {id:'loadUnload',label:'Load/Unload',x:407,y:412,view:'stage',win:'Right Bond Stage'},
+  {id:'loadBoard',label:'Load Board',x:98,y:432,view:'stage',win:'Right Bond Stage'},
+  {id:'unloadBoard',label:'Unload Board',x:253,y:432,view:'stage',win:'Right Bond Stage'},
+  {id:'placeBoard',label:'Place Board',x:98,y:452,view:'stage',win:'Right Bond Stage'},
+  {id:'removeBoard',label:'Remove Board',x:253,y:452,view:'stage',win:'Right Bond Stage'},
+  {id:'manual',label:'Manual',x:407,y:452,view:'stage',win:'Right Bond Stage'},
+  {id:'singleBond',label:'Single Bond',x:98,y:472,view:'stage',win:'Right Bond Stage'},
+  {id:'unloadLoadBoard',label:'UnloadLoad Board',x:253,y:472,view:'stage',win:'Right Bond Stage'},
+  {id:'loadCleanWater',label:'Load Clean Water',x:98,y:512,view:'stage',win:'Right Bond Stage'},
+  {id:'unloadCleanWater',label:'Unload Clean Water',x:253,y:512,view:'stage',win:'Right Bond Stage'},
+  {id:'placeCleanWater',label:'Place Clean Water',x:98,y:532,view:'stage',win:'Right Bond Stage'},
+  {id:'removeCleanWater',label:'Remove Clean Water',x:253,y:532,view:'stage',win:'Right Bond Stage'},
+  {id:'onBtn',label:'Water Loader ON',x:375,y:599,view:'stage',win:'Right Bond Stage'},
+  {id:'offBtn',label:'Water Loader OFF',x:448,y:599,view:'stage',win:'Right Bond Stage'},
+  {id:'homeBtn',label:'Water Loader HOME',x:508,y:599,view:'stage',win:'Right Bond Stage'},
+  {id:'custom',label:'自定义位置（手填坐标）',x:0,y:0,view:'stage',win:'Auto Bond'}
+];
+
+var EXAMPLE = [
+  {name:'打开 Setup 页面',preset:'setupIcon',view:'main',win:'Auto Bond',winClass:'',x:515,y:222,wait:800,check:'',note:'PPT 第 1 页：右侧工具栏第 3 个图标 SETUP'},
+  {name:'进入 Right Bond Stage',preset:'treeRightBondStage',view:'setup',win:'Auto Bond',winClass:'',x:105,y:215,wait:900,check:'',note:'PPT 第 2 页：树形列表 Right → Right Bond Stage'},
+  {name:'Standby 回待机位',preset:'standby',view:'stage',win:'Right Bond Stage',winClass:'',x:410,y:440,wait:1500,check:'',note:'PPT 第 3 页：Operations 右下部'},
+  {name:'Vacuum Toggle 释放真空',preset:'vacuumToggle',view:'stage',win:'Right Bond Stage',winClass:'',x:285,y:155,wait:1000,check:'',note:'PPT 第 4 页：Status 最顶端 Toggle'}
+];
+
+var WAIT_PRESETS = {fast:[0.4,0.5,1.0,0.5],std:[0.8,0.9,1.5,1.0],safe:[2,2,4,2]};
+var CHECKLIST = ['设备无未清除报警','载板 / 当前批次无产品（空片或维护模式）','本次操作已获设备工程师批准','已确认当前 Heater 状态下允许执行本流程'];
+var steps = JSON.parse(JSON.stringify(EXAMPLE));
+var waitScale = 1.0;
+var running = false, abort = false;
+
+function $(id){return document.getElementById(id);}
+function esc(s){return String(s==null?'':s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');}
+function sleep(ms){return new Promise(function(r){setTimeout(r,ms);});}
+function stamp(){var d=new Date();return ('0'+d.getHours()).slice(-2)+':'+('0'+d.getMinutes()).slice(-2)+':'+('0'+d.getSeconds()).slice(-2);}
+function presetOf(id){return PRESETS.filter(function(p){return p.id===id;})[0]||null;}
+
+document.querySelectorAll('.tab').forEach(function(t){
+  t.addEventListener('click',function(){
+    document.querySelectorAll('.tab').forEach(function(x){x.classList.remove('on');});
+    document.querySelectorAll('.panel').forEach(function(x){x.classList.remove('on');});
+    t.classList.add('on'); $('tab-'+t.dataset.tab).classList.add('on');
+  });
+});
+
+function log(msg,cls){
+  var box=$('logBox'); var d=document.createElement('div');
+  d.className=cls||''; d.textContent='['+stamp()+'] '+msg;
+  box.appendChild(d); box.scrollTop=box.scrollHeight;
+}
+function setState(text,cls){$('statePill').textContent=text;$('statePill').className='pill '+(cls||'');}
+function setBar(p){$('bar').style.width=p+'%';}
+function showView(name){
+  document.querySelectorAll('.view').forEach(function(v){v.classList.remove('on');});
+  var v=$('view-'+(name||'stage')); if(v) v.classList.add('on');
+}
+function highlight(id){
+  document.querySelectorAll('.hot').forEach(function(b){b.classList.remove('hot');});
+  var el=document.querySelector('[data-preset="'+id+'"]');
+  if(el) el.classList.add('hot');
+}
+function clearHighlight(){document.querySelectorAll('.hmi-btn,.tool,.tree-i').forEach(function(b){b.classList.remove('hot','done');});}
+
+$('runBtn').addEventListener('click',async function(){
+  if(running) return;
+  var cfg=steps;
+  if($('confirmChk').checked){
+    var list=cfg.map(function(s,i){return (i+1)+'. '+s.name+'  ['+s.win+']';}).join('\n');
+    if(!confirm('即将按顺序执行 '+cfg.length+' 步：\n\n'+list+'\n\n请确认设备处于允许卸载状态。演示中不会操作真实设备。')) return;
+  }
+  running=true; abort=false;
+  $('runBtn').disabled=true; $('stopBtn').disabled=false;
+  clearHighlight(); $('logBox').innerHTML=''; setBar(0); showView('main');
+  setState('运行中','run'); log('流程来源：演示文稿1.pptx 第 1~4 页','t');
+  log($('confirmChk').checked ? '二次确认通过' : '已取消二次确认，直接执行', 't');
+  log('共 '+cfg.length+' 步 · 全局倍率 x'+waitScale.toFixed(1),'t');
+  for(var i=0;i<cfg.length;i++){
+    if(abort){log('检测到中止请求，剩余步骤不再执行','e');break;}
+    var s=cfg[i], p=presetOf(s.preset);
+    setBar(Math.round(i*100/cfg.length));
+    $('stepText').textContent='第 '+(i+1)+' / '+cfg.length+' 步：'+s.name;
+    showView(s.view);
+    log('['+(i+1)+'/'+cfg.length+'] 定位窗口「'+s.win+'」并激活 · 通过');
+    highlight(s.preset);
+    log('点击「'+((p&&p.label)||s.name)+'」 相对坐标('+s.x+', '+s.y+')');
+    await sleep(160);
+    if($('failChk').checked && i===2){
+      log('状态校验失败：未检测到预期状态 → 立即中止，不执行第 4 步','e');
+      setState('已中止','err'); $('stepText').textContent='校验失败，已安全中止';
+      finish(); return;
+    }
+    if(s.check) log('状态校验：找到「'+s.check+'」· 通过','s');
+    var real=Math.round(s.wait*waitScale);
+    var w=$('realChk').checked?Math.min(real,4000):420;
+    var okWait=await waitWithAbort(w);
+    if(!okWait){log('等待期间收到中止请求，已停止','e');setState('已中止','err');$('stepText').textContent='用户中止';finish();return;}
+    log('等待 '+real+' ms（设定 '+s.wait+' ms × 倍率 '+waitScale.toFixed(1)+'）'+(w<real?' · 演示已压缩':''));
+    var el=document.querySelector('[data-preset="'+s.preset+'"]');
+    if(el){el.classList.remove('hot');el.classList.add('done');}
+  }
+  if(!abort){
+    setBar(100); log('全部步骤执行结束，请人工核对设备状态','s');
+    setState('已完成','ok'); $('stepText').textContent='执行结束 · 请核对设备状态';
+  }else{
+    setState('已中止','err'); $('stepText').textContent='已中止 · 剩余步骤未执行';
+  }
+  finish();
+});
+
+function waitWithAbort(ms){
+  return new Promise(function(resolve){
+    var left=ms;
+    var t=setInterval(function(){
+      if(abort){clearInterval(t);resolve(false);return;}
+      left-=80;
+      if(left<=0){clearInterval(t);resolve(true);}
+    },80);
+  });
+}
+function finish(){running=false; $('runBtn').disabled=false; $('stopBtn').disabled=true;}
+$('stopBtn').addEventListener('click',function(){abort=true;log('用户点击「中止」','e');setState('正在中止','err');});
+$('resetBtn').addEventListener('click',function(){$('logBox').innerHTML='';clearHighlight();setBar(0);showView('main');setState('待机','');$('stepText').textContent='准备就绪，等待启动';});
+
+/* ---------- 等待时间：可调 + 与步骤表双向同步 ---------- */
+var WAIT_LABELS=['① 点完 SETUP 图标之后','② 点完 Right Bond Stage 树项之后','③ 点完 Standby 之后','④ 点完 Vacuum Toggle 之后'];
+function renderWaitRows(){
+  $('waitRows').innerHTML=steps.map(function(s,i){
+    var sec=(s.wait/1000).toFixed(1);
+    return '<div class="waitrow">'
+      +'<label>'+(WAIT_LABELS[i]||('第 '+(i+1)+' 步之后'))+'</label>'
+      +'<input type="range" class="waitRange" data-i="'+i+'" min="0" max="10" step="0.1" value="'+sec+'">'
+      +'<input type="number" class="numbox waitNum" data-i="'+i+'" min="0" max="60" step="0.1" value="'+sec+'">'
+    +'</div>';
+  }).join('')+'<div class="muted" style="margin-top:8px">单位：秒。拖动滑块或直接填数字，改动会立即写进步骤表与导出的脚本。</div>';
+}
+function syncWaitUI(){
+  steps.forEach(function(s,i){
+    var sec=(s.wait/1000).toFixed(1);
+    var r=document.querySelector('.waitRange[data-i="'+i+'"]'); if(r) r.value=sec;
+    var n=document.querySelector('.waitNum[data-i="'+i+'"]'); if(n) n.value=sec;
+  });
+  $('scaleNum').value=waitScale.toFixed(1);
+  $('scaleSel').value=String(waitScale);
+  $('waitScaleShow').textContent=waitScale.toFixed(1);
+  var total=steps.reduce(function(a,s){return a+s.wait;},0)/1000*waitScale;
+  $('waitTotal').textContent=total.toFixed(1);
+  var max=0,idx=0;
+  steps.forEach(function(s,i){if(s.wait>max){max=s.wait;idx=i;}});
+  $('waitLongest').textContent=['①','②','③','④'][idx]||(idx+1);
+}
+$('waitRows').addEventListener('input',function(e){
+  var i=e.target.dataset.i; if(i===undefined) return;
+  var v=Number(e.target.value); if(isNaN(v)||v<0) return;
+  steps[i].wait=Math.round(v*1000);
+  syncWaitUI(); renderTable();
+});
+document.querySelectorAll('[data-wpreset]').forEach(function(b){
+  b.addEventListener('click',function(){
+    var arr=WAIT_PRESETS[b.dataset.wpreset];
+    steps.forEach(function(s,i){if(i<arr.length) s.wait=Math.round(arr[i]*1000);});
+    syncWaitUI(); renderTable();
+    log('等待时间已设为「'+b.textContent.trim()+'」预设', 't');
+  });
+});
+$('scaleSel').addEventListener('change',function(){waitScale=Number(this.value)||1;syncWaitUI();});
+$('scaleNum').addEventListener('input',function(){var v=Number(this.value);if(v>0){waitScale=v;syncWaitUI();}});
+$('waitCopy').addEventListener('click',function(){
+  var t=steps.map(function(s,i){return (WAIT_LABELS[i]||('第 '+(i+1)+' 步'))+'：'+(s.wait/1000).toFixed(1)+' 秒';}).join('\n')+'\n全局倍率：x'+waitScale.toFixed(1);
+  if(navigator.clipboard&&navigator.clipboard.writeText) navigator.clipboard.writeText(t).catch(function(){});
+  log('已复制当前等待设置','t');
+});
+$('waitExportAhk').addEventListener('click',function(){download('OneKeyUnload.ahk',buildAhk(),true);});
+$('waitExportJson').addEventListener('click',function(){download('config.json',buildConfig(),false);});
+
+/* ---------- 步骤配置表 ---------- */
+function renderTable(){
+  function optsFor(cur){
+    return PRESETS.map(function(p){
+      return '<option value="'+p.id+'"'+(p.id===cur?' selected':'')+'>'+esc(p.label)+'</option>';
+    }).join('');
+  }
+  $('stepBody').innerHTML=steps.map(function(s,i){
+    return '<tr>'
+      +'<td class="num">'+(i+1)+'</td>'
+      +'<td><input class="inp" data-i="'+i+'" data-f="name" value="'+esc(s.name)+'"></td>'
+      +'<td><select class="inp" data-i="'+i+'" data-f="preset">'+optsFor(s.preset)+'</select></td>'
+      +'<td><input class="inp" data-i="'+i+'" data-f="win" value="'+esc(s.win)+'"></td>'
+      +'<td><input class="inp" data-i="'+i+'" data-f="x" value="'+esc(s.x)+'"></td>'
+      +'<td><input class="inp" data-i="'+i+'" data-f="y" value="'+esc(s.y)+'"></td>'
+      +'<td><input class="inp" data-i="'+i+'" data-f="wait" value="'+esc(s.wait)+'"></td>'
+      +'<td><input class="inp" data-i="'+i+'" data-f="note" value="'+esc(s.note)+'"></td>'
+      +'<td class="act"><button data-a="up" data-i="'+i+'">上</button><button data-a="down" data-i="'+i+'">下</button><button data-a="del" data-i="'+i+'">删</button></td>'
+    +'</tr>';
+  }).join('');
+  $('runBtn').innerHTML='一键退出基板<span class="bigsmall">共 '+steps.length+' 步 · 跨 2 个窗口</span>';
+}
+$('stepBody').addEventListener('input',function(e){
+  var el=e.target, i=el.dataset.i, f=el.dataset.f;
+  if(i===undefined||!f) return;
+  if(f==='x'||f==='y'||f==='wait') steps[i][f]=Number(el.value)||0;
+  else steps[i][f]=el.value;
+  if(f==='wait') syncWaitUI();
+});
+$('stepBody').addEventListener('change',function(e){
+  var el=e.target;
+  if(el.dataset.f!=='preset') return;
+  var i=Number(el.dataset.i), p=presetOf(el.value);
+  steps[i].preset=el.value;
+  if(p){
+    steps[i].view=p.view;
+    steps[i].win=p.win;
+    if(p.id!=='custom'){steps[i].x=p.x;steps[i].y=p.y;}
+  }
+  renderTable();
+});
+$('stepBody').addEventListener('click',function(e){
+  var a=e.target.dataset.a; if(!a) return;
+  var i=Number(e.target.dataset.i);
+  if(a==='del'){steps.splice(i,1);}
+  if(a==='up'&&i>0){var t=steps[i];steps[i]=steps[i-1];steps[i-1]=t;}
+  if(a==='down'&&i<steps.length-1){var t2=steps[i];steps[i]=steps[i+1];steps[i+1]=t2;}
+  renderWaitRows(); syncWaitUI(); renderTable();
+});
+$('addBtn').addEventListener('click',function(){
+  steps.push({name:'新步骤',preset:'custom',view:'stage',win:$('targetWin').value,winClass:'',x:0,y:0,wait:1000,check:'',note:''});
+  renderWaitRows(); syncWaitUI(); renderTable();
+});
+$('resetCfgBtn').addEventListener('click',function(){
+  if(confirm('恢复到 PPT 的 4 步流程？当前修改会丢失。')){
+    steps=JSON.parse(JSON.stringify(EXAMPLE)); waitScale=1.0;
+    renderWaitRows(); syncWaitUI(); renderTable();
+  }
+});
+
+/* ---------- 导出 ---------- */
+function ahkStr(v){return String(v==null?'':v).replace(/"/g,'""');}
+function stepLines(){
+  return steps.map(function(s){
+    return 'Steps.Push({name:"'+ahkStr(s.name)+'", win:"'+ahkStr(s.win)+'", x:'+(Number(s.x)||0)+', y:'+(Number(s.y)||0)+', wait:'+(Number(s.wait)||0)+', check:"'+ahkStr(s.check)+'"})';
+  }).join('\n');
+}
+function buildAhk(){
+  var t=$('ahkTpl').textContent.trim();
+  return t.split('__TARGET__').join(ahkStr($('targetWin').value))
+          .split('__STAGEWIN__').join(ahkStr($('stageWin').value))
+          .split('__WAITSCALE__').join(String(waitScale||1))
+          .split('__STEPS__').join(stepLines())+'\n';
+}
+function buildConfig(){
+  return JSON.stringify({
+    targetWindow:$('targetWin').value,
+    windows:{main:$('targetWin').value,mainClass:'',stage:$('stageWin').value,stageClass:''},
+    source:'演示文稿1.pptx 第 1~4 页（按页序整理）',
+    requireConfirm:false,
+    expectPopup:false,
+    waitScale:waitScale||1,
+    calibrated:false,
+    calibratedAt:'',
+    preRunChecklist:CHECKLIST,
+    note:'现场答复（2026-11-11）：4 步均不弹确认框；等待时间可调（wait 为毫秒、waitScale 为全局倍率）；标题栏截图缺失无关紧要，取点向导自动记录窗口真实标题与类名。x/y 仍为占位值，须先做一次现场取点；calibrated=false 时脚本禁止真实执行，只允许空跑。',
+    steps:steps.map(function(s){
+      return {name:s.name,preset:s.preset,view:s.view,win:s.win,winClass:s.winClass||'',x:Number(s.x)||0,y:Number(s.y)||0,wait:Number(s.wait)||0,check:s.check||'',note:s.note||''};
+    })
+  },null,2);
+}
+function download(name,text,bom){
+  var blob=new Blob([(bom?'\ufeff':'')+text],{type:'text/plain;charset=utf-8'});
+  var a=document.createElement('a'); a.href=URL.createObjectURL(blob); a.download=name;
+  document.body.appendChild(a); a.click();
+  setTimeout(function(){URL.revokeObjectURL(a.href);a.remove();},1200);
+}
+$('exportAhkBtn').addEventListener('click',function(){download('OneKeyUnload.ahk',buildAhk(),true);});
+$('exportJsonBtn').addEventListener('click',function(){download('config.json',buildConfig(),false);});
+$('exportBlockBtn').addEventListener('click',function(){
+  var o=$('blockOut'); o.style.display='block'; o.textContent=stepLines();
+  if(navigator.clipboard&&navigator.clipboard.writeText){navigator.clipboard.writeText(stepLines()).catch(function(){});}
+});
+$('importBtn').addEventListener('click',function(){$('importFile').click();});
+$('importFile').addEventListener('change',function(e){
+  var f=e.target.files[0]; if(!f) return;
+  var r=new FileReader();
+  r.onload=function(){
+    try{
+      var c=JSON.parse(r.result);
+      if(!c.steps||!c.steps.length) throw new Error('缺少 steps');
+      steps=c.steps.map(function(s){
+        var p=presetOf(s.preset);
+        return {name:s.name||'',preset:s.preset||'custom',view:s.view||(p?p.view:'stage'),win:s.win||(p?p.win:''),winClass:s.winClass||'',x:s.x||0,y:s.y||0,wait:s.wait||0,check:s.check||'',note:s.note||''};
+      });
+      if(c.targetWindow) $('targetWin').value=c.targetWindow;
+      if(c.windows&&c.windows.stage) $('stageWin').value=c.windows.stage;
+      if(c.waitScale) waitScale=Number(c.waitScale)||1;
+      if(c.preRunChecklist&&c.preRunChecklist.length) CHECKLIST=c.preRunChecklist.slice();
+      renderWaitRows(); syncWaitUI(); renderTable(); alert('导入成功，共 '+steps.length+' 步');
+    }catch(err){alert('导入失败：'+err.message);}
+  };
+  r.readAsText(f,'utf-8');
+});
+
+renderWaitRows();
+syncWaitUI();
+renderTable();
+log('流程已按 PPT 第 1~4 页更新：4 步 · 跨 2 个窗口','t');
+log('等待时间可在第 3 页调整；坐标须现场 F12 取点','');
+</script>
+</body>
+</html>

@@ -1,0 +1,733 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>A股大盘全景复盘 &amp; *ST闻泰威科夫分析 | 2026-11-09</title>
+<style>
+:root{
+  --bg:#f5f7fa; --card:#ffffff; --line:#e3e8ef; --line2:#eef1f5;
+  --ink:#1b2430; --ink2:#4a5568; --ink3:#8792a2;
+  --up:#d93025; --down:#0f9d58; --accent:#1e3a5f; --accent2:#2b5c9b;
+  --warn:#b45309; --warnbg:#fffbeb; --warnline:#fcd34d;
+  --danger:#b91c1c; --dangerbg:#fef2f2; --dangerline:#fecaca;
+  --okbg:#f0f7ff;
+}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--ink);
+  font-family:-apple-system,BlinkMacSystemFont,"PingFang SC","Microsoft YaHei","Segoe UI",sans-serif;
+  font-size:14px;line-height:1.75;-webkit-font-smoothing:antialiased}
+.wrap{max-width:1180px;margin:0 auto;padding:0 22px 70px}
+header{background:#fff;border-bottom:1px solid var(--line);position:sticky;top:0;z-index:20;box-shadow:0 1px 6px rgba(20,35,60,.04)}
+.hd{max-width:1180px;margin:0 auto;padding:13px 22px;display:flex;align-items:center;gap:20px;flex-wrap:wrap}
+.brand{font-size:16px;font-weight:800;letter-spacing:.4px;color:var(--accent)}
+.brand small{display:block;font-size:11px;font-weight:500;color:var(--ink3);letter-spacing:0}
+.tabs{display:flex;gap:6px;margin-left:auto;background:#f1f4f8;padding:4px;border-radius:9px}
+.tab{border:0;background:transparent;padding:7px 17px;border-radius:6px;font-size:13px;font-weight:600;
+  color:var(--ink2);cursor:pointer;font-family:inherit;white-space:nowrap}
+.tab.active{background:#fff;color:var(--accent);box-shadow:0 1px 4px rgba(20,35,60,.12)}
+.stamp{font-size:12px;color:var(--ink3);white-space:nowrap}
+.view{display:none}
+.view.active{display:block}
+.pagetitle{margin:30px 0 4px;font-size:25px;font-weight:800;letter-spacing:.3px}
+.pagesub{color:var(--ink3);font-size:12.5px;margin-bottom:20px}
+.alert{border-radius:10px;padding:13px 17px;margin:0 0 20px;font-size:13px;line-height:1.7}
+.alert.info{background:var(--okbg);border:1px solid #c9def7;color:#1c4b82}
+.alert.warn{background:var(--warnbg);border:1px solid var(--warnline);color:#7c4a05}
+.alert.danger{background:var(--dangerbg);border:1px solid var(--dangerline);color:#8c1c1c}
+.alert b{font-weight:800}
+.card{background:var(--card);border:1px solid var(--line);border-radius:12px;padding:20px 22px;margin-bottom:18px;
+  box-shadow:0 1px 3px rgba(20,35,60,.03)}
+.card h2{font-size:16.5px;margin:0 0 4px;font-weight:800;color:var(--accent);display:flex;align-items:center;gap:9px}
+.card h2 .num{font-size:11px;background:var(--accent);color:#fff;width:21px;height:21px;border-radius:5px;
+  display:inline-flex;align-items:center;justify-content:center;font-weight:700;flex:none}
+.card .desc{font-size:12px;color:var(--ink3);margin:0 0 16px}
+h3{font-size:14px;margin:20px 0 9px;font-weight:700;color:var(--accent)}
+p{margin:9px 0}
+.tldr{background:linear-gradient(135deg,#fff 0%,#f7faff 100%);border:1px solid #c9def7;border-left:4px solid var(--accent2)}
+.tldr .big{font-size:17px;font-weight:800;color:var(--accent);line-height:1.6;margin-bottom:8px}
+.tldr .tag{display:inline-block;background:var(--accent);color:#fff;font-size:11px;font-weight:700;
+  padding:3px 10px;border-radius:20px;margin-right:8px;vertical-align:2px}
+.kpis{display:grid;grid-template-columns:repeat(4,1fr);gap:12px;margin-bottom:18px}
+.kpi{background:#fff;border:1px solid var(--line);border-radius:10px;padding:14px 16px}
+.kpi .lab{font-size:11.5px;color:var(--ink3);margin-bottom:5px}
+.kpi .val{font-size:23px;font-weight:800;line-height:1.2;font-variant-numeric:tabular-nums}
+.kpi .sub{font-size:11px;color:var(--ink3);margin-top:4px}
+.up{color:var(--up)} .down{color:var(--down)} .neutral{color:var(--accent)}
+table{width:100%;border-collapse:collapse;font-size:12.8px;font-variant-numeric:tabular-nums}
+th{background:#f7f9fc;color:var(--ink2);font-weight:700;text-align:left;padding:9px 10px;border-bottom:1px solid var(--line);white-space:nowrap}
+td{padding:9px 10px;border-bottom:1px solid var(--line2);vertical-align:top}
+tr:last-child td{border-bottom:0}
+tbody tr:hover{background:#fafcff}
+.num-c{text-align:right;font-variant-numeric:tabular-nums}
+.source{font-size:11px;color:var(--ink3);margin-top:11px;line-height:1.6}
+.source a{color:var(--accent2);text-decoration:none}
+.source a:hover{text-decoration:underline}
+.bars{display:flex;flex-direction:column;gap:8px;margin-top:6px}
+.barrow{display:grid;grid-template-columns:105px 1fr 66px;align-items:center;gap:10px;font-size:12.5px}
+.barname{color:var(--ink2);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.bartrack{background:#f1f4f8;border-radius:4px;height:19px;position:relative;overflow:hidden}
+.barfill{height:100%;border-radius:4px}
+.barval{text-align:right;font-weight:700;font-variant-numeric:tabular-nums}
+.stack{display:flex;height:26px;border-radius:6px;overflow:hidden;font-size:11px;font-weight:700;color:#fff}
+.stack div{display:flex;align-items:center;justify-content:center;min-width:0}
+.legend{display:flex;gap:18px;font-size:11.5px;color:var(--ink2);margin-top:9px;flex-wrap:wrap}
+.legend i{width:10px;height:10px;border-radius:2px;display:inline-block;margin-right:5px;vertical-align:-1px}
+.grid2{display:grid;grid-template-columns:1fr 1fr;gap:18px}
+.grid3{display:grid;grid-template-columns:repeat(3,1fr);gap:12px}
+.box{background:#f8fafc;border:1px solid var(--line);border-radius:9px;padding:14px 15px}
+.box .t{font-size:12.5px;font-weight:800;color:var(--accent);margin-bottom:7px}
+.box .c{font-size:12.5px;color:var(--ink2);line-height:1.72}
+.box ul{margin:5px 0 0;padding-left:17px}
+.box li{margin:4px 0}
+ul.clean{margin:8px 0;padding-left:19px}
+ul.clean li{margin:6px 0}
+.chips{display:flex;flex-wrap:wrap;gap:7px;margin:10px 0}
+.chip{font-size:11.5px;padding:4px 10px;border-radius:20px;background:#eef4fb;color:var(--accent);border:1px solid #d5e4f7}
+.chip.red{background:#fdeeed;color:#a5261f;border-color:#f7cfcb}
+.chip.green{background:#e9f7ef;color:#0b7a45;border-color:#c5ead6}
+.chip.gray{background:#f2f4f7;color:var(--ink2);border-color:var(--line)}
+.flow{display:flex;align-items:stretch;gap:0;margin:14px 0 6px;flex-wrap:wrap}
+.fnode{flex:1;min-width:88px;background:#f7f9fc;border:1px solid var(--line);border-radius:8px;padding:10px 8px;text-align:center;font-size:11.5px;color:var(--ink2);position:relative}
+.fnode b{display:block;font-size:13px;color:var(--accent);margin-bottom:2px}
+.fnode.now{background:#fff4f2;border:1.5px solid var(--up);box-shadow:0 2px 8px rgba(217,48,37,.12)}
+.fnode.now b{color:var(--up)}
+.farrow{display:flex;align-items:center;color:var(--ink3);font-size:14px;padding:0 4px}
+.levelrow{display:grid;grid-template-columns:76px 118px 1fr;gap:10px;padding:8px 0;border-bottom:1px solid var(--line2);font-size:12.5px;align-items:center}
+.levelrow:last-child{border-bottom:0}
+.lv{font-size:11px;font-weight:800;padding:2px 8px;border-radius:5px;text-align:center}
+.lv.r{background:#fdeeed;color:#a5261f} .lv.s{background:#e9f7ef;color:#0b7a45}
+.price{font-weight:800;font-variant-numeric:tabular-nums;font-size:13.5px}
+.note{background:#f8fafc;border-left:3px solid var(--accent2);padding:10px 14px;font-size:12.5px;color:var(--ink2);margin:12px 0;border-radius:0 7px 7px 0}
+.note.red{background:#fff6f5;border-left-color:var(--up);color:#7d2b24}
+.note.green{background:#f2fbf6;border-left-color:var(--down);color:#12603c}
+.divider{height:1px;background:var(--line);margin:18px 0}
+.badge{display:inline-block;font-size:10.5px;font-weight:700;padding:2px 7px;border-radius:4px;background:#eef4fb;color:var(--accent);margin-left:6px}
+.badge.r{background:#fdeeed;color:#a5261f} .badge.g{background:#e9f7ef;color:#0b7a45}
+.footer{font-size:11.5px;color:var(--ink3);border-top:1px solid var(--line);margin-top:26px;padding-top:18px;line-height:1.8}
+.disc{background:#fff;border:1px solid var(--dangerline);border-radius:10px;padding:16px 19px;font-size:12.3px;color:#7a2222;line-height:1.85;margin-top:16px}
+.disc b{color:var(--danger)}
+.klinebox{width:100%;overflow-x:auto}
+.klinebox svg{width:100%;min-width:760px;height:auto;display:block}
+.svgcap{font-size:11px;color:var(--ink3);margin-top:7px}
+@media(max-width:900px){.kpis{grid-template-columns:repeat(2,1fr)}.grid2,.grid3{grid-template-columns:1fr}}
+@media print{header{position:static}.view{display:block!important}.tabs{display:none}}
+</style>
+</head>
+<body>
+<header>
+  <div class="hd">
+    <div class="brand">A股盘面全景 &amp; 威科夫个股推演<small>盘中快照 · 2026-11-09（周一）</small></div>
+    <div class="stamp">数据截取 10:19–10:25 (北京时间)</div>
+    <div class="tabs">
+      <button class="tab active" data-view="market">第 1 页 · 大盘全景复盘</button>
+      <button class="tab" data-view="wyckoff">第 2 页 · *ST闻泰威科夫</button>
+    </div>
+  </div>
+</header>
+
+<div class="wrap">
+
+<!-- ==================== PAGE 1 ==================== -->
+<div class="view active" id="market">
+  <div class="pagetitle">A股大盘全景复盘</div>
+  <div class="pagesub">2026年11月9日 · 盘中实时快照 · 单文件离线阅读</div>
+
+  <div class="alert info">
+    <b>⚠️ 先说时点：</b>现在是上午 <b>10:20 左右，A股仍在连续竞价交易中</b>，尚未收盘。因此本页所有数据均为<b>盘中快照</b>，不是收盘复盘：涨跌幅、涨跌家数、涨停数、板块排名、成交额都会随后续交易变化，不能当作当日定论。上一交易日为 <b>2026-11-06（周五）</b>。
+  </div>
+
+  <div class="card tldr">
+    <div class="big"><span class="tag">30秒结论</span>中期调整趋势里的一次「政策底 + 超跌反弹」，是<strong>情绪修复与风格切换</strong>，还不是趋势反转。</div>
+    <p>盘面质感是<strong>「广度极好、权重不跟、高度不高」</strong>：全A 涨 3772 / 跌 1471、涨停 49 / 跌停 1，但沪深300 只涨 0.46% 且成分股 <strong>134 涨 / 151 跌</strong>，涨幅由小盘、科技题材与北证50 贡献。这说明是存量资金从消费、顺周期、权重切向科技主题，而非增量资金全面进场。</p>
+    <p style="margin-bottom:0"><strong>阶段定位：</strong>从单边下跌（markdown）向构筑震荡区间过渡的<strong>试探期</strong>——「政策底已现、市场底待确认」。用威科夫语言，相当于初步支撑与自动反弹之后、等待二次测试确认的阶段（第 2 页会用同一套框架展开个股）。当前更适合<strong>精选与控制仓位</strong>，不是全面进攻。</p>
+  </div>
+
+  <div class="kpis">
+    <div class="kpi"><div class="lab">上证指数 000001</div><div class="val up">3675.52</div><div class="sub up">+0.72%</div></div>
+    <div class="kpi"><div class="lab">深证成指 399001</div><div class="val up">11278.55</div><div class="sub up">+0.92%</div></div>
+    <div class="kpi"><div class="lab">创业板指 399006</div><div class="val up">2497.01</div><div class="sub up">+1.29%</div></div>
+    <div class="kpi"><div class="lab">北证50 899050</div><div class="val up">903.59</div><div class="sub up">+1.70%</div></div>
+    <div class="kpi"><div class="lab">全A 上涨 / 下跌家数</div><div class="val"><span class="up">3772</span> <span style="color:#cbd3dd;font-weight:400">/</span> <span class="down">1471</span></div><div class="sub">涨跌比 2.56 : 1</div></div>
+    <div class="kpi"><div class="lab">涨停 / 跌停家数</div><div class="val"><span class="up">49</span> <span style="color:#cbd3dd;font-weight:400">/</span> <span class="down">1</span></div><div class="sub">3板以上仅 2 家</div></div>
+    <div class="kpi"><div class="lab">沪深成交额（盘中累计）</div><div class="val neutral">6984<span style="font-size:14px">亿</span></div><div class="sub">沪 3141.8亿 + 深 3842.2亿</div></div>
+    <div class="kpi"><div class="lab">下跌板块数</div><div class="val down">44</div><div class="sub">最深跌幅仅 −1.44%</div></div>
+  </div>
+  <div class="source">数据来源：通达信实时行情接口 / 条件选股接口，时点 2026-11-09 10:19–10:25（盘中）。成交额为沪、深两市指数快照的 Amount 字段相加，未含北交所 65.59 亿元；盘中累计值不可线性外推全天。</div>
+
+  <div class="card">
+    <h2><span class="num">1</span>指数与市场广度：涨得广，但权重没跟上</h2>
+    <div class="desc">判断行情「健康还是脆弱」，广度与权重的背离比指数涨跌更重要。</div>
+
+    <h3>主要指数今日涨幅（盘中）</h3>
+    <div class="bars">
+      <div class="barrow"><div class="barname">北证50</div><div class="bartrack"><div class="barfill" style="width:100%;background:#d93025"></div></div><div class="barval up">+1.70%</div></div>
+      <div class="barrow"><div class="barname">创业板指</div><div class="bartrack"><div class="barfill" style="width:75.9%;background:#d93025"></div></div><div class="barval up">+1.29%</div></div>
+      <div class="barrow"><div class="barname">科创50</div><div class="bartrack"><div class="barfill" style="width:61.8%;background:#d93025"></div></div><div class="barval up">+1.05%</div></div>
+      <div class="barrow"><div class="barname">深证成指</div><div class="bartrack"><div class="barfill" style="width:54.1%;background:#d93025"></div></div><div class="barval up">+0.92%</div></div>
+      <div class="barrow"><div class="barname">上证指数</div><div class="bartrack"><div class="barfill" style="width:42.4%;background:#d93025"></div></div><div class="barval up">+0.72%</div></div>
+      <div class="barrow"><div class="barname">沪深300</div><div class="bartrack"><div class="barfill" style="width:27.1%;background:#e8847f"></div></div><div class="barval up">+0.46%</div></div>
+    </div>
+    <div class="note"><b>大小盘剪刀差明显：</b>北证50(+1.70%)、创业板指(+1.29%) 显著强于沪深300(+0.46%)。这是典型的小盘/题材驱动反弹，权重股只起到「不拖后腿」的作用，而非领涨。</div>
+
+    <h3>全A 涨跌家数分布</h3>
+    <div class="stack">
+      <div style="width:71.9%;background:#d93025">上涨 3772 家</div>
+      <div style="width:28.1%;background:#0f9d58">下跌 1471 家</div>
+    </div>
+    <div class="legend"><span><i style="background:#d93025"></i>上涨 71.9%</span><span><i style="background:#0f9d58"></i>下跌 28.1%</span><span style="color:var(--ink3)">占比按涨跌方向明确的 5243 家计算，未含平盘 / 停牌 / 未报价个股</span></div>
+
+    <h3>结构诊断：沪深300 成分股居然是跌多涨少</h3>
+    <div class="grid2">
+      <div>
+        <div class="stack" style="height:22px">
+          <div style="width:45.4%;background:#d93025">134 涨</div>
+          <div style="width:51.2%;background:#0f9d58">151 跌</div>
+          <div style="width:3.4%;background:#c7cfda"></div>
+        </div>
+        <div class="source" style="margin-top:7px">沪深300 成分：134 涨 / 151 跌 / 10 平</div>
+      </div>
+      <div>
+        <div class="stack" style="height:22px">
+          <div style="width:72.1%;background:#d93025">1017 涨</div>
+          <div style="width:24.2%;background:#0f9d58">342 跌</div>
+          <div style="width:3.7%;background:#c7cfda"></div>
+        </div>
+        <div class="source" style="margin-top:7px">创业板指成分：1017 涨 / 342 跌 / 52 平</div>
+      </div>
+    </div>
+    <div class="note red"><b>核心背离：</b>全市场七成个股上涨，但代表核心资产的沪深300 成分股下跌家数反而更多。这说明指数上涨并非「全面扩散的健康普涨」，而是<strong>资金从权重/消费搬向小盘题材</strong>的结构性行情。若后续权重始终不接力，反弹的持续性会受限于存量博弈。</div>
+    <div class="source">来源：通达信实时行情（各指数快照内置「上涨家数 / 下跌家数 / 平家数」字段）与条件选股 total 字段，2026-11-09 约 10:20。<b>口径提示：</b>条件选股给出全A（含北交所）3772 涨 / 1471 跌；分市场指数快照加总为沪市 1517 涨 / 715 跌 / 125 平、深市 1981 涨 / 778 跌 / 178 平（合计 3498 涨 / 1493 跌 / 303 平）、北证50 成分 289 涨 / 51 跌 / 15 平。两者因覆盖范围与取数秒级差异不完全相等，<b>不可直接相加或混用</b>，本页主表采用全A口径，结构分析采用分市场口径。</div>
+  </div>
+
+  <div class="card">
+    <h2><span class="num">2</span>市场情绪：恐慌消退，但高度还没起来</h2>
+    <div class="desc">情绪周期看四个量化维度：涨停数、跌停数、连板高度、炸板与首板占比。</div>
+    <div class="grid3">
+      <div class="box"><div class="t">涨停 49 家 / 跌停 1 家</div><div class="c">赚钱效应明显回暖，恐慌盘基本消失。唯一跌停为凤凰航运(000520)，一字跌停，原因标注为「个股调整」。</div></div>
+      <div class="box"><div class="t">连板高度：6 板</div><div class="c">3 板以上仅 <b>2 家</b>：闽发铝业(002578) 6天6板一字、新亚制程(002388) 4天4板换手板。其余多为首板。</div></div>
+      <div class="box"><div class="t">封单质量：偏强</div><div class="c">中国卫星(600118) 封单 12.65 亿、日出东方(603366) 12.28 亿、信维通信(300136) 10.83 亿；多数首板「涨停打开次数 = 0」。</div></div>
+    </div>
+    <div class="note"><b>定性：情绪周期处于「冰点 → 修复」的第一段，不是主升。</b>涨停数量不少、封单扎实，但连板梯队极薄（3板以上只有 2 家），且前十大涨停股中 8 家是「1天1板」。<strong>扩散广而高度低</strong>是超跌修复的典型形态，也意味着暂时还没有形成能持续吸金的领涨主线——明日能否「弱转强」出高度，比今天涨多少更关键。</div>
+    <h3>涨停梯队与催化归属（按封单金额，前 10）</h3>
+    <table>
+      <thead><tr><th>代码</th><th>名称</th><th class="num-c">涨幅</th><th class="num-c">封单(亿)</th><th>板型 / 连板</th><th>主线归属与催化</th></tr></thead>
+      <tbody>
+        <tr><td>600118</td><td>中国卫星</td><td class="num-c up">+10.00%</td><td class="num-c">12.65</td><td>1天1板 / 换手</td><td>商业航天·卫星制造「首个星座出海项目签约」</td></tr>
+        <tr><td>603366</td><td>日出东方</td><td class="num-c up">+10.01%</td><td class="num-c">12.28</td><td>2天2板 / 一字</td><td>储能·光伏（三季度新增光伏装机同比约 +38%）</td></tr>
+        <tr><td>300136</td><td>信维通信</td><td class="num-c up">+20.00%</td><td class="num-c">10.83</td><td>1天1板</td><td>商业航天地面站连接器 + 人形机器人</td></tr>
+        <tr><td>300624</td><td>万兴科技</td><td class="num-c up">+20.00%</td><td class="num-c">8.96</td><td>1天1板</td><td>AI智能体 / AIGC 文档机器人</td></tr>
+        <tr><td>002149</td><td>西部材料</td><td class="num-c up">+9.99%</td><td class="num-c">8.35</td><td>1天1板 / T字</td><td>航天材料·卫星过渡接头</td></tr>
+        <tr><td>600498</td><td>烽火通信</td><td class="num-c up">+10.00%</td><td class="num-c">8.07</td><td>1天1板 / 换手</td><td>通信设备·国企改革</td></tr>
+        <tr><td>000823</td><td>超声电子</td><td class="num-c up">+9.98%</td><td class="num-c">7.43</td><td>1天1板</td><td>PCB / CPO 覆铜板，三季报预增 90%–102%</td></tr>
+        <tr><td>002037</td><td>保利联合</td><td class="num-c up">+10.05%</td><td class="num-c">5.50</td><td>1天1板 / 一字</td><td>电子雷管·雅江水电</td></tr>
+        <tr><td>000530</td><td>冰山冷热</td><td class="num-c up">+10.00%</td><td class="num-c">4.96</td><td>8天4板</td><td>冰雪旅游旺季 + 数据中心液冷</td></tr>
+        <tr><td>600345</td><td>长江通信</td><td class="num-c up">+9.99%</td><td class="num-c">4.42</td><td>1天1板</td><td>光通信 / 低轨卫星 NTN</td></tr>
+      </tbody>
+    </table>
+    <div class="source">来源：通达信条件选股「今日涨停的股票」「连续涨停3天以上的股票」，2026-11-09 约 10:20–10:24；涨停原因为数据商标注的题材归因，属二次加工信息，<b>需以公司公告核实</b>。</div>
+  </div>
+
+  <div class="card">
+    <h2><span class="num">3</span>板块轮动：科技进攻，消费与顺周期失血</h2>
+    <div class="desc">板块轮动是结果而非预测。这里只描述当下资金去了哪、从哪出来。</div>
+    <div class="grid2">
+      <div>
+        <h3 style="margin-top:0;color:var(--up)">领涨方向（细分行业/概念指数）</h3>
+        <div class="bars">
+          <div class="barrow"><div class="barname">合成树脂</div><div class="bartrack"><div class="barfill" style="width:100%;background:#d93025"></div></div><div class="barval up">+8.83%</div></div>
+          <div class="barrow"><div class="barname">航天装备</div><div class="bartrack"><div class="barfill" style="width:77.3%;background:#d93025"></div></div><div class="barval up">+6.83%</div></div>
+          <div class="barrow"><div class="barname">卫浴电器</div><div class="bartrack"><div class="barfill" style="width:76.7%;background:#d93025"></div></div><div class="barval up">+6.77%</div></div>
+          <div class="barrow"><div class="barname">其他出版</div><div class="bartrack"><div class="barfill" style="width:70.9%;background:#d93025"></div></div><div class="barval up">+6.26%</div></div>
+          <div class="barrow"><div class="barname">光纤光缆</div><div class="bartrack"><div class="barfill" style="width:56.7%;background:#d93025"></div></div><div class="barval up">+5.01%</div></div>
+          <div class="barrow"><div class="barname">钛</div><div class="bartrack"><div class="barfill" style="width:56.1%;background:#d93025"></div></div><div class="barval up">+4.95%</div></div>
+          <div class="barrow"><div class="barname">机器人</div><div class="bartrack"><div class="barfill" style="width:53.0%;background:#d93025"></div></div><div class="barval up">+4.68%</div></div>
+          <div class="barrow"><div class="barname">网络接配及塔设</div><div class="bartrack"><div class="barfill" style="width:47.8%;background:#e06b64"></div></div><div class="barval up">+4.22%</div></div>
+          <div class="barrow"><div class="barname">PCB</div><div class="bartrack"><div class="barfill" style="width:46.5%;background:#e06b64"></div></div><div class="barval up">+4.11%</div></div>
+          <div class="barrow"><div class="barname">通信设备</div><div class="bartrack"><div class="barfill" style="width:46.4%;background:#e06b64"></div></div><div class="barval up">+4.10%</div></div>
+        </div>
+      </div>
+      <div>
+        <h3 style="margin-top:0;color:var(--down)">弱势方向（全部下跌板块中的前 10）</h3>
+        <div class="bars">
+          <div class="barrow"><div class="barname">电池</div><div class="bartrack"><div class="barfill" style="width:100%;background:#0f9d58"></div></div><div class="barval down">−1.44%</div></div>
+          <div class="barrow"><div class="barname">水泥</div><div class="bartrack"><div class="barfill" style="width:81.9%;background:#0f9d58"></div></div><div class="barval down">−1.18%</div></div>
+          <div class="barrow"><div class="barname">电信服务</div><div class="bartrack"><div class="barfill" style="width:77.1%;background:#0f9d58"></div></div><div class="barval down">−1.11%</div></div>
+          <div class="barrow"><div class="barname">工程机械</div><div class="bartrack"><div class="barfill" style="width:76.4%;background:#0f9d58"></div></div><div class="barval down">−1.10%</div></div>
+          <div class="barrow"><div class="barname">酒店餐饮</div><div class="bartrack"><div class="barfill" style="width:76.4%;background:#0f9d58"></div></div><div class="barval down">−1.10%</div></div>
+          <div class="barrow"><div class="barname">调味品</div><div class="bartrack"><div class="barfill" style="width:63.9%;background:#4cb784"></div></div><div class="barval down">−0.92%</div></div>
+          <div class="barrow"><div class="barname">医药商业</div><div class="bartrack"><div class="barfill" style="width:61.8%;background:#4cb784"></div></div><div class="barval down">−0.89%</div></div>
+          <div class="barrow"><div class="barname">能源金属</div><div class="bartrack"><div class="barfill" style="width:54.9%;background:#4cb784"></div></div><div class="barval down">−0.79%</div></div>
+          <div class="barrow"><div class="barname">酿酒</div><div class="bartrack"><div class="barfill" style="width:44.4%;background:#4cb784"></div></div><div class="barval down">−0.64%</div></div>
+          <div class="barrow"><div class="barname">保险</div><div class="bartrack"><div class="barfill" style="width:35.4%;background:#4cb784"></div></div><div class="barval down">−0.51%</div></div>
+        </div>
+      </div>
+    </div>
+    <div class="note"><b>轮动特征：</b>① <strong>进攻方向集中在「硬科技 + 新主题」</strong>——商业航天、光通信/CPO/PCB、AI智能体与具身智能机器人，且都有当日可追溯的催化（星座出海签约、英伟达 CPO、优必选 Thinker-Sim 平台发布）；② <strong>失血方向是消费（酿酒/调味品/酒店餐饮/白色家电）、顺周期（水泥/工程机械/特钢/化纤）、电池与能源金属、大金融（保险）</strong>；③ 下跌板块仅 44 个且最深不过 −1.44%，说明<strong>不是抛压涌出，而是资金被抽走</strong>——典型的高低切换，而非系统性风险。</div>
+    <div class="chips">
+      <span class="chip red">主线候选 A · 商业航天/卫星</span>
+      <span class="chip red">主线候选 B · 光通信/CPO/PCB</span>
+      <span class="chip red">主线候选 C · AI智能体/具身智能</span>
+      <span class="chip gray">次级热点 · 储能光伏</span>
+      <span class="chip gray">脉冲题材 · 冰雪旅游/液冷</span>
+      <span class="chip green">弱势 · 消费/顺周期/电池/保险</span>
+    </div>
+    <div class="note red"><b>持续性存疑，别把一日脉冲当主线：</b>三条「主线候选」今天都是首板驱动、彼此还争抢资金，且部分催化剂（星座签约、CPO 展示）属于事件型而非业绩型。<strong>按主线判定标准，它们目前只是「有龙头、有扩散、但连续性未验证」的强热点</strong>。要升级为真主线，需要看到明日中军放量新高、后排不掉队、且至少走出一只 3 板以上龙头。今天下定论为时过早。</div>
+    <div class="source">来源：通达信条件选股「今日涨幅居前的板块指数」「今日下跌的行业板块，涨幅为负，按涨幅从低到高」，2026-11-09 约 10:22–10:24（盘中）。板块为通达信细分行业/概念指数，非申万一级行业口径；航天装备在 10:24 的实时快照已升至 +7.08%（成交 47.21 亿、量比 3.34），说明盘中变动很快。</div>
+  </div>
+
+  <div class="card">
+    <h2><span class="num">4</span>北向资金动向：先纠正一个几乎人人会犯的口径错误</h2>
+    <div class="desc">用户要的「今日北向净流入」，在现行披露规则下<strong>并不存在</strong>。</div>
+    <div class="alert warn" style="margin-bottom:14px">
+      <b>📌 关键口径：</b>沪深港交易所分两阶段调整披露机制——<b>2024-05-13</b> 起取消北向盘中实时成交额与实时额度余额；<b>2024-08-19</b> 起进一步取消<b>每日/每月净买入净卖出金额、十大活跃股分项买卖额、每日个股持股数据</b>。目前仅保留：收盘后的<b>成交总额、总笔数、十大活跃证券名单及其成交总额</b>，以及<b>每季第 5 个沪深股通交易日</b>披露的上季末单只证券合计持股数量。截至 2026-11-09，该安排未回摆。<br>
+      → 所以<b>盘中没有任何「北向净流入 X 亿」的官方数据</b>；第三方终端显示的「北向实时净流入」多为大单资金流拟合值（东北证券测算日频 R² 仅约 0.32），<b>不是真实北向净买入</b>。本页不编造该数字。
+    </div>
+
+    <div class="grid2">
+      <div>
+        <h3 style="margin-top:0">方向性数据：只能看季度持股（滞后但权威）</h3>
+        <table>
+          <thead><tr><th>2026Q3末（10/14 披露）</th><th class="num-c">数值</th><th class="num-c">较 Q2</th></tr></thead>
+          <tbody>
+            <tr><td>持仓总市值</td><td class="num-c">2.577 万亿元</td><td class="num-c down">−5500 亿以上</td></tr>
+            <tr><td>持股数量</td><td class="num-c">1123.4 亿股</td><td class="num-c up">+48.5 亿股</td></tr>
+            <tr><td>季度净买入（Choice 估算）</td><td class="num-c down">约 −886 亿元</td><td class="num-c">上半年为净流入</td></tr>
+          </tbody>
+        </table>
+        <div class="note green" style="margin-top:10px"><b>别误读：</b>持仓市值大降 mainly 来自股价下跌（同期上证 −6.16%，电子/电力设备板块分别跌 32.65%/23.73%），<strong>持股数量其实是增加的</strong>。「−886 亿」是按区间均价×持股数变化测算的估算值，<b>非官方披露</b>。行业调仓方向更可信：加仓银行（持股市值 +673 亿 / 环比 +47%）、医药生物 +337 亿、非银 +130 亿；减仓电子 −2844 亿、电力设备 −1984 亿、通信 −771 亿（均为市值口径，含价格因素）。<strong>整体呈「减科技、加金融医药」的防御化再平衡。</strong></div>
+      </div>
+      <div>
+        <h3 style="margin-top:0">日频数据：只有成交热度，没有方向</h3>
+        <table>
+          <thead><tr><th>日期</th><th class="num-c">沪股通</th><th class="num-c">深股通</th><th class="num-c">北向合计</th></tr></thead>
+          <tbody>
+            <tr><td>11-06</td><td class="num-c">1283.68亿</td><td class="num-c">1342.25亿</td><td class="num-c"><b>2625.93亿</b></td></tr>
+            <tr><td>11-05</td><td class="num-c">1519.97亿</td><td class="num-c">1681.67亿</td><td class="num-c">3201.64亿</td></tr>
+            <tr><td>11-04</td><td class="num-c">1642.38亿</td><td class="num-c">1749.43亿</td><td class="num-c">3391.81亿</td></tr>
+            <tr><td>11-03</td><td class="num-c">1384.83亿</td><td class="num-c">1372.41亿</td><td class="num-c">2757.24亿</td></tr>
+            <tr><td>11-02</td><td class="num-c">1450.01亿</td><td class="num-c">1527.60亿</td><td class="num-c">2977.61亿</td></tr>
+          </tbody>
+        </table>
+        <div class="note" style="margin-top:10px">11-06 北向成交占两市总成交额 <b>15.84%</b>；十大活跃股以科技硬件为主（中际旭创 46.03 亿、宁德时代 36.78 亿、新易盛 26.92 亿、北方华创 21.20 亿），但<b>当日这些标的多数大跌</b>（中际旭创 −9.19%、东山精密 −10.00%、沪电股份 −9.62%），而茅台、招行、平安、长电小幅收涨。<strong>成交额放大 ≠ 净买入</strong>，这组数据只能说明外资通道在科技股上换手剧烈，不能判断买卖方向。</div>
+      </div>
+    </div>
+    <div class="note red"><b>对今天盘面的含义：</b>Q3 的「减科技、加金融医药」与今天「科技大涨、消费金融走弱」在方向上是<b>相反的</b>——这恰恰提示今天的反弹更像境内存量资金的高低切换与题材博弈，而不是外资趋势性回补。<b>今日收盘后</b>可跟踪的只有北向成交总额与活跃股名单，仍无方向；真正有方向含义的下一个数据点是 <b>2026Q4 持股（预计 2027 年 1 月披露）</b>。</div>
+    <div class="source">来源：沪深交易所公告（2024-04-12 / 2024-07-26，一手）、中国证券网 2026-10-14、东方财富 Choice 估算、同花顺北向资金说明页（更新至 2026-11-06）、证券时报十大成交榜（2026-11-06）；经 domain_search 多源汇总，<b>媒体与数据商口径为非一手来源，需核实原文</b>。规则参考链接：<a href="https://m.cnfin.com/yw-lb/zixun/20240819/4090757_1.html" target="_blank">中国金融信息网·2024-08-19 披露机制调整</a>；<a href="https://m.cnstock.com/commonDetail/802568" target="_blank">中国证券网·2026Q3 北向调仓</a>。</div>
+  </div>
+
+  <div class="card">
+    <h2><span class="num">5</span>行情所处阶段：政策底已现，市场底待确认</h2>
+    <div class="desc">把指数位置、广度、情绪、政策与外部约束放在一起做定性，而不是只看今天涨了多少。</div>
+
+    <h3>位置：今天这点涨幅，还远没走出中期调整</h3>
+    <div class="grid2">
+      <div>
+        <table>
+          <thead><tr><th>区间</th><th class="num-c">上证指数</th><th class="num-c">深证成指</th></tr></thead>
+          <tbody>
+            <tr><td>上一交易日(11-06)</td><td class="num-c down">−1.10%</td><td class="num-c down">−2.57%</td></tr>
+            <tr><td>近 5 日</td><td class="num-c up">+1.03%</td><td class="num-c up">+2.43%</td></tr>
+            <tr><td>近 10 日</td><td class="num-c down">−0.59%</td><td class="num-c down">−2.22%</td></tr>
+            <tr><td>近 20 日</td><td class="num-c down">−3.21%</td><td class="num-c down">−8.93%</td></tr>
+            <tr><td>近 60 日</td><td class="num-c down">−6.71%</td><td class="num-c down">−21.19%</td></tr>
+            <tr><td>年初至今</td><td class="num-c down">−7.39%</td><td class="num-c down">−16.61%</td></tr>
+          </tbody>
+        </table>
+      </div>
+      <div>
+        <div class="box" style="height:100%">
+          <div class="t">多周期告诉我们的三件事</div>
+          <div class="c">
+            <b>① 深市/成长的调整远深于沪市</b>（60日 −21.19% vs −6.71%），今天弹性更大本质是超跌反弹，不是新趋势起点。<br>
+            <b>② 今天的 +0.72% / +0.92% 连上周五的跌幅都没完全收复</b>，5日虽转正但 10/20/60 日仍全负。<br>
+            <b>③ 放量但需验证：</b>沪指量比 1.67、深成 1.83、创业板 1.86，属温和放量；盘中量比不能外推全天，收盘能否维持才是关键。
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <h3>驱动与约束</h3>
+    <div class="grid2">
+      <div class="box"><div class="t">支撑因素（政策底）</div><div class="c"><ul>
+        <li>11-06 国务院常务会议提出「完善资本市场稳市机制，增强股市内在稳定性」。</li>
+        <li>再贷款利率降至 1% 并长期化用于回购增持贷款；互换便利 1000 亿已有券商领取运作。</li>
+        <li>11-06 中美经贸牵头人视频通话，同意继续发挥磋商机制作用。</li>
+        <li>深交所修订创业板指编制方案，单只样本权重上限逐步调至 15%（2026-12-14 生效）。</li>
+        <li>隔夜美股芯片股反弹，费城半导体指数 +4.2%。</li>
+      </ul></div></div>
+      <div class="box"><div class="t">约束因素（为何不敢言反转）</div><div class="c"><ul>
+        <li>美股上周周线：纳指 −3.37%、标普 −2.68%、纳指100 −4.91%，标普与纳指100 <b>连跌四周</b>，创 3 月以来最长纪录。</li>
+        <li>海外对 AI 数据中心能耗与资本开支的争议升温，硬科技融资盘仍不稳。</li>
+        <li>11-06 北向活跃科技股集体重挫，说明高位科技筹码尚未出清。</li>
+        <li>今日权重不参与、连板高度低，缺乏增量资金入场的证据。</li>
+      </ul></div></div>
+    </div>
+
+    <div class="note"><b>客观定性：</b>属于「<strong>弱修复反弹 + 风格切换</strong>」叠加，处在<strong>下跌趋势末端向震荡筑底过渡的试探窗口</strong>，而非「全面扩散的健康上涨」，也不是「普遍转弱」。<b>政策底相对清晰，市场底需要广度、量能与权重的连续确认。</b>这个阶段最容易犯的错，是把一根反弹阳线当成趋势反转、去追当日最强的题材高位股。</div>
+
+    <h3>状态切换信号（可执行的判断框架）</h3>
+    <div class="grid3">
+      <div class="box"><div class="t" style="color:#0b7a45">继续成立的条件</div><div class="c">全天成交额维持温和放量；全A 涨跌比保持在 2:1 以上；涨停数不骤降、跌停数维持个位数；指数不回补今日跳空缺口。</div></div>
+      <div class="box"><div class="t" style="color:var(--accent2)">升级为反转的前置信号</div><div class="c">沪深300 成分涨跌家数由 134:151 <b>翻正</b>并连续 2–3 日放量；出现 3 板以上高度主线；上证站稳并收复 20 日均线；权重与题材同步上涨。</div></div>
+      <div class="box"><div class="t" style="color:#a5261f">判断失效的标志</div><div class="c">广度先于指数掉头（上涨家数快速缩至 2500 以下）；炸板率抬升、跌停数增加；上证跌回 3649（昨收）下方并回补 3653–3659 缺口；美股 AI 链再度破位。</div></div>
+    </div>
+    <div class="note red"><b>仓位与风格含义（震荡档）：</b>精选个股、控制总仓位、做短不做长；减少在高位追涨当日脉冲题材，等结构清晰再加风险敞口。<b>这不是「进攻档」。</b></div>
+    <div class="source">指数多周期涨跌幅来源：通达信实时行情 ProInfo 字段（2026-11-09 10:19）。政策与海外行情来源：通达信资讯（金吾财讯 2026-11-09 09:29 开盘播报、广发证券投顾点评 2026-11-09 10:03、趋势财经 08:50），<b>媒体/投顾观点属非一手来源，需核实原文</b>；国常会与中美经贸通话以官方发布为准。</div>
+  </div>
+
+  <div class="card">
+    <h2><span class="num">6</span>后续观察清单</h2>
+    <div class="desc">不给涨跌预测，只列能改变判断的变量。</div>
+    <table>
+      <thead><tr><th style="width:52px">优先</th><th>观察变量</th><th>为什么重要 / 怎么读</th></tr></thead>
+      <tbody>
+        <tr><td><b style="color:var(--up)">①</b></td><td>权重能否接力</td><td>盯沪深300 成分涨跌家数是否由 134:151 转正。权重不参与，指数上行空间就受限于存量博弈。</td></tr>
+        <tr><td><b style="color:var(--up)">②</b></td><td>情绪能否出高度</td><td>看 3 板以上家数、炸板率、高位股次日溢价。首板扩散而高度起不来，通常意味着轮动加快、持续性弱。</td></tr>
+        <tr><td><b>③</b></td><td>全天成交额与量比</td><td>盘中 6984 亿只是约 50 分钟的累计值；收盘量能是否延续，决定反弹有无增量资金。</td></tr>
+        <tr><td><b>④</b></td><td>三条主线候选的次日反馈</td><td>商业航天 / 光通信CPO / AI智能体：看中军是否放量新高、后排是否掉队、龙头能否弱转强。若集体一日游，则确认为脉冲题材。</td></tr>
+        <tr><td><b>⑤</b></td><td>收盘后北向成交总额与活跃股</td><td>只有热度无方向；若活跃度继续向科技硬件集中，说明分歧仍大。</td></tr>
+        <tr><td><b>⑥</b></td><td>外围：美股 AI 链与费城半导体</td><td>纳指100 已连跌四周，A股硬科技的外部映射仍是最大不确定项。</td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <div class="card">
+    <h2><span class="num">7</span>数据口径与来源总表</h2>
+    <table>
+      <thead><tr><th>数据块</th><th>来源</th><th>时点</th><th>性质 / 注意</th></tr></thead>
+      <tbody>
+        <tr><td>指数价格、涨跌幅、成交额、量比、多周期涨幅、分市场涨跌家数</td><td>通达信实时行情接口</td><td>2026-11-09 10:19–10:24</td><td>盘中快照，非收盘价</td></tr>
+        <tr><td>全A 涨跌家数、涨停/跌停/连板、板块涨跌幅排行</td><td>通达信条件选股接口</td><td>2026-11-09 约 10:20–10:24</td><td>盘中动态值；板块为通达信自有分类</td></tr>
+        <tr><td>北向披露规则</td><td>沪深交易所公告 2024-04-12 / 07-26</td><td>2024-08-19 生效至今</td><td>一手规则来源</td></tr>
+        <tr><td>北向 Q3 持仓与调仓、日频成交额、活跃股</td><td>中国证券网 / 东方财富 Choice / 证券时报 / 同花顺（domain_search 汇总）</td><td>2026-10-14 披露 Q3；日频截至 11-06</td><td>非一手；净买入为估算，需核实原文</td></tr>
+        <tr><td>政策、海外行情、题材催化</td><td>通达信资讯：金吾财讯、广发证券投顾点评、趋势财经</td><td>2026-11-09 08:50–10:09</td><td>媒体/投顾观点，非一手</td></tr>
+        <tr><td>主力资金净流入（沪 +93.80亿 / 深 +114.19亿，10:19）</td><td>通达信行情字段</td><td>2026-11-09 10:19</td><td><b>按大单统计的推断值，参考意义有限，本页不作为结论依据</b></td></tr>
+      </tbody>
+    </table>
+  </div>
+</div>
+
+<!-- ==================== PAGE 2 ==================== -->
+<div class="view" id="wyckoff">
+  <div class="pagetitle">*ST闻泰（600745）威科夫走势推演</div>
+  <div class="pagesub">量价结构 · 阶段识别 · 条件化买卖点位 · 2026-11-09 盘中</div>
+
+  <div class="alert danger">
+    <b>🔴 先纠正标的名称，也先看清风险：</b>该股当前简称为 <b>*ST闻泰</b>（600745.SH，上交所主板），不是普通「ST」。因 <b>2025 年度财务会计报告与内控审计均被出具「无法表示意见」</b>，自 <b>2026-05-06</b> 起被实施<b>退市风险警示并叠加其他风险警示</b>。若 2026 年报未能取得财报+内控双标准无保留意见，<b>股票可能被终止上市</b>（年报披露截止 2027-04-30）。<br>
+    这意味着：<b>本页的所有技术点位都只是「无新公告窗口内」的条件推演，任何一份司法裁决、审计进展或退市提示公告都能让结构瞬间失效。</b>
+  </div>
+
+  <div class="card tldr">
+    <div class="big"><span class="tag">威科夫结论</span>周线仍处 markdown（下跌趋势），日线处于 <strong>Phase C（Spring 之后）→ Phase D（LPS / SOS 验证）</strong> 的过渡区，<strong>吸筹假设「有迹象、未确认」</strong>。</div>
+    <p>10-29 下探 <strong>9.95</strong>（52周低点）后快速收回、10-30 至 11-03 放量反攻至 <strong>12.68</strong>，符合 <em>Selling Climax → Spring → SOS</em> 的量价序列；但 11-04 起连续三日缩量回落、反弹高点逐级下移（23.93 → 22.26 → 20.38 → 12.68），<strong>尚未出现有效的 LPS（最后支撑点）与回踩不破的确认</strong>，也存在把这段解读为「下跌中继平台」的合理可能。</p>
+    <p style="margin-bottom:0"><strong>置信度：中等偏低。</strong>关键原因见文末「反向声音」：威科夫假设市场里有一个连续吸筹的「主力（Composite Man）」，而这只在<b>流动性正常、信息连续</b>时成立；*ST闻泰 5 月的连续一字跌停是流动性真空，10 月底的放量由跨境诉讼与公告驱动，11-03 龙虎榜<b>无机构、无北向参与</b>。这里更可能是事件博弈，不是主力吸筹。</p>
+  </div>
+
+  <div class="kpis">
+    <div class="kpi"><div class="lab">现价（10:20 盘中）</div><div class="val down">11.48</div><div class="sub down">−0.09%　昨收 11.49</div></div>
+    <div class="kpi"><div class="lab">今日区间</div><div class="val" style="font-size:18px">11.35 – 11.63</div><div class="sub">开盘 11.41｜振幅 2.44%</div></div>
+    <div class="kpi"><div class="lab">年初至今</div><div class="val down">−69.21%</div><div class="sub">60日 −31.75%｜20日 −22.90%</div></div>
+    <div class="kpi"><div class="lab">总市值 / PB</div><div class="val" style="font-size:19px">151.6亿 / 0.64</div><div class="sub">PE(TTM) −1.39（亏损，无意义）</div></div>
+    <div class="kpi"><div class="lab">52周区间</div><div class="val" style="font-size:19px">9.95 – 47.88</div><div class="sub">周线最高 50.80（2025-09）</div></div>
+    <div class="kpi"><div class="lab">今日成交（截至 10:21）</div><div class="val" style="font-size:19px">1.46亿</div><div class="sub">换手 0.96%｜量比 0.99</div></div>
+    <div class="kpi"><div class="lab">今日主力净流入</div><div class="val down" style="font-size:19px">−2649.7万</div><div class="sub">数据商大单推断值</div></div>
+    <div class="kpi"><div class="lab">股东户数</div><div class="val" style="font-size:19px">21.20万</div><div class="sub">2026-09-30，环比 −7.39%</div></div>
+  </div>
+  <div class="source">来源：通达信实时行情 / 日线周线 K 线接口，2026-11-09 10:20–10:21；财务与股东户数来自公司 2026 年三季报（2026-10-23 披露）、westock-data。不同数据源在同一分钟给出的现价有 11.45 / 11.47 / 11.48 的秒级差异，属盘中取数时点不同，非数据冲突。</div>
+
+  <div class="card">
+    <h2><span class="num">1</span>日K与量能：近三个月的完整结构</h2>
+    <div class="desc">红涨绿跌（A股惯例）。上半部为 K 线，下半部为成交额（亿元）；虚线为关键结构位。</div>
+    <div class="klinebox" id="klineBox"></div>
+    <div class="svgcap">图：2026-08-03 至 2026-11-09 日K（前复权，共 65 根）+ 成交额。11-09 为盘中未完成 K 线。红色虚线 = 12.68（AR / SOS 上沿），绿色虚线 = 9.95（SC 低点 / 生命线），蓝色虚线 = 11.30（潜在 LPS 观察区）。</div>
+    <div class="note"><b>图上要看的三件事：</b>① <strong>9 月缩量平台</strong>（16.3–19.8 元，日成交额萎缩至 2–4 亿）——供给枯竭但价格中枢缓慢下移；② <strong>10 月加速下跌 + 10-22 放量 7.54 亿</strong>——恐慌盘涌出；③ <strong>10-29 探 9.95 收回、11-02 放天量 8.65 亿冲 12.39</strong>——潜在 Spring 与 SOS；但 <strong>11-04 至 11-09 量能逐级萎缩、价格回落至 11.4 附近</strong>，正是「SOS 之后等 LPS」的验证期形态。</div>
+    <div class="source">来源：通达信日 K 线接口（600745，前复权，2026-11-09 10:21 取数）。成交额按接口 Amount 字段换算为亿元，未做二次单位换算。</div>
+  </div>
+
+  <div class="card">
+    <h2><span class="num">2</span>威科夫阶段定位</h2>
+    <div class="desc">标准吸筹结构（Phase A–E）与本股当前所在位置。</div>
+    <div class="flow">
+      <div class="fnode"><b>下跌趋势</b>markdown</div><div class="farrow">→</div>
+      <div class="fnode"><b>PS / SC</b>初步支撑<br>抛售高潮</div><div class="farrow">→</div>
+      <div class="fnode"><b>AR</b>自动反弹<br>定出区间上沿</div><div class="farrow">→</div>
+      <div class="fnode"><b>ST</b>二次测试<br>确认供给枯竭</div><div class="farrow">→</div>
+      <div class="fnode now"><b>Spring / Test</b>震仓<br><span style="color:var(--up);font-weight:700">当前位置</span></div><div class="farrow">→</div>
+      <div class="fnode"><b>SOS + LPS</b>强势出现<br>最后支撑点</div><div class="farrow">→</div>
+      <div class="fnode"><b>Phase E</b>脱离区间<br>进入 markup</div>
+    </div>
+    <div class="note red"><b>本股定位：Spring 已出现、SOS 出现但未被确认、LPS 尚未形成 → Phase C 尾部 / Phase D 前段。</b>翻译成交易语言：<b>最恐慌的一跌可能已经过去，但「可以买」的确认信号还没来</b>。此时既有「回踩缩量后向上突破」的路径，也有「反弹失败、区间下沿再破」的路径，两者概率都不低。</div>
+    <div class="grid2">
+      <div class="box"><div class="t" style="color:#a5261f">支持「吸筹」的证据</div><div class="c"><ul>
+        <li>10-29 探 9.95 后当日收回至 10.36，未连续创新低（Spring 特征）。</li>
+        <li>10-30 → 11-03 放量反攻：8.65 亿、7.59 亿，明显大于 9 月 2–4 亿的地量。</li>
+        <li>11-04 起回落伴随量能递减（7.81 → 6.98 → 4.78 亿），属「缩量回踩」而非「放量派发」。</li>
+        <li>境内东莞中院 11-02 行为保全裁定获支持，构成事件端正向催化。</li>
+      </ul></div></div>
+      <div class="box"><div class="t" style="color:#0b7a45">反对「吸筹」的证据</div><div class="c"><ul>
+        <li>反弹高点逐级下移：23.93(6/3) → 22.26(7/13) → 20.38(8/26) → 12.68(11/3)，周线仍是低点下移的 markdown。</li>
+        <li>11-03 龙虎榜（3日榜）买 1.74 亿 / 卖 1.99 亿，<b>无机构、无北向席位</b>，缺乏「主力持续吸筹」的席位证据。</li>
+        <li>股价对公告极度敏感、日内跳空与一字板频出，供需分析的前提被破坏。</li>
+        <li>*ST 退市风险为二元变量，不是可以用支撑位管理的连续风险。</li>
+      </ul></div></div>
+    </div>
+  </div>
+
+  <div class="card">
+    <h2><span class="num">3</span>威科夫事件时间轴（真实 K 线标注）</h2>
+    <div class="desc">每个事件都对应可核对的日期、价格与成交额，不做事后图形拟合。</div>
+    <table>
+      <thead><tr><th>日期</th><th>价格 / 成交额</th><th>威科夫事件</th><th>量价解读</th></tr></thead>
+      <tbody>
+        <tr><td>2026-04-21</td><td>31.38 → 29.13 / <b>19.93亿</b></td><td>SOW 弱势信号</td><td>成交额约为前一日 6.91 亿的 3 倍，跌破 31 元平台，高位派发后的破位。</td></tr>
+        <tr><td>05-06 → 05-20</td><td>26.71 → 16.00 / 日 0.15–1.48亿</td><td>流动性真空</td><td>*ST 实施后连续一字跌停，<b>成交极度萎缩</b>。这不是威科夫意义上的派发，是制度性冲击，量价信号在此失真。</td></tr>
+        <tr><td><b>05-21</b></td><td>最低 15.20 → 收 16.80 / <b>34.37亿</b></td><td><b>PS + SC（主抛售高潮）</b></td><td>单日成交 214 万手，为此前数十倍；恐慌盘一次性换手，形成阶段性底部。</td></tr>
+        <tr><td>05-22 → 06-03</td><td>反弹至 23.93</td><td><b>AR 自动反弹</b></td><td>定义第一个交易区间上沿；随后 06-24 回踩 15.87 构成 ST 二次测试。</td></tr>
+        <tr><td>07-13 / 08-26</td><td>22.26 / 20.38</td><td>反弹高点下移</td><td>两次反攻均无法回到 AR 上方，说明供给仍占优，区间重心持续下移。</td></tr>
+        <tr><td>09-01 → 09-30</td><td>16.3–19.8 / 日 2–4亿</td><td>区间收敛 + 量能枯竭</td><td>波动与成交同步收窄，但价格中枢缓慢下移，属于弱势整理而非强势吸筹。</td></tr>
+        <tr><td><b>10-22</b></td><td>收 10.53 / <b>7.54亿</b></td><td>二次抛售</td><td>10 月自 16.00 单边下杀后的放量恐慌日。</td></tr>
+        <tr><td><b>10-29</b></td><td>最低 <b>9.95</b> → 收 10.36 / 5.31亿</td><td><b>Spring（终局震仓）</b></td><td>击穿前低后当日收回，长下影 + 未连续创新低；9.95 由此成为结构生命线。</td></tr>
+        <tr><td>10-30 → 11-03</td><td>11.40 → 12.51（高 12.68）/ 8.65亿、7.59亿</td><td><b>SOS 强势出现</b></td><td>放量突破 10 月下跌平台，触发连续 3 日涨幅偏离 20% 的异动公告与龙虎榜。</td></tr>
+        <tr><td>11-04 → 11-09</td><td>12.51 → 11.4 附近 / 7.81→4.78→1.46亿</td><td><b>待验证：LPS 或 UT</b></td><td>缩量回踩是好事，但至今未出现「缩量止跌 + 放量重新向上」的确认；若 12.5 一带形成放量长上影，则更接近 Upthrust（假突破）。</td></tr>
+      </tbody>
+    </table>
+    <div class="source">来源：通达信日 K / 周 K 线（600745，前复权，2026-11-09 10:21 取数）；周线区间 2024-12-06 至 2026-11-09（100 根，区间最高 50.80、最低 9.95）；异动与龙虎榜信息来自公司 2026-11-03 公告及媒体转述（每日经济新闻 2026-11-03），<b>非一手来源，需核实原文</b>。</div>
+  </div>
+
+  <div class="card">
+    <h2><span class="num">4</span>关键点位地图</h2>
+    <div class="desc">全部来自真实成交密集区与高低点，不是整数关口臆测。当前价 11.48。</div>
+    <div class="grid2">
+      <div>
+        <h3 style="margin-top:0;color:var(--up)">上方阻力（供给区）</h3>
+        <div class="levelrow"><span class="lv r">R1</span><span class="price">11.63 / 11.97–12.10</span><span>今日高点；11-04、11-05 收盘密集区</span></div>
+        <div class="levelrow"><span class="lv r">R2</span><span class="price">12.51 – 12.68</span><span><b>关键</b>：11-03 收盘与 AR 高点，SOS 确认必须站上</span></div>
+        <div class="levelrow"><span class="lv r">R3</span><span class="price">13.03 – 13.25</span><span>10-19 / 10-20 密集成交区</span></div>
+        <div class="levelrow"><span class="lv r">R4</span><span class="price">13.72 – 14.34</span><span>10-14 至 10-16 下跌平台</span></div>
+        <div class="levelrow"><span class="lv r">R5</span><span class="price">15.67 – 16.30</span><span>6–7 月低点区（15.67 / 15.83）+ 9 月平台下沿，中期强阻力带</span></div>
+      </div>
+      <div>
+        <h3 style="margin-top:0;color:var(--down)">下方支撑（需求区）</h3>
+        <div class="levelrow"><span class="lv s">S1</span><span class="price">11.27 – 11.35</span><span>11-05 / 11-06 / 11-09 低点</span></div>
+        <div class="levelrow"><span class="lv s">S2</span><span class="price">10.69 – 10.83</span><span>11-02 低点、10-26 低点</span></div>
+        <div class="levelrow"><span class="lv s">S3</span><span class="price">10.41 – 10.53</span><span><b>关键</b>：10-22/10-23 低点，Spring 前低区</span></div>
+        <div class="levelrow"><span class="lv s">S4</span><span class="price">9.95</span><span><b>结构生命线</b>：52周 / 历史低点</span></div>
+        <div class="levelrow"><span class="lv s">参考</span><span class="price">10.34 / 12.64</span><span>数据源标注的当日跌停 / 涨停参考价（基于昨收 11.49）</span></div>
+      </div>
+    </div>
+    <div class="note"><b>区间量度（威科夫 P&amp;F 思路，仅作幅度参考不是预测）：</b>当前交易区间 TR ≈ <b>9.95 – 12.68</b>，高度 2.73 元。若有效突破上沿，第一量度目标 12.68 + 2.73 ≈ <b>15.41 元</b>；该位置与 6–7 月低点 15.67 / 15.83、9 月平台下沿 16.30 共同构成 <b>15.4–16.3 元阻力带</b>，应视为分批减仓区而非加仓区；第二量度 18.14 元仅为区间倍数推演，在 *ST 基本面约束下现实意义很低。</div>
+  </div>
+
+  <div class="card">
+    <h2><span class="num">5</span>条件化买卖点位框架</h2>
+    <div class="alert warn" style="margin-bottom:16px">
+      <b>前提声明：</b>用户未提供风险偏好、资金量与持有期限。以下按「<b>短线事件博弈、能承受本金大幅甚至全部损失</b>」的假设推演；这是<strong>技术条件 → 动作 → 失效条件</strong>的研究框架，<b>不是买入推荐</b>。若无法承受退市归零风险，本标的<b>不适用任何买点，默认动作应为观望或不参与</b>。
+    </div>
+
+    <h3>A. 默认不执行（最重要的一条）</h3>
+    <div class="box"><div class="c">
+      <b>不在 11.90–12.68 供给区追高。</b>11-04 至 11-06 已连续三日自该区回落，说明上方供给真实存在；在 SOS 未被确认前追涨，等于替 11-02/11-03 的放量介入方接货。<br>
+      <b>不把缩量上涨当 SOS。</b>单日成交额低于 5 亿的冲高一律不视为突破。
+    </div></div>
+
+    <h3>B. 观察型试仓（左侧 · LPS 逻辑）</h3>
+    <div class="grid2">
+      <div class="box"><div class="t">触发条件（需同时满足）</div><div class="c"><ul>
+        <li>价格回踩 <b>10.80 – 11.30</b> 区间；</li>
+        <li>当日成交额较 11-02 的 8.65 亿 <b>萎缩 ≥ 50%</b>（即 &lt; 4.3 亿）；</li>
+        <li>收盘回到 <b>11.30 上方</b>，或留明显下影线（供给被吸收）。</li>
+      </ul></div></div>
+      <div class="box"><div class="t">动作与风控</div><div class="c"><ul>
+        <li>动作：<b>试错仓 10%–20%</b>，不一次建满；</li>
+        <li>止损：<b>收盘跌破 10.41 无条件离场</b>，不放宽、不摊平；</li>
+        <li>第一目标：12.51–12.68，到位先减半；</li>
+        <li>时间止损：5 个交易日内未站上 12.10，视为动能衰减。</li>
+      </ul></div></div>
+    </div>
+
+    <h3>C. 确认型买点（右侧 · SOS / Jump Across the Creek）</h3>
+    <div class="grid2">
+      <div class="box"><div class="t">触发条件（需同时满足）</div><div class="c"><ul>
+        <li>单日成交额 <b>≥ 8.5 亿</b>（对标 11-02 天量）且<b>收盘站上 12.68</b>；</li>
+        <li>次日回踩<b>不破 12.30</b>，且回踩缩量；</li>
+        <li>同期无新的重大不利公告（见失效条件）。</li>
+      </ul></div></div>
+      <div class="box"><div class="t">动作与风控</div><div class="c"><ul>
+        <li>动作：<b>确认仓 +20%–30%</b>，与试错仓合计仍建议控制在 50% 以内；</li>
+        <li>止损：跌回 <b>11.70</b> 以下（SOS 失败）；</li>
+        <li>目标：<b>15.40–16.30 区间分批止盈</b>（区间第一量度 15.41 与历史阻力带重合）；</li>
+        <li>不设 18 元以上目标——*ST 基本面不支持趋势性 markup。</li>
+      </ul></div></div>
+    </div>
+
+    <h3>D. 卖出 / 减仓触发器（优先级从高到低）</h3>
+    <table>
+      <thead><tr><th style="width:60px">序</th><th>触发条件</th><th>动作</th><th>依据</th></tr></thead>
+      <tbody>
+        <tr><td><b style="color:var(--danger)">1</b></td><td><b>事件止损：</b>退市风险提示升级、2026 年报审计意见不利信号、荷兰法院裁决不利、转债兑付方案恶化</td><td><b>不看价格，直接离场</b></td><td>二元风险优先于一切技术位</td></tr>
+        <tr><td>2</td><td>收盘跌破 <b>9.95</b></td><td>清仓，结构完全失效</td><td>Spring 失败 → 重回 markdown</td></tr>
+        <tr><td>3</td><td>收盘跌破 <b>10.41</b></td><td>减仓 / 离场</td><td>S3 破位，吸筹假设受损</td></tr>
+        <tr><td>4</td><td>冲 12.51–12.68 出现<b>放量长上影</b>且次日低开</td><td>减仓</td><td>UT / UTAD 假突破特征</td></tr>
+        <tr><td>5</td><td>持有 5 个交易日未站上 12.10</td><td>减仓</td><td>时间止损，反弹动能衰减</td></tr>
+        <tr><td>6</td><td>触及 <b>15.40–16.30</b></td><td>分批止盈</td><td>6–7 月低点 / 9 月平台阻力 + 区间量度目标重合</td></tr>
+      </tbody>
+    </table>
+    <div class="note red"><b>执行前的环境确认：</b>大盘处于「震荡档、非进攻档」（见第 1 页），*ST 板块不在当前主线上（今日主线是商业航天 / 光通信 / AI 智能体），且个股当日主力资金为净流出。<b>按交易纪律，环境不支持时应降仓或放弃；这里给出的仓位上限已按此压缩，并不构成「应该参与」的结论。</b></div>
+  </div>
+
+  <div class="card">
+    <h2><span class="num">6</span>反向声音：这份分析最可能错在哪</h2>
+    <div class="alert danger" style="margin-bottom:12px">
+      <b>不要顺着「找到了 Spring，所以可以买」的思路一路推下去。</b>下面是三条足以推翻全部技术推演的理由，请和上面的点位一起读。
+    </div>
+    <div class="grid3">
+      <div class="box"><div class="t">① 方法前提可能不成立</div><div class="c">威科夫的核心是「主力在流动性正常的市场里连续吸筹」。<b>本股 5 月连续一字跌停、成交只有几千万，是流动性真空；10 月底的放量来自跨境诉讼与公告</b>。11-03 龙虎榜无机构、无北向参与。这里很可能<b>根本没有 Composite Man</b>，把 PS/SC/Spring 套上去有过度拟合风险。</div></div>
+      <div class="box"><div class="t">② 定价主变量不是供需</div><div class="c">真正决定股价的是<b>2026 年报能否拿到财报+内控双标准无保留意见</b>，以及<b>安世境外股权归属的司法结果</b>。技术点位只在「没有新公告」的窗口内有效，而该股公告密度极高（每月风险警示进展 + 临时公告）。</div></div>
+      <div class="box"><div class="t">③ 点位的正确用法</div><div class="c">对<b>已持仓者</b>，这份点位更适合用来<b>管理风险与规划退出</b>（尤其 10.41 / 9.95 两条线）；对<b>未持仓者</b>，更合理的是观望，等审计与司法结果明朗。<b>用威科夫在 *ST 退市风险股上「找买点」，本身就是框架错配。</b></div></div>
+    </div>
+    <div class="note"><b>还有一个容易被忽略的归因错误：</b>10-30 至 11-03 那波 +20% 的上涨，市场容易解读为「资金认可境内法院行为保全、安世要回来了」。但公司在异动公告里明确「经营稳定、无未披露重大信息」，且荷兰企业法庭裁决<b>仍然生效</b>、20 亿美元索赔刚提出。<b>把这波上涨读作基本面反转，很可能是一个错误的归因</b>——量能结构上它同样符合事件驱动的短线博弈。</div>
+  </div>
+
+  <div class="card">
+    <h2><span class="num">7</span>基本面风险清单（比技术位更重要）</h2>
+    <div class="grid2">
+      <div class="box"><div class="t" style="color:var(--danger)">① 退市风险（最高优先级）</div><div class="c">2025 年报财报与内控均被出具「无法表示意见」，2026-05-06 起 *ST。解除条件是 2026 年报<b>财报 + 内控双标准无保留意见</b>，核心障碍（安世境外股权公允价值依据、合并范围稳定性）取决于荷兰司法程序，<b>公司无法单方面控制</b>。时间窗口至 2027-04-30。</div></div>
+      <div class="box"><div class="t" style="color:var(--danger)">② 安世控制权僵局</div><div class="c">荷兰部长令已暂停，但<b>企业法庭裁决仍生效</b>，控制权仍受限；管理人「双圈」方案被公司书面回绝；Nexperia B.V. 提出 <b>20 亿美元索赔</b>（截至公告尚未正式送达立案，公司否认全部指控）。境内东莞中院行为保全获支持、此前冻结约 21.39 亿元财产。</div></div>
+      <div class="box"><div class="t" style="color:var(--warn)">③ 可转债集中兑付压力</div><div class="c">「闻泰转债」(110081) 存量约 <b>80.6 亿元</b>，2027 年 7 月到期，截至 2026-08-31 仅 16.22% 转股、<b>83.78% 未转股</b>；主体与债项评级已被中诚信国际降至 <b>BBB- / 展望负面</b>（2026-09-15）。公司已提议下修转股价，需跟踪下修幅度与转股率。</div></div>
+      <div class="box"><div class="t" style="color:var(--warn)">④ 经营已「瘦身」</div><div class="c">2026 前三季度营收 <b>20.50 亿（−93.11%）</b>、归母净利 <b>−6.23 亿（−141.15%）</b>、经营现金流 <b>−4.95 亿</b>；收入基本只剩安世中国。相对干净的是资产负债表：资产负债率 37.15%、归母权益 249.33 亿、每股净资产 17.909 元（对应 PB 0.64）。<b>真正风险不是偿债，而是审计意见与资产归属。</b></div></div>
+    </div>
+    <div class="note red"><b>低 PB 不是安全垫。</b>0.64 倍 PB 看似便宜，但净资产中含约 31.95 亿商誉与约 243.83 亿元按公允价值计量的安世境外其他权益工具投资，其估值依据正是审计师「无法表示意见」的争议点之一。<b>一旦资产归属或计量被推翻，账面净资产本身就需要重估。</b></div>
+    <div class="source">来源：公司 2026 年三季报（2026-10-23）、公司 2026-11-03 股票交易异常波动公告与子公司经营管理进展公告、2026-10-30 其他风险警示进展公告及董事会决议、中诚信国际 2026-09-15 跟踪评级公告；经 domain_search 汇总，媒体转述见每日经济新闻 / 财联社 2026-11-03、每日经济新闻 2026-11-04。<b>公告为一手来源；媒体与数据商内容为非一手，需核实原文。</b></div>
+  </div>
+
+  <div class="disc">
+    <b>⚠️ 风险提示与免责声明</b>：本文/本对话内容仅为基于公开信息的分析讨论，不构成任何投资建议、理财建议或交易邀约。市场有风险，投资需谨慎。文中所涉标的、价位、策略均仅供研究参考，不保证分析准确性或完整性，不代表对任何投资结果的承诺。投资者应根据自身风险承受能力、投资目标和财务状况独立做出决策并承担相应风险。过往业绩不预示未来表现。
+    <div class="divider" style="margin:12px 0"></div>
+    <b>免责声明</b>：以上内容基于公开数据和量化分析，仅供参考，不构成投资建议。市场有风险，投资需谨慎。任何投资决策应结合个人风险承受能力、资金状况和投资目标独立判断，必要时咨询持牌专业机构。过往表现不预示未来收益。
+  </div>
+</div>
+
+<div class="footer">
+  <b>阅读说明</b>：本文件为单一 HTML 文件，内含两页，点击顶部标签切换；支持 <code>#market</code> / <code>#wyckoff</code> 锚点直接跳转；所有图表由内联 SVG/CSS 生成，<b>无需联网、无外部依赖</b>，双击即可在浏览器打开。<br>
+  <b>统一时点</b>：全部行情为 2026-11-09（周一）10:19–10:25 盘中快照，非收盘数据；当日交易尚未结束，所有数值均可能变化。<br>
+  <b>生成时间</b>：2026-11-09 · 数据源：通达信实时行情 / K 线 / 条件选股 / 资讯接口，交易所公告与公司公告，公开财经媒体（已标注一手与非一手）。
+</div>
+
+</div>
+
+<script>
+(function () {
+  var tabs = document.querySelectorAll('.tab');
+  var views = document.querySelectorAll('.view');
+  function show(id) {
+    for (var i = 0; i < tabs.length; i++) {
+      tabs[i].classList.toggle('active', tabs[i].getAttribute('data-view') === id);
+    }
+    for (var j = 0; j < views.length; j++) {
+      views[j].classList.toggle('active', views[j].id === id);
+    }
+    if (window.location.hash !== '#' + id) {
+      try { history.replaceState(null, '', '#' + id); } catch (e) { /* file:// may block */ }
+    }
+  }
+  for (var k = 0; k < tabs.length; k++) {
+    tabs[k].addEventListener('click', function () { show(this.getAttribute('data-view')); });
+  }
+  var init = window.location.hash.replace('#', '');
+  show(init === 'wyckoff' ? 'wyckoff' : 'market');
+})();
+
+(function () {
+  var box = document.getElementById('klineBox');
+  if (!box) { return; }
+  // [date, open, high, low, close, amount(亿元)] 前复权，2026-08-03 ~ 2026-11-09
+  var D = [
+    ['08-03',16.56,16.70,16.26,16.42,4.576],['08-04',16.50,17.28,16.40,17.11,8.574],
+    ['08-05',16.92,17.33,16.87,17.08,7.407],['08-06',16.87,17.05,16.61,16.76,5.873],
+    ['08-07',16.73,16.96,16.63,16.82,4.887],['08-10',16.78,16.79,16.31,16.49,5.056],
+    ['08-11',16.40,17.97,16.20,17.48,11.067],['08-12',17.24,17.37,17.10,17.15,5.896],
+    ['08-13',17.02,17.95,17.02,17.43,8.650],['08-14',17.50,18.20,17.41,17.46,8.069],
+    ['08-17',17.16,17.96,17.12,17.60,7.439],['08-18',17.51,17.52,17.12,17.14,5.669],
+    ['08-19',16.85,16.89,16.26,16.30,5.860],['08-20',16.43,16.79,16.23,16.52,3.659],
+    ['08-21',16.42,16.87,16.33,16.67,3.421],['08-24',17.15,17.49,16.91,17.20,7.504],
+    ['08-25',17.39,18.92,17.32,18.92,15.427],['08-26',19.44,20.38,18.33,18.49,19.126],
+    ['08-27',18.88,19.50,18.51,19.11,12.608],['08-28',19.16,20.20,18.71,19.79,13.773],
+    ['08-31',19.40,19.43,18.90,19.12,9.266],['09-01',19.40,19.75,18.41,18.53,10.359],
+    ['09-02',18.12,19.24,17.99,18.76,8.248],['09-03',18.70,18.70,18.05,18.10,6.872],
+    ['09-04',18.19,18.55,17.90,18.13,6.527],['09-07',18.00,18.25,17.90,18.10,4.575],
+    ['09-08',18.00,18.03,17.55,17.60,6.269],['09-09',17.50,17.68,17.13,17.17,5.297],
+    ['09-10',17.05,17.34,16.97,17.03,4.383],['09-11',16.88,17.24,16.78,17.13,4.438],
+    ['09-14',17.01,17.01,16.69,16.73,3.979],['09-15',16.67,16.94,16.64,16.68,2.968],
+    ['09-16',16.65,17.19,16.65,17.05,3.738],['09-17',16.72,16.87,16.50,16.50,5.023],
+    ['09-18',16.63,16.86,16.57,16.74,3.553],['09-21',16.64,16.96,16.55,16.86,3.609],
+    ['09-22',17.02,17.69,17.02,17.59,7.762],['09-23',17.42,17.43,17.10,17.10,4.021],
+    ['09-24',17.08,17.42,17.04,17.04,3.504],['09-28',16.91,16.91,16.29,16.30,4.176],
+    ['09-29',16.39,16.66,16.35,16.51,2.472],['09-30',16.55,16.61,16.39,16.43,2.137],
+    ['10-08',16.38,16.47,15.91,16.00,3.399],['10-09',15.82,15.89,15.13,15.64,4.507],
+    ['10-12',15.51,15.54,14.88,14.89,3.871],['10-13',14.57,14.77,13.45,14.23,4.828],
+    ['10-14',14.12,14.87,14.03,14.34,3.424],['10-15',13.86,14.32,13.73,13.89,2.686],
+    ['10-16',14.15,14.20,13.68,13.72,2.342],['10-19',13.58,13.80,13.03,13.03,3.940],
+    ['10-20',13.03,13.25,12.20,12.46,5.780],['10-21',12.49,12.63,11.69,11.70,5.805],
+    ['10-22',11.68,11.85,10.53,10.53,7.535],['10-23',10.50,11.58,10.41,11.58,6.919],
+    ['10-26',11.12,11.28,10.83,10.85,4.679],['10-27',10.95,11.13,10.50,10.50,3.424],
+    ['10-28',10.65,10.72,10.15,10.42,3.577],['10-29',10.29,10.86,9.95,10.36,5.306],
+    ['10-30',10.88,11.40,10.80,11.40,4.467],['11-02',11.20,12.39,10.69,11.77,8.652],
+    ['11-03',11.50,12.68,11.46,12.51,7.591],['11-04',12.17,12.38,11.61,11.97,7.807],
+    ['11-05',11.70,12.34,11.33,11.87,6.980],['11-06',11.31,11.97,11.27,11.49,4.776],
+    ['11-09',11.41,11.63,11.35,11.47,1.459]
+  ];
+  var W = 1000, H = 470, L = 46, R = 986, TOP = 14, PB = 330, VB = 440;
+  var PMIN = 9.4, PMAX = 21.0, MAXAMT = 19.5;
+  function py(p) { return PB - (p - PMIN) / (PMAX - PMIN) * (PB - TOP); }
+  var n = D.length, step = (R - L) / n, bw = step * 0.62;
+  var s = [];
+  s.push('<svg viewBox="0 0 ' + W + ' ' + H + '" xmlns="http://www.w3.org/2000/svg" font-family="-apple-system,PingFang SC,Microsoft YaHei,sans-serif">');
+  s.push('<rect x="0" y="0" width="' + W + '" height="' + H + '" fill="#ffffff"/>');
+  [10, 12, 14, 16, 18, 20].forEach(function (p) {
+    var y = py(p);
+    s.push('<line x1="' + L + '" y1="' + y + '" x2="' + R + '" y2="' + y + '" stroke="#eceff3" stroke-width="1"/>');
+    s.push('<text x="' + (L - 7) + '" y="' + (y + 4) + '" text-anchor="end" font-size="11" fill="#8792a2">' + p + '</text>');
+  });
+  function keyline(p, color, label) {
+    var y = py(p);
+    s.push('<line x1="' + L + '" y1="' + y + '" x2="' + R + '" y2="' + y + '" stroke="' + color + '" stroke-width="1.2" stroke-dasharray="5,4" opacity="0.85"/>');
+    s.push('<text x="' + (R - 4) + '" y="' + (y - 5) + '" text-anchor="end" font-size="11" font-weight="700" fill="' + color + '">' + label + '</text>');
+  }
+  keyline(12.68, '#d93025', 'R2 / AR 12.68');
+  keyline(11.30, '#2b5c9b', 'LPS 观察 11.30');
+  keyline(9.95, '#0f9d58', 'S4 / SC 9.95');
+  s.push('<line x1="' + L + '" y1="' + (PB + 8) + '" x2="' + R + '" y2="' + (PB + 8) + '" stroke="#e3e8ef" stroke-width="1"/>');
+  D.forEach(function (d, i) {
+    var x = L + step * i + step / 2;
+    var isUp = d[4] >= d[1];
+    var col = isUp ? '#d93025' : '#0f9d58';
+    s.push('<line x1="' + x.toFixed(1) + '" y1="' + py(d[2]).toFixed(1) + '" x2="' + x.toFixed(1) + '" y2="' + py(d[3]).toFixed(1) + '" stroke="' + col + '" stroke-width="1"/>');
+    var y1 = py(Math.max(d[1], d[4])), y2 = py(Math.min(d[1], d[4]));
+    s.push('<rect x="' + (x - bw / 2).toFixed(1) + '" y="' + y1.toFixed(1) + '" width="' + bw.toFixed(1) + '" height="' + Math.max(1.3, y2 - y1).toFixed(1) + '" fill="' + col + '"/>');
+    var vh = d[5] / MAXAMT * 96;
+    s.push('<rect x="' + (x - bw / 2).toFixed(1) + '" y="' + (VB - vh).toFixed(1) + '" width="' + bw.toFixed(1) + '" height="' + vh.toFixed(1) + '" fill="' + col + '" opacity="0.55"/>');
+    if (i % 7 === 0 || i === n - 1) {
+      s.push('<text x="' + x.toFixed(1) + '" y="' + (H - 8) + '" text-anchor="middle" font-size="10" fill="#8792a2">' + d[0] + '</text>');
+    }
+  });
+  s.push('<text x="' + L + '" y="' + (PB + 22) + '" font-size="10.5" fill="#8792a2">成交额（亿元，峰值 19.13）</text>');
+  s.push('<text x="' + (R - 2) + '" y="' + (H - 8) + '" text-anchor="end" font-size="10" fill="#b91c1c">11-09 为盘中未完成K线</text>');
+  // 事件标注
+  function mark(date, txt, color, yy) {
+    var idx = -1;
+    for (var i = 0; i < D.length; i++) { if (D[i][0] === date) { idx = i; break; } }
+    if (idx < 0) { return; }
+    var x = L + step * idx + step / 2;
+    s.push('<line x1="' + x.toFixed(1) + '" y1="' + yy + '" x2="' + x.toFixed(1) + '" y2="' + (yy + 12) + '" stroke="' + color + '" stroke-width="1"/>');
+    s.push('<text x="' + x.toFixed(1) + '" y="' + (yy - 3) + '" text-anchor="middle" font-size="10.5" font-weight="700" fill="' + color + '">' + txt + '</text>');
+  }
+  mark('10-29', 'Spring 9.95', '#0f9d58', 300);
+  mark('11-03', 'SOS 12.68', '#d93025', 232);
+  mark('11-06', '待确认 LPS', '#2b5c9b', 258);
+  s.push('</svg>');
+  box.innerHTML = s.join('');
+})();
+</script>
+</body>
+</html>

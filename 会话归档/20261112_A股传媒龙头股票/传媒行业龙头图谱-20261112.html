@@ -1,0 +1,336 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>A股传媒龙头图谱 · 2026-11-12</title>
+<script src="https://cdn.jsdelivr.net/npm/echarts@5/dist/echarts.min.js"></script>
+<style>
+  :root{--bg:#f5f7fa;--card:#ffffff;--ink:#1c2733;--sub:#5b6b7c;--line:#e2e8ef;--blue:#2c5f8d;--deep:#17324d;--red:#c0392b;--green:#1e8449;--amber:#b7791f}
+  *{box-sizing:border-box}
+  body{margin:0;background:var(--bg);color:var(--ink);font-family:-apple-system,BlinkMacSystemFont,"Segoe UI","Microsoft YaHei",sans-serif;line-height:1.65}
+  .wrap{max-width:1180px;margin:0 auto;padding:32px 22px 60px}
+  header{border-bottom:3px solid var(--deep);padding-bottom:18px;margin-bottom:24px}
+  h1{font-size:29px;margin:0 0 8px;letter-spacing:.5px}
+  .meta{color:var(--sub);font-size:13px}
+  h2{font-size:20px;margin:38px 0 14px;padding-left:11px;border-left:4px solid var(--blue)}
+  h3{font-size:16px;margin:24px 0 10px;color:var(--deep)}
+  .card{background:var(--card);border:1px solid var(--line);border-radius:10px;padding:20px 22px;margin-bottom:16px;box-shadow:0 1px 3px rgba(20,40,70,.04)}
+  .tldr{background:linear-gradient(180deg,#ffffff,#f0f5fa);border-left:5px solid var(--deep)}
+  .tldr p{margin:0 0 10px;font-size:15px}
+  .kpis{display:flex;flex-wrap:wrap;gap:12px;margin:18px 0 4px}
+  .kpi{flex:1;min-width:168px;background:#fff;border:1px solid var(--line);border-radius:8px;padding:14px 16px}
+  .kpi .n{font-size:24px;font-weight:700;color:var(--deep);line-height:1.2}
+  .kpi .l{font-size:12px;color:var(--sub);margin-top:5px}
+  table{width:100%;border-collapse:collapse;font-size:13.5px;background:#fff}
+  th,td{padding:9px 10px;border-bottom:1px solid var(--line);text-align:left;vertical-align:middle}
+  th{background:#eef3f8;color:var(--deep);font-weight:600;white-space:nowrap}
+  tr:hover td{background:#f8fbfe}
+  td.num{text-align:right;font-variant-numeric:tabular-nums;white-space:nowrap}
+  .up{color:var(--red);font-weight:600}
+  .down{color:var(--green);font-weight:600}
+  .tag{display:inline-block;padding:2px 8px;border-radius:11px;font-size:11.5px;background:#eaf1f8;color:var(--blue);white-space:nowrap}
+  .tag.game{background:#eaf1f8;color:#2c5f8d}
+  .tag.ad{background:#fdf0e6;color:#a85b16}
+  .tag.film{background:#f0ebf7;color:#6b47a3}
+  .tag.pub{background:#e9f3ec;color:#1e7a44}
+  .tag.tv{background:#e8f2f5;color:#1c6b7d}
+  .note{font-size:12px;color:var(--sub);margin-top:9px;line-height:1.6}
+  .chart{width:100%;height:380px}
+  .btn{border:1px solid var(--blue);background:#fff;color:var(--blue);border-radius:6px;padding:5px 13px;font-size:12.5px;cursor:pointer}
+  .btn:hover{background:#eaf1f8}
+  .flexhead{display:flex;justify-content:space-between;align-items:center;gap:12px;margin-bottom:10px}
+  .flexhead h3{margin:0}
+  .warn{background:#fff8ed;border:1px solid #f0dcb8;border-radius:8px;padding:14px 18px;font-size:13.5px;margin-bottom:12px}
+  .grid2{display:grid;grid-template-columns:1fr 1fr;gap:16px}
+  @media(max-width:860px){.grid2{grid-template-columns:1fr}.chart{height:330px}}
+  ul{margin:8px 0 0 0;padding-left:20px}
+  li{margin-bottom:7px;font-size:14px}
+  .disc{background:#f0f2f5;border:1px solid var(--line);border-radius:8px;padding:14px 18px;font-size:12.5px;color:var(--sub);margin-top:28px}
+  .src{font-size:12px;color:var(--sub);border-top:1px dashed var(--line);margin-top:24px;padding-top:12px}
+</style>
+</head>
+<body>
+<div class="wrap">
+
+<header>
+  <h1>A股传媒龙头图谱</h1>
+  <div class="meta">口径：通达信一级行业「传媒」（板块 881368）｜数据时点：2026-11-12 盘中快照（北京时间）｜板块统计截至 2026-11-11 收盘</div>
+</header>
+
+<div class="card tldr">
+  <p><strong>结论先行：</strong>传媒不是一个 homogenous 的板块，龙头要按子赛道拆开看。若用「总市值 + 中证传媒指数权重 + 归母净利润」三榜交叉验证，真正能称得上<strong>全行业核心龙头</strong>的是 <strong>世纪华通（002602）、分众传媒（002027）、蓝色光标（300058）、昆仑万维（300418）、巨人网络（002558）、恺英网络（002517）、三七互娱（002555）</strong>这 7 只；<strong>芒果超媒（300413）</strong>是市值与流量龙头，但盈利体量未进前十、PE(TTM) 偏高，属于「叙事龙头」而非「利润龙头」。</p>
+  <p style="color:var(--sub);font-size:13.5px">分层依据（可量化）：① 2026-11-12 盘中总市值 ≥200 亿元（全行业共 20 只）；② 中证传媒指数（399971）成分权重；③ 通达信选股引擎最新报告期归母净利润 ≥10 亿元（共 10 只）。三项中至少两项进入前列者列入核心龙头，其余按子赛道龙头／主题弹性标的归类。</p>
+  <div class="kpis">
+    <div class="kpi"><div class="n">20 只</div><div class="l">总市值 ≥200 亿的传媒股（2026-11-12 盘中）</div></div>
+    <div class="kpi"><div class="n">859.4 亿</div><div class="l">市值第一：世纪华通（002602）</div></div>
+    <div class="kpi"><div class="n">63.35 亿</div><div class="l">归母净利第一：世纪华通（002602）</div></div>
+    <div class="kpi"><div class="n">50 只</div><div class="l">中证传媒指数成分股总数，前 3 权重合计约 23.6%</div></div>
+    <div class="kpi"><div class="n">+10.55%</div><div class="l">传媒板块近 10 日涨幅（截至 2026-11-11）</div></div>
+  </div>
+  <div class="note">数据来源：通达信条件选股引擎、通达信 F9 指数成分权重、通达信 F10 板块统计；查询日 2026-11-12。权重为指数口径（自由流通市值加权并含调整因子），与总市值排序不完全一致，后文有说明。</div>
+</div>
+
+<h2>一、三榜交叉：谁是全行业核心龙头</h2>
+<div class="card">
+  <table>
+    <thead><tr><th>标的</th><th>代码</th><th>子赛道</th><th class="num">总市值(亿元)</th><th class="num">市值榜</th><th class="num">中证传媒权重</th><th class="num">归母净利(亿元)</th><th>交叉结果</th></tr></thead>
+    <tbody>
+      <tr><td><strong>世纪华通</strong></td><td>002602</td><td><span class="tag game">游戏</span></td><td class="num">859.4</td><td class="num">1</td><td class="num">9.138%</td><td class="num">63.35</td><td>市值/权重/净利三榜第一</td></tr>
+      <tr><td><strong>分众传媒</strong></td><td>002027</td><td><span class="tag ad">广告营销</span></td><td class="num">762.5</td><td class="num">2</td><td class="num">8.141%</td><td class="num">44.76</td><td>三项均第二，广告绝对龙头</td></tr>
+      <tr><td><strong>蓝色光标</strong></td><td>300058</td><td><span class="tag ad">广告营销</span></td><td class="num">476.1</td><td class="num">5</td><td class="num">6.326%</td><td class="num">—</td><td>市值/权重前列，营收全行业第一</td></tr>
+      <tr><td><strong>昆仑万维</strong></td><td>300418</td><td><span class="tag game">游戏／AI</span></td><td class="num">540.1</td><td class="num">4</td><td class="num">4.579%</td><td class="num">—</td><td>市值/权重前列，AI 叙事驱动</td></tr>
+      <tr><td><strong>巨人网络</strong></td><td>002558</td><td><span class="tag game">游戏</span></td><td class="num">401.4</td><td class="num">6</td><td class="num">3.829%</td><td class="num">28.86</td><td>净利第三、权重第七</td></tr>
+      <tr><td><strong>恺英网络</strong></td><td>002517</td><td><span class="tag game">游戏</span></td><td class="num">352.9</td><td class="num">8</td><td class="num">3.930%</td><td class="num">20.69</td><td>净利第四、权重第六</td></tr>
+      <tr><td><strong>三七互娱</strong></td><td>002555</td><td><span class="tag game">游戏</span></td><td class="num">350.6</td><td class="num">9</td><td class="num">3.431%</td><td class="num">14.70</td><td>市值/营收/净利/权重四榜在榜</td></tr>
+    </tbody>
+  </table>
+  <div class="note">「—」表示未进入该榜单（归母净利 ≥10 亿名单），不代表该项为零。总市值：通达信条件选股引擎 2026-11-12 盘中快照；指数权重与 PE：通达信 F9 中证传媒（399971）成分权重明细，查询日 2026-11-12；归母净利：通达信条件选股引擎最新报告期口径（接口未标注具体报告期，需核实）。</div>
+</div>
+
+<div class="card">
+  <h3>世纪华通不只是「块头大」：盈利质量也在行业前列</h3>
+  <table>
+    <thead><tr><th>指标</th><th class="num">世纪华通数值</th><th class="num">行业平均</th><th class="num">行业排名</th></tr></thead>
+    <tbody>
+      <tr><td>每股收益(元)</td><td class="num">0.86</td><td class="num">0.42</td><td class="num">4</td></tr>
+      <tr><td>销售净利率(%)</td><td class="num">19.31</td><td class="num">15.96</td><td class="num">6</td></tr>
+      <tr><td>净利润增长率(%)</td><td class="num">44.74</td><td class="num">20.78</td><td class="num">7</td></tr>
+      <tr><td>净资产收益率-摊薄(%)</td><td class="num">17.88</td><td class="num">10.81</td><td class="num">4</td></tr>
+    </tbody>
+  </table>
+  <div class="note">来源：通达信 F10 行业排名（财务状况，queryKey=00102，个股 002602），查询日 2026-11-12；接口未返回具体报告期标签，排名分母为通达信行业分类口径。</div>
+</div>
+
+<h2>二、市值分布：前三名断层领先</h2>
+<div class="card">
+  <div class="flexhead">
+    <h3>传媒行业总市值 Top 10（亿元）</h3>
+    <button class="btn" id="capBtn" onclick="toggleCap()">切换为表</button>
+  </div>
+  <div id="chartCap" class="chart"></div>
+  <div id="capTable" style="display:none">
+    <table>
+      <thead><tr><th>排名</th><th>名称</th><th>代码</th><th class="num">总市值(亿元)</th><th class="num">当日涨跌幅</th></tr></thead>
+      <tbody>
+        <tr><td>1</td><td>世纪华通</td><td>002602</td><td class="num">859.4</td><td class="num down">-2.18%</td></tr>
+        <tr><td>2</td><td>分众传媒</td><td>002027</td><td class="num">762.5</td><td class="num down">-2.58%</td></tr>
+        <tr><td>3</td><td>芒果超媒</td><td>300413</td><td class="num">652.9</td><td class="num down">-4.59%</td></tr>
+        <tr><td>4</td><td>昆仑万维</td><td>300418</td><td class="num">540.1</td><td class="num down">-1.11%</td></tr>
+        <tr><td>5</td><td>蓝色光标</td><td>300058</td><td class="num">476.1</td><td class="num down">-0.38%</td></tr>
+        <tr><td>6</td><td>巨人网络</td><td>002558</td><td class="num">401.4</td><td class="num down">-3.08%</td></tr>
+        <tr><td>7</td><td>光线传媒</td><td>300251</td><td class="num">368.2</td><td class="num down">-4.05%</td></tr>
+        <tr><td>8</td><td>恺英网络</td><td>002517</td><td class="num">352.9</td><td class="num down">-2.71%</td></tr>
+        <tr><td>9</td><td>三七互娱</td><td>002555</td><td class="num">350.6</td><td class="num down">-2.04%</td></tr>
+        <tr><td>10</td><td>中国电影</td><td>600977</td><td class="num">290.9</td><td class="num down">-2.44%</td></tr>
+      </tbody>
+    </table>
+  </div>
+  <div class="note">来源：通达信条件选股引擎「传媒行业总市值超过200亿元」，2026-11-12 盘中快照，单位由元换算为亿元（保留 1 位小数）。当日涨跌幅为同一快照、盘中数值，非收盘价。红涨绿跌按 A 股惯例着色。</div>
+</div>
+
+<div class="grid2">
+  <div class="card">
+    <h3>归母净利润 Top 10（亿元）</h3>
+    <div id="chartProfit" class="chart" style="height:340px"></div>
+    <div class="note">来源：通达信条件选股引擎「传媒行业归母净利润超过10亿元」，查询日 2026-11-12；接口未标注报告期，按引擎默认最新期口径。游戏股占 5 席、出版股占 4 席。</div>
+  </div>
+  <div class="card">
+    <h3>营收 Top 6：营收 vs 营业成本（亿元）</h3>
+    <div id="chartRev" class="chart" style="height:340px"></div>
+    <div class="note">来源：通达信条件选股引擎「传媒行业营业收入超过100亿元」，查询日 2026-11-12。广告代理类公司营业成本几乎贴近营收，游戏公司成本占比明显更低（按接口原始值计算）。</div>
+  </div>
+</div>
+
+<h2>三、按子赛道拆龙头（这才是「传媒龙头」的正确问法）</h2>
+<div class="card">
+  <table>
+    <thead><tr><th>子赛道</th><th>代表龙头</th><th>量化依据 / 定位</th><th>需要留意</th></tr></thead>
+    <tbody>
+      <tr>
+        <td><span class="tag game">游戏</span></td>
+        <td>世纪华通(002602)、三七互娱(002555)、恺英网络(002517)、巨人网络(002558)、吉比特(603444)、完美世界(002624)、昆仑万维(300418)、神州泰岳(300002)</td>
+        <td>净利 ≥10 亿名单中游戏占 5 席；中证传媒权重 ≥2% 的 20 只里游戏占 7 席；世纪华通市值 859.4 亿、净利 63.35 亿双第一</td>
+        <td>板块利润最集中的一环，也是龙头最密集的一环；昆仑万维 PE(TTM) 为负，估值靠 AI 叙事而非当期盈利</td>
+      </tr>
+      <tr>
+        <td><span class="tag ad">广告营销</span></td>
+        <td>分众传媒(002027)、蓝色光标(300058)、利欧股份(002131)、省广集团(002400)、三维通信(002115)、易点天下(301171)、天娱数科(002354)</td>
+        <td>分众传媒净利 44.76 亿全行业第二、权重 8.141% 第二；营收榜前 6 中广告营销占 5 席</td>
+        <td>营收大 ≠ 赚钱：蓝色光标营收 531.0 亿、营业成本 516.3 亿；利欧股份、省广集团净利增长率为负</td>
+      </tr>
+      <tr>
+        <td><span class="tag tv">数字媒体／视频</span></td>
+        <td>芒果超媒(300413)</td>
+        <td>市值 652.9 亿全行业第三，中证传媒权重 2.555%</td>
+        <td>PE(TTM) 161.24 倍，未进净利前十；长视频平台属性更接近「流量+内容」龙头</td>
+      </tr>
+      <tr>
+        <td><span class="tag film">影视院线</span></td>
+        <td>光线传媒(300251)、中国电影(600977)、华策影视(300133)、儒意电影(002739)、博纳影业(001330)</td>
+        <td>光线传媒市值 368.2 亿、权重 2.520%；中国电影市值 290.9 亿</td>
+        <td>盈利波动大：光线传媒、儒意电影、华策影视 PE(TTM) 分别为 -62.56、-103.08、116.28 倍，票房/项目制驱动</td>
+      </tr>
+      <tr>
+        <td><span class="tag pub">出版／教育</span></td>
+        <td>凤凰传媒(601928)、中南传媒(601098)、山东出版(601019)、南方传媒(601900)、新华文轩(601811)、中文在线(300364)</td>
+        <td>净利 ≥10 亿名单中出版占 4 席；凤凰传媒 12.68 亿、山东出版 11.43 亿、中南传媒 10.97 亿、南方传媒 10.78 亿</td>
+        <td>盈利稳、市值多在 200-250 亿，属防御/分红属性；中文在线市值 203.3 亿但 PE(TTM) 为负，是主题弹性而非出版基本面</td>
+      </tr>
+      <tr>
+        <td><span class="tag tv">广播电视／新媒体</span></td>
+        <td>东方明珠(600637)、海看股份(301262)、无线传媒(301551)、吉视传媒(601929)、贵广网络(600996)</td>
+        <td>东方明珠市值 276.3 亿、权重 2.233%；海看股份、无线传媒市值约 100-110 亿</td>
+        <td>区域广电资产为主，成长性弱，题材属性强于业绩属性</td>
+      </tr>
+    </tbody>
+  </table>
+  <div class="note">子赛道归属：中证传媒成分股按通达信 F9 返回的「TDX 二级行业」划分（游戏／广告营销／数字媒体／影视院线／出版业／广播电视）；未在 F9 前 20 权重中出现的标的（如中国电影、博纳影业、山东出版、南方传媒、海看股份、无线传媒、吉视传媒、贵广网络）按主营业务作定性归类，并均已通过通达信「传媒」行业成分校验。PE(TTM) 来源：通达信 F9 中证传媒成分权重明细，查询日 2026-11-12。</div>
+</div>
+
+<h2>四、全量清单：总市值 ≥200 亿的 20 只传媒股</h2>
+<div class="card">
+  <table>
+    <thead><tr><th>#</th><th>名称</th><th>代码</th><th>子赛道</th><th class="num">总市值(亿元)</th><th class="num">当日涨跌</th><th class="num">中证传媒权重</th><th class="num">PE(TTM)</th></tr></thead>
+    <tbody>
+      <tr><td>1</td><td>世纪华通</td><td>002602</td><td>游戏</td><td class="num">859.4</td><td class="num down">-2.18%</td><td class="num">9.138%</td><td class="num">11.60</td></tr>
+      <tr><td>2</td><td>分众传媒</td><td>002027</td><td>广告营销</td><td class="num">762.5</td><td class="num down">-2.58%</td><td class="num">8.141%</td><td class="num">24.60</td></tr>
+      <tr><td>3</td><td>芒果超媒</td><td>300413</td><td>数字媒体</td><td class="num">652.9</td><td class="num down">-4.59%</td><td class="num">2.555%</td><td class="num">161.24</td></tr>
+      <tr><td>4</td><td>昆仑万维</td><td>300418</td><td>游戏／AI</td><td class="num">540.1</td><td class="num down">-1.11%</td><td class="num">4.579%</td><td class="num">-59.06</td></tr>
+      <tr><td>5</td><td>蓝色光标</td><td>300058</td><td>广告营销</td><td class="num">476.1</td><td class="num down">-0.38%</td><td class="num">6.326%</td><td class="num">142.25</td></tr>
+      <tr><td>6</td><td>巨人网络</td><td>002558</td><td>游戏</td><td class="num">401.4</td><td class="num down">-3.08%</td><td class="num">3.829%</td><td class="num">12.84</td></tr>
+      <tr><td>7</td><td>光线传媒</td><td>300251</td><td>影视院线</td><td class="num">368.2</td><td class="num down">-4.05%</td><td class="num">2.520%</td><td class="num">-62.56</td></tr>
+      <tr><td>8</td><td>恺英网络</td><td>002517</td><td>游戏</td><td class="num">352.9</td><td class="num down">-2.71%</td><td class="num">3.930%</td><td class="num">15.18</td></tr>
+      <tr><td>9</td><td>三七互娱</td><td>002555</td><td>游戏</td><td class="num">350.6</td><td class="num down">-2.04%</td><td class="num">3.431%</td><td class="num">17.66</td></tr>
+      <tr><td>10</td><td>中国电影</td><td>600977</td><td>影视院线</td><td class="num">290.9</td><td class="num down">-2.44%</td><td class="num">—</td><td class="num">—</td></tr>
+      <tr><td>11</td><td>利欧股份</td><td>002131</td><td>广告营销</td><td class="num">286.4</td><td class="num down">-0.70%</td><td class="num">3.805%</td><td class="num">-31.12</td></tr>
+      <tr><td>12</td><td>东方明珠</td><td>600637</td><td>广播电视</td><td class="num">276.3</td><td class="num down">-0.61%</td><td class="num">2.233%</td><td class="num">58.94</td></tr>
+      <tr><td>13</td><td>吉比特</td><td>603444</td><td>游戏</td><td class="num">245.3</td><td class="num down">-2.30%</td><td class="num">2.210%</td><td class="num">11.60</td></tr>
+      <tr><td>14</td><td>凤凰传媒</td><td>601928</td><td>出版</td><td class="num">234.9</td><td class="num down">-0.75%</td><td class="num">—</td><td class="num">—</td></tr>
+      <tr><td>15</td><td>新华文轩</td><td>601811</td><td>出版</td><td class="num">224.7</td><td class="num up">+1.56%</td><td class="num">—</td><td class="num">—</td></tr>
+      <tr><td>16</td><td>易点天下</td><td>301171</td><td>广告营销</td><td class="num">212.6</td><td class="num down">-1.01%</td><td class="num">1.768%</td><td class="num">222.46</td></tr>
+      <tr><td>17</td><td>华策影视</td><td>300133</td><td>影视院线</td><td class="num">212.6</td><td class="num down">-5.10%</td><td class="num">1.712%</td><td class="num">116.28</td></tr>
+      <tr><td>18</td><td>完美世界</td><td>002624</td><td>游戏</td><td class="num">210.5</td><td class="num down">-2.60%</td><td class="num">2.060%</td><td class="num">47.76</td></tr>
+      <tr><td>19</td><td>中文在线</td><td>300364</td><td>出版／IP</td><td class="num">203.3</td><td class="num down">-4.87%</td><td class="num">2.467%</td><td class="num">-75.76</td></tr>
+      <tr><td>20</td><td>中南传媒</td><td>601098</td><td>出版</td><td class="num">202.2</td><td class="num down">-1.40%</td><td class="num">—</td><td class="num">—</td></tr>
+    </tbody>
+  </table>
+  <div class="note">「—」= 未进入中证传媒指数前 20 大权重明细（该指数共 50 只成分），不代表无权重。总市值与当日涨跌：通达信条件选股引擎，2026-11-12 盘中快照；权重与 PE(TTM)：通达信 F9 中证传媒（399971）前 20 大权重明细，查询日 2026-11-12。两组数据的行情快照时点不同，请勿将权重表的价格/市值与市值表直接混用。</div>
+</div>
+
+<h2>五、三个容易踩的坑（反面声音）</h2>
+<div class="card">
+  <div class="warn"><strong>1｜营收龙头 ≠ 利润龙头。</strong>营收榜第一是蓝色光标（531.0 亿），但它未进入归母净利 ≥10 亿名单；同期营业成本 516.3 亿，成本/营收约 97%。省广集团（营收 174.5 亿）、利欧股份（161.7 亿）净利增长率分别为 -133.09%、-173.25%（通达信选股引擎，2026-11-12）。广告代理是「过账式」收入，用营收规模给龙头排序会系统性高估这类公司。</div>
+  <div class="warn"><strong>2｜市值龙头 ≠ 指数权重龙头。</strong>芒果超媒市值 652.9 亿排第 3，中证传媒权重却只有 2.555%；昆仑万维市值 540.1 亿排第 4，权重 4.579%。指数按自由流通市值加权并设置调整因子/权重约束，权重反映的是「可交易筹码与指数规则」，不是公司体量。两种口径要分开用。</div>
+  <div class="warn"><strong>3｜高估值段的龙头，定价的是叙事不是当期盈利。</strong>中证传媒权重前 20 中，昆仑万维、光线传媒、中文在线、利欧股份、儒意电影、天娱数科的 PE(TTM) 为负，蓝色光标 142.25 倍、易点天下 222.46 倍、华策影视 116.28 倍、芒果超媒 161.24 倍（通达信 F9，2026-11-12）。影视与 AI 应用方向的市值弹性主要来自内容周期与 AI 预期，业绩兑现度需要单独验证。相对地，世纪华通、吉比特、巨人网络、恺英网络、三七互娱的 PE(TTM) 在 11-18 倍区间，是板块里盈利可验证的一档。</div>
+</div>
+
+<h2>六、板块当前位置：短期升温，但一年维度仍未转正</h2>
+<div class="card">
+  <table>
+    <thead><tr><th>指标（传媒板块 881368）</th><th class="num">数值</th><th>说明</th></tr></thead>
+    <tbody>
+      <tr><td>2026-11-11 收盘</td><td class="num">1303.15</td><td>成交额 1009.27 亿元，上涨 88 家 / 下跌 38 家</td></tr>
+      <tr><td>近 5 日涨幅</td><td class="num up">+8.08%</td><td>11-10 曾出现上涨 123 家 / 下跌 5 家的普涨</td></tr>
+      <tr><td>近 10 日涨幅</td><td class="num up">+10.55%</td><td>短期热度明显回升</td></tr>
+      <tr><td>近 20 日 / 30 日涨幅</td><td class="num up">+4.63% / +9.47%</td><td>中期为震荡上行</td></tr>
+      <tr><td>近一年涨幅</td><td class="num down">-3.85%</td><td>一年维度仍为负，属修复/主题活跃而非趋势性牛市</td></tr>
+    </tbody>
+  </table>
+  <div class="note">来源：通达信 F10 板块市场统计（skef10_bk_cpbd_jczl，branch=004，板块代码 881368），最新交易日 2026-11-11。红涨绿跌按 A 股惯例着色。</div>
+  <ul>
+    <li><strong>优先研究顺序：</strong>先看游戏（利润最集中、估值可验证）→ 再看广告营销龙头分众传媒（现金流与分红属性）→ 影视与 AI 应用单独按催化事件跟踪，不按基本面龙头逻辑定价。</li>
+    <li><strong>验证指标：</strong>新游戏版号与流水、季度归母净利能否延续增长、广告主预算/刊挂率、票房与项目储备、AI 应用的实际收入贡献（而非仅公告或合作意向）。</li>
+    <li><strong>口径提醒：</strong>中证传媒指数（399971）50 只成分中，权重第 5 的岩山科技（002195）在通达信一级行业被归为「计算机」，不是传媒股；按「传媒行业」口径筛选时不应纳入。</li>
+  </ul>
+</div>
+
+<div class="src">
+  <strong>数据来源与时点汇总：</strong>① 通达信条件选股引擎（行业=传媒 / 板块 881368）：总市值、当日涨跌幅、营业收入、营业成本、增长率、归母净利润，查询时点 2026-11-12 盘中，财务为引擎默认最新报告期口径、接口未标注具体报告期；② 通达信 F9 中证传媒指数（399971）成分权重明细：权重、PE(TTM)、TDX 二级行业，查询日 2026-11-12（共 50 只成分，本文取权重前 20）；③ 通达信 F10 行业排名（002602）：查询日 2026-11-12；④ 通达信 F10 板块市场统计（881368）：最新交易日 2026-11-11。本文未使用外部媒体或研报二手数据。所有行情为盘中/最近交易日快照，非实时逐笔，数值会随交易变动。
+</div>
+
+<div class="disc">
+  <strong>免责声明</strong>：以上内容基于公开数据和量化分析，仅供参考，不构成投资建议。市场有风险，投资需谨慎。任何投资决策应结合个人风险承受能力、资金状况和投资目标独立判断，必要时咨询持牌专业机构。过往表现不预示未来收益。
+</div>
+
+</div>
+<script>
+var capData = [
+  { n: '世纪华通', v: 859.4 }, { n: '分众传媒', v: 762.5 }, { n: '芒果超媒', v: 652.9 },
+  { n: '昆仑万维', v: 540.1 }, { n: '蓝色光标', v: 476.1 }, { n: '巨人网络', v: 401.4 },
+  { n: '光线传媒', v: 368.2 }, { n: '恺英网络', v: 352.9 }, { n: '三七互娱', v: 350.6 },
+  { n: '中国电影', v: 290.9 }
+];
+var profitData = [
+  { n: '世纪华通', v: 63.35 }, { n: '分众传媒', v: 44.76 }, { n: '巨人网络', v: 28.86 },
+  { n: '恺英网络', v: 20.69 }, { n: '吉比特', v: 15.85 }, { n: '三七互娱', v: 14.70 },
+  { n: '凤凰传媒', v: 12.68 }, { n: '山东出版', v: 11.43 }, { n: '中南传媒', v: 10.97 },
+  { n: '南方传媒', v: 10.78 }
+];
+var revNames = ['蓝色光标', '世纪华通', '省广集团', '利欧股份', '三维通信', '三七互娱'];
+var revVals = [531.00, 332.98, 174.50, 161.66, 148.69, 113.66];
+var costVals = [516.33, 89.70, 165.89, 150.29, 143.44, 24.42];
+
+var capChart = echarts.init(document.getElementById('chartCap'));
+capChart.setOption({
+  tooltip: { trigger: 'axis', axisPointer: { type: 'shadow' } },
+  grid: { left: 88, right: 62, top: 14, bottom: 30 },
+  xAxis: { type: 'value', name: '亿元', nameLocation: 'end' },
+  yAxis: { type: 'category', data: capData.map(function (x) { return x.n; }).slice().reverse() },
+  series: [{
+    type: 'bar',
+    barWidth: '62%',
+    data: capData.map(function (x, i) {
+      return { value: x.v, itemStyle: { color: i < 3 ? '#c0392b' : '#2c5f8d' } };
+    }).slice().reverse(),
+    label: { show: true, position: 'right', formatter: '{c}' }
+  }]
+});
+
+var profitChart = echarts.init(document.getElementById('chartProfit'));
+profitChart.setOption({
+  tooltip: { trigger: 'axis', axisPointer: { type: 'shadow' } },
+  grid: { left: 76, right: 48, top: 14, bottom: 30 },
+  xAxis: { type: 'value', name: '亿元' },
+  yAxis: { type: 'category', data: profitData.map(function (x) { return x.n; }).slice().reverse() },
+  series: [{
+    type: 'bar',
+    barWidth: '62%',
+    data: profitData.map(function (x) { return x.v; }).slice().reverse(),
+    itemStyle: { color: '#1e6f8c' },
+    label: { show: true, position: 'right', formatter: '{c}' }
+  }]
+});
+
+var revChart = echarts.init(document.getElementById('chartRev'));
+revChart.setOption({
+  tooltip: { trigger: 'axis', axisPointer: { type: 'shadow' } },
+  legend: { data: ['营业收入', '营业成本'], top: 0 },
+  grid: { left: 58, right: 18, top: 32, bottom: 58 },
+  xAxis: { type: 'category', data: revNames, axisLabel: { interval: 0, rotate: 28 } },
+  yAxis: { type: 'value', name: '亿元' },
+  series: [
+    { name: '营业收入', type: 'bar', data: revVals, itemStyle: { color: '#2c5f8d' } },
+    { name: '营业成本', type: 'bar', data: costVals, itemStyle: { color: '#d9a05b' } }
+  ]
+});
+
+function toggleCap() {
+  var c = document.getElementById('chartCap');
+  var t = document.getElementById('capTable');
+  var b = document.getElementById('capBtn');
+  var toTable = t.style.display === 'none';
+  t.style.display = toTable ? 'block' : 'none';
+  c.style.display = toTable ? 'none' : 'block';
+  b.textContent = toTable ? '切换为图' : '切换为表';
+  if (!toTable) { capChart.resize(); }
+}
+
+window.addEventListener('resize', function () {
+  capChart.resize();
+  profitChart.resize();
+  revChart.resize();
+});
+</script>
+</body>
+</html>
